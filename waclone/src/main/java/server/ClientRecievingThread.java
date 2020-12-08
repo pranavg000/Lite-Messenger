@@ -38,6 +38,8 @@ public class ClientRecievingThread extends Thread {
                     System.out.println(request);
                     String recieverId = request.getRecieverId();
                     BlockingQueue<Request> sendBox = GlobalVariables.clientSendBox.get(recieverId);
+                    ClientSendingThread cst = new ClientSendingThread().setClient(socket, request.getSenderId());
+                    cst.start();
                     if (sendBox != null) {
                         try {
                             sendBox.put(request);
