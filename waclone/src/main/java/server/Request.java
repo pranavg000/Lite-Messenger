@@ -38,5 +38,10 @@ public class Request {
        this.data = data;
    }
 
+   @Override
+   public String toString() {
+       return "Request [action=" + action + ", data=" + data + ", recieverId=" + recieverId + ", senderId=" + senderId
+               + "]";
+   }
    
 }
