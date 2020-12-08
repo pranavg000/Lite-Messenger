@@ -32,6 +32,7 @@ public class ClientRecievingThread extends Thread {
             Request request = gson.fromJson(in.readUTF(), Request.class);
             if (isAuthenticated(request)) {
                 BlockingQueue<Request> clientSendBox = new LinkedBlockingDeque<Request>();
+                System.out.println("Created SendBox of " + request.getSenderId());
                 GlobalVariables.clientSendBox.put(request.getSenderId(), clientSendBox);
                 while (true) {
                     request = gson.fromJson(in.readUTF(), Request.class);

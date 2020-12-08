@@ -16,7 +16,7 @@ public class SendRequest {
 
     public SendRequest(String ipAddress_m, int port_m, String myPhoneNo_m) {
 
-        private socket = null;
+        socket = null;
         ipAddress = ipAddress_m;
         port = port_m;
         myPhoneNo = myPhoneNo_m;

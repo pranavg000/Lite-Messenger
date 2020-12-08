@@ -1,5 +1,5 @@
 package server;
-
+import java.util.Scanner;
 /**
  * Hello world!
  *
@@ -8,14 +8,32 @@ public class App {
     public static void main( String[] args ) {
         System.out.println("Starting Client");
         
-        SendRequest sendRequest = new SendRequest("127.0.0.1", 5000, "827211133");
+        Scanner in = new Scanner(System.in);
+        String myPhoneNo = in.nextLine();
+        String otherPhoneNo = in.nextLine();
+        in.close();
+        SendRequest sendRequest = new SendRequest("127.0.0.1", 5000, myPhoneNo);
         if(!sendRequest.sendAuth()) return;
         System.out.println("Auth sent!!");
         
-        if(!sendRequest.sendNewChat("9876543210")) return;
+        try {
+            Thread.sleep(10000);
+        } 
+        catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+
+        if(!sendRequest.sendNewChat(otherPhoneNo)) return;
         System.out.println("New Chat sent!!");
 
-        if(!sendRequest.sendMessage("9876543210", "OS Lab ka Assignment karliya??")) return;
+        try {
+            Thread.sleep(1000);
+        } 
+        catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+
+        if(!sendRequest.sendMessage(otherPhoneNo, "OS Lab ka Assignment karliya??")) return;
         System.out.println("Message sent!!");
 
     }
