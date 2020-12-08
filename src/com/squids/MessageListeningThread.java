@@ -37,12 +37,14 @@ public class MessageListeningThread extends Thread{
                 if(message.charAt(0) == 'M'){
                     System.out.printf("Received a message: %s\n", message);
                     //Add to requests queue
+                    GlobalVariables.messageSem.acquire();
                     GlobalVariables.messageRequests.add(message);
+                    GlobalVariables.messageSem.release();
                     //Close this socket
                     socket.close();
                     in.close();
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
                 return;
             }
