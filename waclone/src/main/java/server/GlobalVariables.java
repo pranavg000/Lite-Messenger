@@ -1,8 +1,8 @@
 package server;
 
 import java.util.Map;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class GlobalVariables {
-    public static Map<String,LinkedBlockingQueue<Request>> clientSendBox;
+    public static Map<String,BlockingQueue<Request>> clientSendBox;
 }
