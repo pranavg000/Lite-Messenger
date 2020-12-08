@@ -35,7 +35,7 @@ public class AuthListeningThread extends Thread{
                 String message = in.readUTF();
                 //Check if message input (just in case)
                 if(message.charAt(0) == 'A'){
-                    System.out.println("Received an auth request");
+                    System.out.printf("Received an auth request: %s\n", message);
                     //Add to requests queue
                     GlobalVariables.authRequests.add(message);
 

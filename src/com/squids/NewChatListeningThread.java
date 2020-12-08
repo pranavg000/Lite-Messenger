@@ -35,7 +35,7 @@ public class NewChatListeningThread extends Thread{
                 String message = in.readUTF();
                 //Check if message input (just in case)
                 if(message.charAt(0) == 'N'){
-                    System.out.println("Received a message");
+                    System.out.printf("Received a new chat request: %s\n", message);
                     //Add to requests queue
                     GlobalVariables.newChatRequests.add(message);
                     //Close this socket

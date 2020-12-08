@@ -1,9 +1,15 @@
 package com.squids;
 import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
 
 public class Main {
 
     public static void main(String[] args) {
+        //Setting up Semaphores
+        GlobalVariables.messageSem = new Semaphore(1);
+        GlobalVariables.authSem = new Semaphore(1);
+        GlobalVariables.newChatSem = new Semaphore(1);
+
         //Setting up queues
         GlobalVariables.messageRequests = new LinkedList<>();
         GlobalVariables.authRequests = new LinkedList<>();
@@ -16,6 +22,10 @@ public class Main {
         mlt.start();
         alt.start();
         nlt.start();
+
+        //Create and start processing threads
+        MessageProcessingThread mpt = new MessageProcessingThread();
+        mpt.start();
 
 
     }
