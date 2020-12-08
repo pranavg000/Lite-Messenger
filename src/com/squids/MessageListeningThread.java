@@ -35,7 +35,7 @@ public class MessageListeningThread extends Thread{
                 String message = in.readUTF();
                 //Check if message input (just in case)
                 if(message.charAt(0) == 'M'){
-                    System.out.println("Received a message");
+                    System.out.printf("Received a message: %s\n", message);
                     //Add to requests queue
                     GlobalVariables.messageRequests.add(message);
                     //Close this socket
