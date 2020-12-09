@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 import com.google.gson.Gson;
 
@@ -14,7 +15,7 @@ public class ReceivingThread extends Thread {
     private Socket socket;
     
 
-    public ReceivingThread(Socket socket, String clientId) {
+    public ReceivingThread(Socket socket) {
         this.socket = socket;
     }
 
@@ -26,26 +27,24 @@ public class ReceivingThread extends Thread {
             Gson gson = new Gson();
             inputStream = new DataInputStream(socket.getInputStream());
             while (true) {
-                // if(!GlobalVariables.clientSendBox.containsKey(clientId)){
-                //     inputStream.close();
-                //     System.out.println("Closing client Receiving thread");
-                //     return;
-                // }
                 try {
                     input = inputStream.readUTF();
-                    request = gson.fromJson(input, Request.class);
-                    System.out.println(request);
-                    RequestType reqType = request.getAction();
+                    // request = gson.fromJson(input, Request.class);
+                    System.out.println(input);
+                    // RequestType reqType = request.getAction();
 
-                    if(reqType == RequestType.Message){
+                    // if(reqType == RequestType.Message){
 
-                    }
-                    else{
-                        System.out.println("NOT a message");
-                    }
+                    // }
+                    // else{
+                    //     System.out.println("NOT a message");
+                    // }
                 }
                 catch (EOFException e) {
                     System.out.println("Closing socket");
+                    break;
+                }
+                catch (SocketException e){
                     break;
                 }
                 catch (IOException e) {
@@ -64,7 +63,6 @@ public class ReceivingThread extends Thread {
             e.printStackTrace();
         }
 
-        
-        
+        System.out.println("Terminating Receive thread");
     }
 }

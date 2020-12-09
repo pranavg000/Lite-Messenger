@@ -76,6 +76,10 @@ public class SendRequest {
         }
     }
 
+    public Socket getSocket(){
+        return socket;
+    }
+
     protected void finalize() {  
         try{
             outputStream.close();
