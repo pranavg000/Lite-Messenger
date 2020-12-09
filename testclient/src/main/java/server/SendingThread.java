@@ -1,6 +1,7 @@
 package server;
 
 import java.net.Socket;
+import java.util.Scanner;
 
 public class SendingThread extends Thread {
 
@@ -17,16 +18,18 @@ public class SendingThread extends Thread {
         System.out.println("Auth sent!!");
         sendRequest.sendAuth();
 
-        try {
-            Thread.sleep(10000);
-        } 
-        catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+        // try {
+        //     Thread.sleep(10000);
+        // } 
+        // catch(InterruptedException ex) {
+        //     Thread.currentThread().interrupt();
+        // }
         int a[] = {2,3,3,2,3,3,4};
         int i = 0;
+        Scanner in = new Scanner(System.in);
         while(true){
             int choice = a[i];
+            choice = in.nextInt();
             i++;
             if(choice == 1){
                 System.out.println("Auth sent!!");
@@ -41,20 +44,21 @@ public class SendingThread extends Thread {
                 System.out.println("Message sent!!");
             }
             else break;
-            try {
-                Thread.sleep(1000);
-            } 
-            catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
+            // try {
+            //     Thread.sleep(1000);
+            // } 
+            // catch(InterruptedException ex) {
+            //     Thread.currentThread().interrupt();
+            // }
         }
+        in.close();
 
-        try {
-            Thread.sleep(100000);
-        } 
-        catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+        // try {
+        //     Thread.sleep(100000);
+        // } 
+        // catch(InterruptedException ex) {
+        //     Thread.currentThread().interrupt();
+        // }
         
         sendRequest.finalize();
         System.out.println("Terminating Sending thread");

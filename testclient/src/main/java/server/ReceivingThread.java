@@ -29,8 +29,8 @@ public class ReceivingThread extends Thread {
             while (true) {
                 try {
                     input = inputStream.readUTF();
-                    // request = gson.fromJson(input, Request.class);
-                    System.out.println(input);
+                    request = gson.fromJson(input, Request.class);
+                    System.out.println(request);
                     // RequestType reqType = request.getAction();
 
                     // if(reqType == RequestType.Message){
