@@ -6,6 +6,8 @@ import java.net.Socket;
 
 import com.google.gson.Gson;
 
+import server.GlobalVariables.RequestType;
+
 public class SendRequest {
 
     private Gson gson;
@@ -13,6 +15,7 @@ public class SendRequest {
     private String ipAddress;
     private int port;
     private String myPhoneNo;
+    private DataOutputStream outputStream;
 
     public SendRequest(String ipAddress_m, int port_m, String myPhoneNo_m) {
 
@@ -23,6 +26,7 @@ public class SendRequest {
 
         try {
             socket = new Socket(ipAddress, port);
+            outputStream = new DataOutputStream(socket.getOutputStream());
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -33,7 +37,7 @@ public class SendRequest {
 
     public boolean sendAuth() {
         Request request = new Request();
-        request.setAction("Connect");
+        request.setAction(RequestType.Auth);
         request.setData("Let me innnn!!!");
         request.setSenderId(myPhoneNo);
 
@@ -42,7 +46,7 @@ public class SendRequest {
 
     public boolean sendMessage(String receiver, String message) {
         Request request = new Request();
-        request.setAction("Message");
+        request.setAction(RequestType.Message);
         request.setData(message);
         request.setSenderId(myPhoneNo);
         request.setRecieverId(receiver);
@@ -52,17 +56,19 @@ public class SendRequest {
 
     public boolean sendNewChat(String phoneNo) {
         Request request = new Request();
-        request.setAction("New Chat");
+        request.setAction(RequestType.NewChat);
         request.setData(phoneNo + " se baat karni hai mujhe");
         request.setSenderId(myPhoneNo);
+        request.setRecieverId(phoneNo);
         return sendRequest(request);
     }
 
     private boolean sendRequest(Request request) {
+        // System.out.println(socket);
         try {
-            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            
             outputStream.writeUTF(gson.toJson(request));
-            outputStream.close();
+            // outputStream.close();
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,6 +78,7 @@ public class SendRequest {
 
     protected void finalize() {  
         try{
+            outputStream.close();
             socket.close();
         }
         catch(IOException e) {

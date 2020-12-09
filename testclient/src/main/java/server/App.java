@@ -1,4 +1,5 @@
 package server;
+import java.net.Socket;
 import java.util.Scanner;
 /**
  * Hello world!
@@ -12,7 +13,9 @@ public class App {
         String myPhoneNo = in.nextLine();
         String otherPhoneNo = in.nextLine();
         
+
         SendRequest sendRequest = new SendRequest("127.0.0.1", 5000, myPhoneNo);
+
 
         while(true){
             int choice = Integer.parseInt(in.nextLine());
@@ -33,7 +36,9 @@ public class App {
             }
             else break;
         }
-
         in.close();
+      
+        sendRequest.finalize();
+
     }
 }

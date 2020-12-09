@@ -1,16 +1,18 @@
 package server;
 
+import server.GlobalVariables.RequestType;
+
 public class Request {
-   private String action;
+   private RequestType action;
    private String senderId;
    private String recieverId;
    private String data;
 
-   public String getAction() {
+   public RequestType getAction() {
        return action;
    }
 
-   public void setAction(String action) {
+   public void setAction(RequestType action) {
        this.action = action;
    }
 
