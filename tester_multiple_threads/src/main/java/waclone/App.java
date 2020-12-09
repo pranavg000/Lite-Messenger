@@ -11,36 +11,41 @@ import java.util.concurrent.Semaphore;
  *
  */
 public class App {
-    public static void main(String[] args) throws InterruptedException, FileNotFoundException
-    {
-        PrintStream o = new PrintStream(new File("A.txt")); 
-        System.setOut(o); 
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
+        PrintStream o = new PrintStream(new File("A.txt"));
+        System.setOut(o);
 
         GlobalVariables.printer = new Semaphore(1);
         ArrayList<SampleSendingThread> threads = new ArrayList<SampleSendingThread>();
-        for(int i=0;i<100;i++){
+        for (int i = 0; i < 100; i++) {
             threads.add(new SampleSendingThread(Integer.toString(i)));
             threads.get(i).start();
         }
-        while(true){
+        while (true) {
 
-            boolean f=false;
-            for(int i=0;i<100;i++){
-                if(!threads.get(i).isAuthenticated){
+            boolean f = false;
+            for (int i = 0; i < 100; i++) {
+                if (!threads.get(i).isAuthenticated) {
 
-                    f=true;
+                    f = true;
                     break;
                 }
             }
-            if(!f){
+            if (!f) {
                 break;
             }
         }
 
         GlobalVariables.printer.acquire();
         GlobalVariables.threadsReady = true;
-        System.out.println("All threads authenticated "+GlobalVariables.threadsReady);
+        System.out.println("All threads authenticated " + GlobalVariables.threadsReady);
         GlobalVariables.printer.release();
+        for (int i = 0; i < 100; i++) {
+            threads.get(i).join();
+        }
 
+        GlobalVariables.printer.acquire();
+        System.out.println("Machayaaaaaaaaaaa!!!!!!!");
+        GlobalVariables.printer.release();
     }
 }
