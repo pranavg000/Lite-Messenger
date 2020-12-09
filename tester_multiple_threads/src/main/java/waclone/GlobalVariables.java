@@ -6,5 +6,7 @@ class GlobalVariables {
 
     public static Semaphore printer;
     public static boolean threadsReady = false;
-
+    public static enum RequestType { 
+        Auth, NewChat, Message
+    }
 }

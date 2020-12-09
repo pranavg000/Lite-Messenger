@@ -4,6 +4,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import com.google.gson.Gson;
+
+import waclone.GlobalVariables.RequestType;
+
 import java.net.Socket;
 
 class SampleSendingThread extends Thread {
@@ -65,7 +68,7 @@ class SampleSendingThread extends Thread {
         request.setSenderId(id);
         request.setRecieverId("-1");
         request.setData("CONNECTION PACKET");
-        request.setAction("Connect");
+        request.setAction(RequestType.Auth);
 
         try {
             outputStream = new DataOutputStream(socket.getOutputStream());
@@ -84,7 +87,7 @@ class SampleSendingThread extends Thread {
             request.setSenderId(id);
             request.setRecieverId(Integer.toString(receiver));
             request.setData("Source: "+id+", Receiver: "+Integer.toString(receiver));
-            request.setAction("Message");
+            request.setAction(RequestType.Message);
             
             try {
                 // DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
