@@ -10,5 +10,6 @@ public class App {
 
         ConnectionListeningThread clt = new ConnectionListeningThread();
         clt.start();
+        System.out.println("End of app.java");
     }
 }
