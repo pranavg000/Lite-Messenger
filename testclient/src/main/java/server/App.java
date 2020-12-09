@@ -11,30 +11,29 @@ public class App {
         Scanner in = new Scanner(System.in);
         String myPhoneNo = in.nextLine();
         String otherPhoneNo = in.nextLine();
-        in.close();
-        SendRequest sendRequest = new SendRequest("127.0.0.1", 5000, myPhoneNo);
-        if(!sendRequest.sendAuth()) return;
-        System.out.println("Auth sent!!");
         
-        try {
-            Thread.sleep(10000);
-        } 
-        catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
+        SendRequest sendRequest = new SendRequest("127.0.0.1", 5000, myPhoneNo);
+
+        while(true){
+            int choice = Integer.parseInt(in.nextLine());
+            if(choice == 1){
+                sendRequest.sendAuth();
+                System.out.println("Auth sent!!");
+            }
+            else if(choice == 2){
+                sendRequest.sendNewChat(otherPhoneNo);
+                System.out.println("New Chat sent!!");
+            }
+            else if(choice == 3){
+                sendRequest.sendMessage(otherPhoneNo, "OS Lab ka Assignment karliya??");
+                System.out.println("Message sent!!");
+            }
+            else if(choice == 4){
+                sendRequest = new SendRequest("127.0.0.1", 5000, myPhoneNo);
+            }
+            else break;
         }
 
-        if(!sendRequest.sendNewChat(otherPhoneNo)) return;
-        System.out.println("New Chat sent!!");
-
-        try {
-            Thread.sleep(1000);
-        } 
-        catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-
-        if(!sendRequest.sendMessage(otherPhoneNo, "OS Lab ka Assignment karliya??")) return;
-        System.out.println("Message sent!!");
-
+        in.close();
     }
 }
