@@ -9,24 +9,33 @@ public class ClientSendingThread extends Thread {
     private Socket socket;
     private String clientId;
 
-    public ClientSendingThread setClient(Socket socket, String clientId) {
+    public ClientSendingThread(Socket socket, String clientId) {
         this.socket = socket;
         this.clientId = clientId;
-        return this;
     }
 
     public void run() {
-        while (true) {
-            Request request = GlobalVariables.clientSendBox.get(clientId).poll();
-            if (request != null) {
-                try {
-                    DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-                    outputStream.writeUTF(request.getData());
+        DataOutputStream outputStream;
+        try {
+            outputStream = new DataOutputStream(socket.getOutputStream());
+            while (true) {
+                if(!GlobalVariables.clientSendBox.containsKey(clientId)){
                     outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("Closing");
+                    return;
+                }
+                Request request = GlobalVariables.clientSendBox.get(clientId).poll();
+                if (request != null) {
+                    try {
+                        outputStream.writeUTF(request.getData());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+        
     }
 }

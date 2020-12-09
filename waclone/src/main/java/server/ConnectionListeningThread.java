@@ -24,7 +24,7 @@ public class ConnectionListeningThread extends Thread {
             try {
                 // When request at listening socket, create socket with client.
                 socket = listeningSocket.accept();
-                ClientRecievingThread crt = new ClientRecievingThread().setSocket(socket);
+                ClientRecievingThread crt = new ClientRecievingThread(socket);
                 crt.start();
             } catch (IOException e) {
                 e.printStackTrace();

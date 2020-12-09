@@ -55,14 +55,16 @@ public class SendRequest {
         request.setAction("New Chat");
         request.setData(phoneNo + " se baat karni hai mujhe");
         request.setSenderId(myPhoneNo);
+        request.setRecieverId(phoneNo);
         return sendRequest(request);
     }
 
     private boolean sendRequest(Request request) {
+        System.out.println(socket);
         try {
             DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
             outputStream.writeUTF(gson.toJson(request));
-            outputStream.close();
+            // outputStream.close();
             return true;
         } catch (IOException e) {
             e.printStackTrace();
