@@ -18,7 +18,11 @@ public class SendMessageTask implements Runnable {
     public void run() {
         try {
             Gson gson = new Gson();
-            outputStream.writeUTF(gson.toJson(request));
+            if(GlobalVariables.onlineClients.containsKey(request.getReceiverId())){
+                outputStream.writeUTF(gson.toJson(request));
+            } else {
+                GlobalVariables.messageCollection.insert(request.toDBObject());
+            }
 
         } catch (IOException e1) {
             //Insert into database if unable to send message.
