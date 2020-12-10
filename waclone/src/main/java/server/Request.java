@@ -6,8 +6,21 @@ import com.mongodb.*;
 public class Request {
    private RequestType action;
    private String senderId;
-   private String recieverId;
+   private String receiverId;
    private String data;
+
+   Request(DBObject obj){
+        if(((String)obj.get("action")).equals("Auth")){
+            this.action = RequestType.Auth;
+        } else if(((String)obj.get("action")).equals("NewChat")){
+            this.action = RequestType.NewChat;
+        } else if(((String)obj.get("action")).equals("Message")){
+            this.action = RequestType.Message;
+        }
+        this.senderId = (String)obj.get("senderId");
+        this.receiverId = (String)obj.get("receiverId");
+        this.data = (String)obj.get("data");
+   }
 
    public RequestType getAction() {
        return action;
@@ -25,12 +38,12 @@ public class Request {
        this.senderId = senderId;
    }
 
-   public String getRecieverId() {
-       return recieverId;
+   public String getReceiverId() {
+       return receiverId;
    }
 
-   public void setRecieverId(String recieverId) {
-       this.recieverId = recieverId;
+   public void setReceiverId(String receiverId) {
+       this.receiverId = receiverId;
    }
 
    public String getData() {
@@ -43,14 +56,23 @@ public class Request {
 
    public DBObject toDBObject(){
 
-        DBObject obj = new BasicDBObject("_id", recieverId).append("senderId", senderId).append("data", data).append("action",action);
+        String actionString="";
+        if(action == RequestType.Auth){
+            actionString="Auth";
+        } else if(action == RequestType.NewChat){
+            actionString="NewChat";
+        } else if(action == RequestType.Message){
+            actionString="Message";
+        }
+
+        DBObject obj = new BasicDBObject("_id", receiverId).append("senderId", senderId).append("data", data).append("action",actionString);
         return obj;
 
    }
 
    @Override
    public String toString() {
-       return "Request [action=" + action + ", data=" + data + ", recieverId=" + recieverId + ", senderId=" + senderId
+       return "Request [action=" + action + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
                + "]";
    }
    
