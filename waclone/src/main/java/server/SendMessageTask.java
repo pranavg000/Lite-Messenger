@@ -21,6 +21,8 @@ public class SendMessageTask implements Runnable {
             outputStream.writeUTF(gson.toJson(request));
 
         } catch (IOException e1) {
+            //Insert into database if unable to send message.
+            GlobalVariables.messageCollection.insert(request.toDBObject());
             e1.printStackTrace();
         }
 

@@ -4,7 +4,18 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 
+import com.mongodb.*;
+
 public class GlobalVariables {
+
+    //Database
+    public static MongoClientURI uri;
+    public static MongoClient mongoClient;
+    public static DB database;
+    public static DBCollection messageCollection;
+    public static DBCollection userCollection;
+
+    //Threads etc.
     public final static int Nthreads = 10;
     public static ExecutorService sendMessage; 
     public static Map<String, ClientInfo> onlineClients;

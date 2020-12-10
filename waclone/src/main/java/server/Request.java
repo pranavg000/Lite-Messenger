@@ -1,6 +1,7 @@
 package server;
 
 import server.GlobalVariables.RequestType;
+import com.mongodb.*;
 
 public class Request {
    private RequestType action;
@@ -38,6 +39,13 @@ public class Request {
 
    public void setData(String data) {
        this.data = data;
+   }
+
+   public DBObject toDBObject(){
+
+        DBObject obj = new BasicDBObject("_id", recieverId).append("senderId", senderId).append("data", data).append("action",action);
+        return obj;
+
    }
 
    @Override
