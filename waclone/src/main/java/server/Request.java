@@ -3,8 +3,7 @@ package server;
 import server.GlobalVariables.RequestType;
 
 import java.text.SimpleDateFormat;
-
-import com.mongodb.*;
+import org.bson.Document;
 
 public class Request {
    private RequestType action;
@@ -12,7 +11,7 @@ public class Request {
    private String receiverId;
    private String data;
 
-   Request(DBObject obj){
+   Request(Document obj){
         if(((String)obj.get("action")).equals("Auth")){
             this.action = RequestType.Auth;
         } else if(((String)obj.get("action")).equals("NewChat")){
@@ -57,7 +56,7 @@ public class Request {
        this.data = data;
    }
 
-   public DBObject toDBObject(){
+   public Document toDocument(){
 
         String actionString="";
         if(action == RequestType.Auth){
@@ -69,7 +68,7 @@ public class Request {
         }
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
 
-        DBObject obj = new BasicDBObject("_id", receiverId+"-"+timeStamp).append("senderId", senderId).append("data", data).append("action",actionString);
+        Document obj = new Document("_id", receiverId+"-"+timeStamp).append("senderId", senderId).append("data", data).append("action",actionString);
         return obj;
 
    }

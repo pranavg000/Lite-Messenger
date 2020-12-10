@@ -2,9 +2,11 @@ package server;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
-import com.mongodb.*;
 
-import java.net.UnknownHostException;
+import com.mongodb.client.MongoClients;
+
+import org.bson.Document;
+
 import java.util.HashMap;
 
 public class App {
@@ -12,16 +14,12 @@ public class App {
         System.out.println("Starting Server");
 
         // Connecting to Database and creating an instance.
-        GlobalVariables.uri = new MongoClientURI("mongodb://wacloneAPH:waclonemen3001@cluster0.etq8i.mongodb.net/wacloneDB?retryWrites=true&w=majority");
-        try {
-            GlobalVariables.mongoClient = new MongoClient(GlobalVariables.uri);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            return;
-        }
+
+        GlobalVariables.mongoClient = MongoClients.create("mongodb+srv://wacloneAPH:waclonemen3001@cluster0.etq8i.mongodb.net/test?retryWrites=true&w=majority");
+
         System.out.println("Connected to database.");
 
-        GlobalVariables.database = GlobalVariables.mongoClient.getDB("wacloneDB");
+        GlobalVariables.database = GlobalVariables.mongoClient.getDatabase("wacloneDB");
         GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
         GlobalVariables.messageCollection = GlobalVariables.database.getCollection("messages");
 

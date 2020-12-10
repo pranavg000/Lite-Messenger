@@ -21,12 +21,14 @@ public class SendMessageTask implements Runnable {
             if(GlobalVariables.onlineClients.containsKey(request.getReceiverId())){
                 outputStream.writeUTF(gson.toJson(request));
             } else {
-                GlobalVariables.messageCollection.insert(request.toDBObject());
+                GlobalVariables.messageCollection.insertOne(request.toDocument());
+                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline, saving to DB");
             }
 
         } catch (IOException e1) {
             //Insert into database if unable to send message.
-            GlobalVariables.messageCollection.insert(request.toDBObject());
+            GlobalVariables.messageCollection.insertOne(request.toDocument());
+            GlobalVariables.onlineClientsRemoveKey(request.getReceiverId());
             e1.printStackTrace();
         }
 

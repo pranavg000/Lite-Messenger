@@ -4,11 +4,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
+import static com.mongodb.client.model.Filters.*;
+
+import org.bson.Document;
 
 import server.GlobalVariables.RequestType;
 
@@ -45,8 +47,9 @@ public class ClientRecievingThread extends Thread {
                     GlobalVariables.onlineClientsAddKey(clientId, new ClientInfo(clientId, inputStream, outputStream));
 
                     //Deliver stored messages to user
-                    DBCursor messages = GlobalVariables.messageCollection.find(new BasicDBObject("receiverId",clientId));
-                    for(DBObject message: messages){
+                    List<Document> messages = GlobalVariables.messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
+
+                    for(Document message: messages){
                         Request r = new Request(message);
                         GlobalVariables.sendMessage.execute(new SendMessageTask(outputStream, r));
                     }
@@ -63,12 +66,9 @@ public class ClientRecievingThread extends Thread {
             // }
         } else if (reqType == RequestType.Message) {
             System.out.println("Send message");
-            if (GlobalVariables.onlineClients.containsKey(receiverId)) {
-                ClientInfo receiverInfo = GlobalVariables.onlineClients.get(receiverId);
-                GlobalVariables.sendMessage.execute(new SendMessageTask(receiverInfo.getOutputStream(), request));
-            } else {
-                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline");
-            }
+            ClientInfo receiverInfo = GlobalVariables.onlineClients.get(receiverId);
+            GlobalVariables.sendMessage.execute(new SendMessageTask(receiverInfo.getOutputStream(), request));
+
         } else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
             // Unkown command return error response

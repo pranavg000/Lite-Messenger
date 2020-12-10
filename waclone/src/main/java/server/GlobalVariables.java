@@ -4,16 +4,18 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 
-import com.mongodb.*;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
 
 public class GlobalVariables {
 
     //Database
-    public static MongoClientURI uri;
     public static MongoClient mongoClient;
-    public static DB database;
-    public static DBCollection messageCollection;
-    public static DBCollection userCollection;
+    public static MongoDatabase database;
+    public static MongoCollection<Document> messageCollection;
+    public static MongoCollection<Document> userCollection;
 
     //Threads etc.
     public final static int Nthreads = 10;
@@ -22,7 +24,7 @@ public class GlobalVariables {
     public static BlockingQueue<Request> outbox;
 
     public static enum RequestType {
-        Auth, NewChat, Message
+        Auth, NewChat, Message, SignUp
     }
 
     public static synchronized void onlineClientsAddKey(String key, ClientInfo clientInfo) {
