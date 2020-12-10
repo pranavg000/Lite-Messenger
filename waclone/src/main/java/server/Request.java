@@ -1,6 +1,9 @@
 package server;
 
 import server.GlobalVariables.RequestType;
+
+import java.text.SimpleDateFormat;
+
 import com.mongodb.*;
 
 public class Request {
@@ -64,8 +67,9 @@ public class Request {
         } else if(action == RequestType.Message){
             actionString="Message";
         }
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
 
-        DBObject obj = new BasicDBObject("_id", receiverId).append("senderId", senderId).append("data", data).append("action",actionString);
+        DBObject obj = new BasicDBObject("_id", receiverId+"-"+timeStamp).append("senderId", senderId).append("data", data).append("action",actionString);
         return obj;
 
    }

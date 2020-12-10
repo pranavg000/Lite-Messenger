@@ -6,6 +6,9 @@ import java.io.EOFException;
 import java.net.Socket;
 
 import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 import server.GlobalVariables.RequestType;
 
@@ -30,7 +33,7 @@ public class ClientRecievingThread extends Thread {
 
     private Boolean processRequest(Request request) {
         RequestType reqType = request.getAction();
-        String recieverId = request.getRecieverId();
+        String receiverId = request.getReceiverId();
         if (clientId.isEmpty())
             clientId = request.getSenderId();
         if (!GlobalVariables.onlineClients.containsKey(clientId)) {
@@ -40,6 +43,14 @@ public class ClientRecievingThread extends Thread {
                 try {
                     outputStream = new DataOutputStream(socket.getOutputStream());
                     GlobalVariables.onlineClientsAddKey(clientId, new ClientInfo(clientId, inputStream, outputStream));
+
+                    //Deliver stored messages to user
+                    DBCursor messages = GlobalVariables.messageCollection.find(new BasicDBObject("receiverId",clientId));
+                    for(DBObject message: messages){
+                        Request r = new Request(message);
+                        GlobalVariables.sendMessage.execute(new SendMessageTask(outputStream, r));
+                    }
+                    
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -47,16 +58,16 @@ public class ClientRecievingThread extends Thread {
         } else if (reqType == RequestType.NewChat) {
             System.out.println("New Chat");
             // Check if the receiver is present in Map
-            // if (!GlobalVariables.clientSendBox.containsKey(recieverId)) {
+            // if (!GlobalVariables.clientSendBox.containsKey(receiverId)) {
             // // Return error response
             // }
         } else if (reqType == RequestType.Message) {
             System.out.println("Send message");
-            if (GlobalVariables.onlineClients.containsKey(recieverId)) {
-                ClientInfo recieverInfo = GlobalVariables.onlineClients.get(recieverId);
-                GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getOutputStream(), request));
+            if (GlobalVariables.onlineClients.containsKey(receiverId)) {
+                ClientInfo receiverInfo = GlobalVariables.onlineClients.get(receiverId);
+                GlobalVariables.sendMessage.execute(new SendMessageTask(receiverInfo.getOutputStream(), request));
             } else {
-                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
+                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline");
             }
         } else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
