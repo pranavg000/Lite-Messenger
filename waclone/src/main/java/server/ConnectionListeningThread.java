@@ -14,6 +14,8 @@ public class ConnectionListeningThread extends Thread {
         try {
             // Create Listening Socket listening at port 5000
             listeningSocket = new ServerSocket(5000);
+            System.out.println(listeningSocket);
+            System.out.println(listeningSocket.getChannel());
         } catch (IOException e) {
             e.printStackTrace();
             return;

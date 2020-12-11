@@ -40,7 +40,9 @@ class SampleReceivingThread extends Thread {
 
         while (true) {
             try {
-                Request request = gson.fromJson(in.readUTF(), Request.class);
+                String input = in.readUTF();
+                System.out.println(input);
+                Request request = gson.fromJson(input, Request.class);
                 GlobalVariables.printer.acquire();
                 System.out.println("Received: "+request.getData());
                 GlobalVariables.printer.release();

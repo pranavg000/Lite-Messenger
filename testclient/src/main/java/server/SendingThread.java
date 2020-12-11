@@ -24,12 +24,10 @@ public class SendingThread extends Thread {
         // catch(InterruptedException ex) {
         //     Thread.currentThread().interrupt();
         // }
-        int a[] = {2,3,3,2,3,3,4};
         int i = 0;
         Scanner in = new Scanner(System.in);
         while(true){
-            int choice = a[i];
-            choice = in.nextInt();
+            int choice = in.nextInt();
             i++;
             if(choice == 1){
                 System.out.println("Auth sent!!");

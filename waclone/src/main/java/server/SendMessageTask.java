@@ -16,13 +16,15 @@ public class SendMessageTask implements Runnable {
     }
 
     public void run() {
-        try {
-            Gson gson = new Gson();
-            outputStream.writeUTF(gson.toJson(request));
-
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        Gson gson = new Gson();
+        String output = gson.toJson(request);
+        System.out.println(output);
+        synchronized (outputStream) {
+            try {
+                outputStream.writeUTF(output);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
-
     }
 }
