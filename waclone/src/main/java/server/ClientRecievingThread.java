@@ -48,6 +48,9 @@ public class ClientRecievingThread extends Thread {
 
                     //Deliver stored messages to user
                     List<Document> messages = GlobalVariables.messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
+                    
+                    //Delete these messages from database
+                    GlobalVariables.messageCollection.deleteMany(eq("receiverId", clientId));
 
                     for(Document message: messages){
                         Request r = new Request(message);

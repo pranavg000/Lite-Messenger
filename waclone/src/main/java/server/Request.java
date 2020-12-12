@@ -58,14 +58,7 @@ public class Request {
 
    public Document toDocument(){
 
-        String actionString="";
-        if(action == RequestType.Auth){
-            actionString="Auth";
-        } else if(action == RequestType.NewChat){
-            actionString="NewChat";
-        } else if(action == RequestType.Message){
-            actionString="Message";
-        }
+        String actionString=GlobalVariables.getActionString(action);
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
 
         Document obj = new Document("_id", receiverId+"-"+timeStamp).append("senderId", senderId).append("data", data).append("action",actionString);
@@ -75,7 +68,7 @@ public class Request {
 
    @Override
    public String toString() {
-       return "Request [action=" + action + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
+       return "Request [action=" + GlobalVariables.getActionString(action) + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
                + "]";
    }
    
