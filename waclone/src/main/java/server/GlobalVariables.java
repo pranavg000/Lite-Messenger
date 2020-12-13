@@ -3,6 +3,7 @@ package server;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Semaphore;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
@@ -15,6 +16,7 @@ public class GlobalVariables {
     public static MongoCollection<Document> messageCollection;
     public static MongoCollection<Document> userCollection;
     public static String connectionString = "mongodb+srv://wacloneAPH:waclonemen3001@waclonecluster.etq8i.mongodb.net/test?retryWrites=true&w=majority";
+    public static Semaphore databaseLock;
 
     //Threads etc.
     public final static int Nthreads = 10;

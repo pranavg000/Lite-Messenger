@@ -1,6 +1,6 @@
-package server;
+package waclone_db_message_tester;
 
-import server.GlobalVariables.RequestType;
+import waclone_db_message_tester.GlobalVariables.RequestType;
 
 import org.bson.Document;
 
@@ -23,9 +23,16 @@ public class Request {
         this.data = (String)obj.get("data");
    }
 
-   public RequestType getAction() {
+    public Request(RequestType a, String sendId, String recId, String d) {
+        action=a;
+        senderId=sendId;
+        receiverId=recId;
+        data=d;
+    }
+
+    public RequestType getAction() {
        return action;
-   }
+    }
 
    public void setAction(RequestType action) {
        this.action = action;

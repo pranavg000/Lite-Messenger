@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+
 import static com.mongodb.client.model.Filters.*;
 
 import org.bson.Document;
@@ -33,7 +36,7 @@ public class ClientRecievingThread extends Thread {
         return false;
     }
 
-    private Boolean processRequest(Request request) {
+    private Boolean processRequest(Request request) throws InterruptedException {
         RequestType reqType = request.getAction();
         String receiverId = request.getReceiverId();
         if (clientId.isEmpty())
@@ -46,15 +49,26 @@ public class ClientRecievingThread extends Thread {
                     outputStream = new DataOutputStream(socket.getOutputStream());
                     GlobalVariables.onlineClientsAddKey(clientId, new ClientInfo(clientId, inputStream, outputStream));
 
-                    //Deliver stored messages to user
-                    List<Document> messages = GlobalVariables.messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
+                    System.out.println("aye");
                     
-                    //Delete these messages from database
-                    GlobalVariables.messageCollection.deleteMany(eq("receiverId", clientId));
-
-                    for(Document message: messages){
-                        Request r = new Request(message);
-                        GlobalVariables.sendMessage.execute(new SendMessageTask(outputStream, r));
+                    GlobalVariables.databaseLock.acquire();
+                    try(MongoClient mongoClient = MongoClients.create(GlobalVariables.connectionString)){
+                        System.out.println("Connected to database.");
+            
+                        GlobalVariables.database = mongoClient.getDatabase("wacloneDB");
+                        GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
+                        GlobalVariables.messageCollection = GlobalVariables.database.getCollection("messages");
+                        List<Document> messages = GlobalVariables.messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
+                        GlobalVariables.messageCollection.deleteMany(eq("receiverId", clientId));
+                        
+                        GlobalVariables.databaseLock.release();
+                        //Deliver stored messages to user
+                        System.out.println(messages);
+                        //Delete these messages from database
+                        for(Document message: messages){
+                            Request r = new Request(message);
+                            GlobalVariables.sendMessage.execute(new SendMessageTask(outputStream, r));
+                        }
                     }
                     
                 } catch (IOException e) {
@@ -69,8 +83,23 @@ public class ClientRecievingThread extends Thread {
             // }
         } else if (reqType == RequestType.Message) {
             System.out.println("Send message");
-            ClientInfo receiverInfo = GlobalVariables.onlineClients.get(receiverId);
-            GlobalVariables.sendMessage.execute(new SendMessageTask(receiverInfo.getOutputStream(), request));
+            if(GlobalVariables.onlineClients.containsKey(receiverId)){
+                ClientInfo receiverInfo = GlobalVariables.onlineClients.get(receiverId);
+                GlobalVariables.sendMessage.execute(new SendMessageTask(receiverInfo.getOutputStream(), request));
+            } else {
+                GlobalVariables.databaseLock.acquire();
+                try(MongoClient mongoClient = MongoClients.create(GlobalVariables.connectionString)){
+                    System.out.println("Connected to database.");
+        
+                    GlobalVariables.database = mongoClient.getDatabase("wacloneDB");
+                    GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
+                    GlobalVariables.messageCollection = GlobalVariables.database.getCollection("messages");
+                    GlobalVariables.messageCollection.insertOne(request.toDocument());
+                    
+                }
+                GlobalVariables.databaseLock.release();
+
+            }
 
         } else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
@@ -98,8 +127,11 @@ public class ClientRecievingThread extends Thread {
 
             inputStream.close();
         } catch (EOFException e) {
-            System.out.println("Closing socket from server");
+
+            System.out.println("Closing socket from server haha");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 

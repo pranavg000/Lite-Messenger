@@ -4,6 +4,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import com.google.gson.Gson;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 
 public class SendMessageTask implements Runnable {
 
@@ -18,18 +20,48 @@ public class SendMessageTask implements Runnable {
     public void run() {
         try {
             Gson gson = new Gson();
-            if(GlobalVariables.onlineClients.containsKey(request.getReceiverId())){
+            if (GlobalVariables.onlineClients.containsKey(request.getReceiverId())) {
                 outputStream.writeUTF(gson.toJson(request));
             } else {
-                GlobalVariables.messageCollection.insertOne(request.toDocument());
+
                 System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline, saving to DB");
+
+                GlobalVariables.databaseLock.acquire();
+                try (MongoClient mongoClient = MongoClients.create(GlobalVariables.connectionString)) {
+                    System.out.println("Connected to database.");
+
+                    GlobalVariables.database = mongoClient.getDatabase("wacloneDB");
+                    GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
+                    GlobalVariables.messageCollection = GlobalVariables.database.getCollection("messages");
+                    GlobalVariables.messageCollection.insertOne(request.toDocument());
+
+                }
+                GlobalVariables.databaseLock.release();
+
             }
 
         } catch (IOException e1) {
-            //Insert into database if unable to send message.
-            GlobalVariables.messageCollection.insertOne(request.toDocument());
-            GlobalVariables.onlineClientsRemoveKey(request.getReceiverId());
+            // Insert into database if unable to send message.
+            try {
+                GlobalVariables.databaseLock.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try(MongoClient mongoClient = MongoClients.create(GlobalVariables.connectionString)){
+                System.out.println("Connected to database.");
+    
+                GlobalVariables.database = mongoClient.getDatabase("wacloneDB");
+                GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
+                GlobalVariables.messageCollection = GlobalVariables.database.getCollection("messages");
+                GlobalVariables.messageCollection.insertOne(request.toDocument());
+                GlobalVariables.onlineClientsRemoveKey(request.getReceiverId());
+
+            }
+            GlobalVariables.databaseLock.release();
+
             e1.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
     }

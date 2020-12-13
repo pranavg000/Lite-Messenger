@@ -9,4 +9,5 @@ class GlobalVariables {
     public static enum RequestType { 
         Auth, NewChat, Message
     }
+    
 }
