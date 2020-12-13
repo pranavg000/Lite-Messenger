@@ -4,8 +4,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import com.google.gson.Gson;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 
 public class SendMessageTask implements Runnable {
 
@@ -26,16 +24,8 @@ public class SendMessageTask implements Runnable {
 
                 System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline, saving to DB");
 
-                GlobalVariables.databaseLock.acquire();
-                try (MongoClient mongoClient = MongoClients.create(GlobalVariables.connectionString)) {
-                    System.out.println("Connected to database.");
-
-                    GlobalVariables.database = mongoClient.getDatabase("wacloneDB");
-                    GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
-                    GlobalVariables.messageCollection = GlobalVariables.database.getCollection("messages");
-                    GlobalVariables.messageCollection.insertOne(request.toDocument());
-
-                }
+                GlobalVariables.databaseLock.acquire();   
+                GlobalVariables.messageCollection.insertOne(request.toDocument());
                 GlobalVariables.databaseLock.release();
 
             }
@@ -47,16 +37,10 @@ public class SendMessageTask implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            try(MongoClient mongoClient = MongoClients.create(GlobalVariables.connectionString)){
-                System.out.println("Connected to database.");
-    
-                GlobalVariables.database = mongoClient.getDatabase("wacloneDB");
-                GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
-                GlobalVariables.messageCollection = GlobalVariables.database.getCollection("messages");
-                GlobalVariables.messageCollection.insertOne(request.toDocument());
-                GlobalVariables.onlineClientsRemoveKey(request.getReceiverId());
 
-            }
+            GlobalVariables.messageCollection.insertOne(request.toDocument());
+            GlobalVariables.onlineClientsRemoveKey(request.getReceiverId());
+
             GlobalVariables.databaseLock.release();
 
             e1.printStackTrace();

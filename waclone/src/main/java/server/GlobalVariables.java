@@ -6,12 +6,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
 
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
 public class GlobalVariables {
 
     //Database
+    public static MongoClient mongoClient;
     public static MongoDatabase database;
     public static MongoCollection<Document> messageCollection;
     public static MongoCollection<Document> userCollection;
