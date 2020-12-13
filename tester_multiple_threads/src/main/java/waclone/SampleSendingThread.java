@@ -25,43 +25,19 @@ class SampleSendingThread extends Thread {
         try {
             // When request at listening socket, create socket with client.
             socket = new Socket("127.0.0.1", 5000);
-            isAuthenticated = true;
 
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
-        while (true) {
-            try {
-                GlobalVariables.printer.acquire();
-                if(GlobalVariables.threadsReady){
-                    GlobalVariables.printer.release();
-                    break;
-                }
-                GlobalVariables.printer.release();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            // try {
-            //     GlobalVariables.printer.acquire();
-            //     System.out.println("Threads not ready");
-            //     GlobalVariables.printer.release();
-            // } catch (InterruptedException e) {
-            //     e.printStackTrace();
-            // }
-
-            continue;
-        }
         // try {
-        //     GlobalVariables.printer.acquire();
-        //     System.out.println("Threads ready");
-        //     GlobalVariables.printer.release();
+        // GlobalVariables.printer.acquire();
+        // System.out.println("Threads ready");
+        // GlobalVariables.printer.release();
         // } catch (InterruptedException e1) {
-        //     e1.printStackTrace();
+        // e1.printStackTrace();
         // }
-
 
         Gson gson = new Gson();
         Request request = new Request();
@@ -81,19 +57,56 @@ class SampleSendingThread extends Thread {
             e.printStackTrace();
             return;
         }
-        
-        for(int i=0;i<10;i++){
-            int receiver = ThreadLocalRandom.current().nextInt(0,100);
+        isAuthenticated = true;
+        try {
+            GlobalVariables.printer.acquire();
+            GlobalVariables.threadsReady++;
+            GlobalVariables.printer.release();
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+
+        while (true) {
+            try {
+                GlobalVariables.printer.acquire();
+                if (GlobalVariables.threadsReady == GlobalVariables.Nclients) {
+                    GlobalVariables.printer.release();
+                    break;
+                }
+                GlobalVariables.printer.release();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // try {
+            // GlobalVariables.printer.acquire();
+            // System.out.println("Threads not ready");
+            // GlobalVariables.printer.release();
+            // } catch (InterruptedException e) {
+            // e.printStackTrace();
+            // }
+
+            continue;
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        for (int i = 0; i < 10; i++) {
+            int receiver = ThreadLocalRandom.current().nextInt(0, GlobalVariables.Nclients);
             request.setSenderId(id);
             request.setRecieverId(Integer.toString(receiver));
-            request.setData("Source: "+id+", Receiver: "+Integer.toString(receiver));
+            request.setData("Source: " + id + ", Receiver: " + Integer.toString(receiver));
             request.setAction(RequestType.Message);
-            
+
             try {
-                // DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+                // DataOutputStream outputStream = new
+                // DataOutputStream(socket.getOutputStream());
                 outputStream.writeUTF(gson.toJson(request));
                 GlobalVariables.printer.acquire();
-                System.out.println("Sent: "+request.getData());
+                System.out.println("Sent: " + request.getData());
                 GlobalVariables.printer.release();
                 // outputStream.close();
             } catch (IOException e) {
