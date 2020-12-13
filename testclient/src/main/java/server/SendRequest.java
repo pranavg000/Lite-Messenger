@@ -49,7 +49,7 @@ public class SendRequest {
         request.setAction(RequestType.Message);
         request.setData(message);
         request.setSenderId(myPhoneNo);
-        request.setRecieverId(receiver);
+        request.setReceiverId(receiver);
 
         return sendRequest(request);
     }
@@ -59,7 +59,7 @@ public class SendRequest {
         request.setAction(RequestType.NewChat);
         request.setData(phoneNo + " se baat karni hai mujhe");
         request.setSenderId(myPhoneNo);
-        request.setRecieverId(phoneNo);
+        request.setReceiverId(phoneNo);
         return sendRequest(request);
     }
 

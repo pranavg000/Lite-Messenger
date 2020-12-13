@@ -5,9 +5,12 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+
+import org.bson.Document;
 
 import server.GlobalVariables.RequestType;
 
@@ -24,29 +27,43 @@ public class ReceiveMessageTask implements Runnable {
         return false;
     }
 
+    private void sendMessageTo(String recieverId, Request request) {
+        if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
+            ClientInfoNew recieverInfo = GlobalVariables.onlineClientsNew.get(recieverId);
+            GlobalVariables.sendMessage.execute(new SendMessageTaskNew(recieverInfo.getChannel(), request));
+        } else {
+            System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
+            GlobalVariables.databaseInsertData(request);
+        }
+    }
+
     private Boolean processRequest(Request request) {
         RequestType reqType = request.getAction();
-        String recieverId = request.getRecieverId();
+        String recieverId = request.getReceiverId();
         System.out.println(reqType);
         if (clientId.isEmpty())
             clientId = request.getSenderId();
         if (!GlobalVariables.onlineClientsNew.containsKey(clientId)) {
+            System.out.println(reqType + "HI");
             if (isAuth(request)) {
-                // GlobalVariables.onlineClientsAddKey(clientId, new ClientInfo(clientId,
-                // inputStream, outputStream));
                 GlobalVariables.onlineClientsNew.put(clientId, new ClientInfoNew(clientId, channel));
                 GlobalVariables.channelToClientId.put(channel, clientId);
+
+                List<Document> messageList = GlobalVariables.fetchUnsendMessages(clientId);
+                // Deliver stored messages to user
+                System.out.println(messageList);
+                // Delete these messages from database
+                for (Document message : messageList) {
+                    Request r = new Request(message);
+                    sendMessageTo(r.getReceiverId(), r);
+                }
+                System.out.println("Auth done for" + clientId);
             }
         } else if (reqType == RequestType.NewChat) {
             System.out.println("New Chat");
         } else if (reqType == RequestType.Message) {
             System.out.println("Send message");
-            if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
-                ClientInfoNew recieverInfo = GlobalVariables.onlineClientsNew.get(recieverId);
-                GlobalVariables.sendMessage.execute(new SendMessageTaskNew(recieverInfo.getChannel(), request));
-            } else {
-                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
-            }
+            sendMessageTo(recieverId, request);
         } else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
             // Unkown command return error response
@@ -55,7 +72,7 @@ public class ReceiveMessageTask implements Runnable {
         return true;
     }
 
-    private void closeConnection(){
+    private void closeConnection() {
         try {
             System.out.println("Closing Channel");
             if (GlobalVariables.channelToClientId.containsKey(channel)) {

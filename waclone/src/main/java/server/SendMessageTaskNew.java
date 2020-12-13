@@ -28,18 +28,7 @@ public class SendMessageTaskNew implements Runnable {
                 utflen += (c >= 0x800) ? 2 : 1;
         }
 
-        // if (utflen > 65535 || /* overflow */ utflen < strlen)
-        // throw new UTFDataFormatException(tooLongMsg(str, utflen));
-
         final byte[] bytearr = new byte[utflen + 2];
-        // if (out instanceof DataOutputStream) {
-        // DataOutputStream dos = (DataOutputStream)out;
-        // if (dos.bytearr == null || (dos.bytearr.length < (utflen + 2)))
-        // dos.bytearr = new byte[(utflen*2) + 2];
-        // bytearr = dos.bytearr;
-        // } else {
-        // bytearr = new byte[utflen + 2];
-        // }
 
         int count = 0;
         bytearr[count++] = (byte) ((utflen >>> 8) & 0xFF);
@@ -72,10 +61,12 @@ public class SendMessageTaskNew implements Runnable {
 
     }
 
-    private void closeConnection() {
+    private void storeAndCloseConnection() {
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline, saving to DB");
+        GlobalVariables.databaseInsertData(request);
         try {
-            System.out.println("Closing Channel");
             if (GlobalVariables.channelToClientId.containsKey(channel)) {
+                System.out.println("Closing Channel");
                 String clientId = GlobalVariables.channelToClientId.get(channel);
                 GlobalVariables.channelToClientId.remove(channel);
                 GlobalVariables.onlineClientsNew.remove(clientId);
@@ -94,22 +85,26 @@ public class SendMessageTaskNew implements Runnable {
         System.out.println("Sending" + buffer.array());
         // synchronized (channel) {
         System.out.println(len);
-        while (len > 0) {
-            int clen;
-            try {
-                clen = channel.write(buffer);
-                len -= clen;
-            } catch (ClosedChannelException e) {
-                System.out.println("channel closed");
-                e.printStackTrace();
-                return;
-            } catch (IOException e) {
-                e.printStackTrace();
-                closeConnection();
-                return;
+        if (GlobalVariables.onlineClientsNew.containsKey(request.getReceiverId())) {
+            while (len > 0) {
+                int clen;
+                try {
+                    clen = channel.write(buffer);
+                    len -= clen;
+                } catch (ClosedChannelException e) {
+                    System.out.println("channel closed");
+                    e.printStackTrace();
+                    storeAndCloseConnection();
+                    return;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    storeAndCloseConnection();
+                    return;
+                }
             }
+        } else {
+            storeAndCloseConnection();
         }
-        // }
         return;
     }
 }
