@@ -72,6 +72,21 @@ public class SendMessageTaskNew implements Runnable {
 
     }
 
+    private void closeConnection() {
+        try {
+            System.out.println("Closing Channel");
+            if (GlobalVariables.channelToClientId.containsKey(channel)) {
+                String clientId = GlobalVariables.channelToClientId.get(channel);
+                GlobalVariables.channelToClientId.remove(channel);
+                GlobalVariables.onlineClientsNew.remove(clientId);
+            }
+            channel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return;
+    }
+
     public void run() {
         Gson gson = new Gson();
         int len = convertUTF(gson.toJson(request));
@@ -90,6 +105,7 @@ public class SendMessageTaskNew implements Runnable {
                 return;
             } catch (IOException e) {
                 e.printStackTrace();
+                closeConnection();
                 return;
             }
         }

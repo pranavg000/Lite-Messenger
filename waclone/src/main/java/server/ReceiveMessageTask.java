@@ -55,6 +55,20 @@ public class ReceiveMessageTask implements Runnable {
         return true;
     }
 
+    private void closeConnection(){
+        try {
+            System.out.println("Closing Channel");
+            if (GlobalVariables.channelToClientId.containsKey(channel)) {
+                clientId = GlobalVariables.channelToClientId.get(channel);
+                GlobalVariables.channelToClientId.remove(channel);
+                GlobalVariables.onlineClientsNew.remove(clientId);
+            }
+            channel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ReceiveMessageTask(SelectionKey selectorKey) {
         this.selectorKey = selectorKey;
         clientId = "";
@@ -71,22 +85,13 @@ public class ReceiveMessageTask implements Runnable {
                 ;
         } catch (IOException e1) {
             e1.printStackTrace();
+            closeConnection();
             return;
         }
         int len = buffer.position();
         System.out.println(len);
         if (len <= 0) {
-            try {
-                System.out.println("Closing Channel");
-                if (GlobalVariables.channelToClientId.containsKey(channel)) {
-                    clientId = GlobalVariables.channelToClientId.get(channel);
-                    GlobalVariables.channelToClientId.remove(channel);
-                    GlobalVariables.onlineClientsNew.remove(clientId);
-                }
-                channel.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            closeConnection();
             return;
         }
         int stp = 0;
