@@ -10,235 +10,124 @@ Sending thread with id 7 created.
 Sending thread with id 8 created.
 Sending thread with id 9 created.
 Thread with id 0 authenticated.
-ID 0
-Thread with id 1 authenticated.
-ID 1
-Thread with id 2 authenticated.
-ID 2
-Thread with id 8 authenticated.
-ID 8
-Thread with id 3 authenticated.
-ID 3
-Thread with id 9 authenticated.
-ID 9
-Thread with id 7 authenticated.
-ID 7
-Thread with id 6 authenticated.
-ID 6
-Thread with id 5 authenticated.
-ID 5
 Thread with id 4 authenticated.
-ID 4
+Thread with id 5 authenticated.
+Thread with id 1 authenticated.
+Thread with id 3 authenticated.
+Thread with id 6 authenticated.
+Thread with id 9 authenticated.
+Thread with id 7 authenticated.
+Thread with id 2 authenticated.
+Thread with id 8 authenticated.
 All sender threads authenticated.
-Sent: Source: 6, Receiver: 13
-Sent: Source: 6, Receiver: 17
-Sent: Source: 6, Receiver: 14
-Sent: Source: 0, Receiver: 12
-Sent: Source: 6, Receiver: 19
-Sent: Source: 0, Receiver: 10
-Sent: Source: 0, Receiver: 18
-Sent: Source: 6, Receiver: 14
-Sent: Source: 0, Receiver: 11
-Sent: Source: 6, Receiver: 10
-Sent: Source: 0, Receiver: 17
-Sent: Source: 6, Receiver: 13
-Sent: Source: 0, Receiver: 15
-Sent: Source: 5, Receiver: 12
-Sent: Source: 6, Receiver: 11
-Sent: Source: 0, Receiver: 15
-Sent: Source: 5, Receiver: 11
-Sent: Source: 6, Receiver: 11
-Sent: Source: 0, Receiver: 19
-Sent: Source: 5, Receiver: 16
-Sent: Source: 6, Receiver: 19
-Sent: Source: 0, Receiver: 16
-Sent: Source: 5, Receiver: 12
-Sent: Source: 0, Receiver: 11
-Sent: Source: 5, Receiver: 11
-Sent: Source: 5, Receiver: 16
-Sent: Source: 5, Receiver: 12
-Sent: Source: 5, Receiver: 11
-Sent: Source: 4, Receiver: 14
-Sent: Source: 5, Receiver: 10
-Sent: Source: 4, Receiver: 19
-Sent: Source: 5, Receiver: 16
-Sent: Source: 4, Receiver: 18
-Sent: Source: 4, Receiver: 14
-Sent: Source: 4, Receiver: 14
-Sent: Source: 4, Receiver: 13
-Sent: Source: 4, Receiver: 15
-Sent: Source: 3, Receiver: 16
-Sent: Source: 4, Receiver: 11
-Sent: Source: 8, Receiver: 16
-Sent: Source: 9, Receiver: 17
-Sent: Source: 7, Receiver: 18
-Sent: Source: 8, Receiver: 12
-Sent: Source: 9, Receiver: 15
-Sent: Source: 3, Receiver: 19
-Sent: Source: 1, Receiver: 10
-Sent: Source: 4, Receiver: 11
-Sent: Source: 2, Receiver: 13
-Sent: Source: 1, Receiver: 18
+Signed up successfully! Token received: KZHTc@@J7PrwmbCfHuUY
+Sent: Source: 7, Receiver: 14
 Sent: Source: 7, Receiver: 11
-Sent: Source: 8, Receiver: 19
-Sent: Source: 3, Receiver: 18
-Sent: Source: 7, Receiver: 11
-Sent: Source: 9, Receiver: 10
-Sent: Source: 4, Receiver: 15
-Sent: Source: 2, Receiver: 11
-Sent: Source: 1, Receiver: 12
-Sent: Source: 8, Receiver: 16
-Sent: Source: 2, Receiver: 15
-Sent: Source: 1, Receiver: 17
-Sent: Source: 8, Receiver: 16
-Sent: Source: 3, Receiver: 12
-Sent: Source: 1, Receiver: 19
+Sent: Source: 7, Receiver: 15
 Sent: Source: 7, Receiver: 14
-Sent: Source: 3, Receiver: 18
-Sent: Source: 9, Receiver: 10
-Sent: Source: 2, Receiver: 12
-Sent: Source: 8, Receiver: 13
-Sent: Source: 1, Receiver: 12
-Sent: Source: 7, Receiver: 18
-Sent: Source: 1, Receiver: 11
-Sent: Source: 3, Receiver: 15
-Sent: Source: 9, Receiver: 16
-Sent: Source: 2, Receiver: 16
-Sent: Source: 8, Receiver: 15
-Sent: Source: 7, Receiver: 18
-Sent: Source: 1, Receiver: 11
-Sent: Source: 3, Receiver: 14
-Sent: Source: 9, Receiver: 14
-Sent: Source: 2, Receiver: 17
-Sent: Source: 9, Receiver: 11
-Sent: Source: 8, Receiver: 14
 Sent: Source: 7, Receiver: 14
-Sent: Source: 8, Receiver: 13
-Sent: Source: 1, Receiver: 11
-Sent: Source: 8, Receiver: 11
-Sent: Source: 3, Receiver: 17
-Sent: Source: 2, Receiver: 16
-Sent: Source: 9, Receiver: 18
-Sent: Source: 7, Receiver: 18
-Sent: Source: 1, Receiver: 14
-Sent: Source: 3, Receiver: 15
-Sent: Source: 2, Receiver: 13
-Sent: Source: 3, Receiver: 17
-Sent: Source: 9, Receiver: 12
-Sent: Source: 7, Receiver: 14
-Sent: Source: 2, Receiver: 12
-Sent: Source: 9, Receiver: 13
-Sent: Source: 2, Receiver: 17
+Sent: Source: 7, Receiver: 19
+Sent: Source: 7, Receiver: 13
+Sent: Source: 7, Receiver: 13
 Sent: Source: 7, Receiver: 12
+Sent: Source: 7, Receiver: 19
+Signed up successfully! Token received: ZscErrVuuZ!LqnyUg8Oh
+Sent: Source: 2, Receiver: 11
+Sent: Source: 2, Receiver: 18
+Sent: Source: 2, Receiver: 11
+Sent: Source: 2, Receiver: 12
+Sent: Source: 2, Receiver: 12
+Sent: Source: 2, Receiver: 18
+Sent: Source: 2, Receiver: 18
+Sent: Source: 2, Receiver: 10
+Sent: Source: 2, Receiver: 16
+Sent: Source: 2, Receiver: 18
+Signed up successfully! Token received: cAI%zHLBa321@x$I!2sb
+Sent: Source: 3, Receiver: 19
+Sent: Source: 3, Receiver: 18
+Sent: Source: 3, Receiver: 15
+Sent: Source: 3, Receiver: 11
+Sent: Source: 3, Receiver: 13
+Sent: Source: 3, Receiver: 12
+Sent: Source: 3, Receiver: 15
+Sent: Source: 3, Receiver: 15
+Sent: Source: 3, Receiver: 11
+Sent: Source: 3, Receiver: 19
+Signed up successfully! Token received: Zbwxi!yXqu8kFqKRC09d
+Sent: Source: 5, Receiver: 17
+Sent: Source: 5, Receiver: 18
+Sent: Source: 5, Receiver: 19
+Sent: Source: 5, Receiver: 10
+Sent: Source: 5, Receiver: 14
+Sent: Source: 5, Receiver: 13
+Sent: Source: 5, Receiver: 18
+Sent: Source: 5, Receiver: 15
+Sent: Source: 5, Receiver: 12
+Sent: Source: 5, Receiver: 14
+Signed up successfully! Token received: $4VKSPYQYcaa@!8b4gg8
+Sent: Source: 1, Receiver: 19
+Sent: Source: 1, Receiver: 12
+Sent: Source: 1, Receiver: 12
+Sent: Source: 1, Receiver: 10
+Sent: Source: 1, Receiver: 18
+Sent: Source: 1, Receiver: 18
+Sent: Source: 1, Receiver: 12
+Sent: Source: 1, Receiver: 18
+Sent: Source: 1, Receiver: 12
+Sent: Source: 1, Receiver: 16
+Signed up successfully! Token received: j%qdXJrAoe#1n9!sb42V
+Sent: Source: 4, Receiver: 14
+Sent: Source: 4, Receiver: 11
+Sent: Source: 4, Receiver: 12
+Sent: Source: 4, Receiver: 18
+Sent: Source: 4, Receiver: 11
+Sent: Source: 4, Receiver: 15
+Sent: Source: 4, Receiver: 17
+Sent: Source: 4, Receiver: 10
+Sent: Source: 4, Receiver: 18
+Sent: Source: 4, Receiver: 17
+Signed up successfully! Token received: X607pi@ppjDYnMpsTfcm
+Sent: Source: 0, Receiver: 11
+Sent: Source: 0, Receiver: 17
+Sent: Source: 0, Receiver: 11
+Sent: Source: 0, Receiver: 17
+Sent: Source: 0, Receiver: 17
+Sent: Source: 0, Receiver: 17
+Sent: Source: 0, Receiver: 11
+Sent: Source: 0, Receiver: 14
+Sent: Source: 0, Receiver: 13
+Sent: Source: 0, Receiver: 13
+Signed up successfully! Token received: %JnNqBtIFN5zZyBm7YnJ
+Sent: Source: 6, Receiver: 12
+Sent: Source: 6, Receiver: 18
+Sent: Source: 6, Receiver: 11
+Sent: Source: 6, Receiver: 15
+Sent: Source: 6, Receiver: 11
+Sent: Source: 6, Receiver: 11
+Sent: Source: 6, Receiver: 11
+Sent: Source: 6, Receiver: 18
+Sent: Source: 6, Receiver: 13
+Sent: Source: 6, Receiver: 15
+Signed up successfully! Token received: O1Zdz4W%RDtrqu6qEHPs
+Sent: Source: 9, Receiver: 11
+Sent: Source: 9, Receiver: 19
+Sent: Source: 9, Receiver: 15
+Sent: Source: 9, Receiver: 18
+Sent: Source: 9, Receiver: 13
+Sent: Source: 9, Receiver: 15
+Sent: Source: 9, Receiver: 19
+Sent: Source: 9, Receiver: 13
+Sent: Source: 9, Receiver: 13
+Sent: Source: 9, Receiver: 19
+Signed up successfully! Token received: #XSjw$biwOEBg8gNwtJz
+Sent: Source: 8, Receiver: 14
+Sent: Source: 8, Receiver: 11
+Sent: Source: 8, Receiver: 10
+Sent: Source: 8, Receiver: 16
+Sent: Source: 8, Receiver: 19
+Sent: Source: 8, Receiver: 10
+Sent: Source: 8, Receiver: 18
+Sent: Source: 8, Receiver: 10
+Sent: Source: 8, Receiver: 16
+Sent: Source: 8, Receiver: 14
 Sender threads done. Scanner ready.
-Receiver thread with id 10 authenticated.
-Receiver thread with id 12 authenticated.
-Receiver thread with id 11 authenticated.
-Receiver thread with id 13 authenticated.
-Receiver thread with id 14 authenticated.
-Receiver thread with id 15 authenticated.
-Receiver thread with id 19 authenticated.
-Receiver thread with id 16 authenticated.
-Receiver thread with id 17 authenticated.
-Receiver thread with id 18 authenticated.
-All receiver threads authenticated.
-Received: Source: 7, Receiver: 14
-Received: Source: 7, Receiver: 14
-Received: Source: 7, Receiver: 14
-Received: Source: 7, Receiver: 14
-Received: Source: 7, Receiver: 14
-Received: Source: 7, Receiver: 14
-Received: Source: 1, Receiver: 14
-Received: Source: 1, Receiver: 14
-Received: Source: 1, Receiver: 14
-Received: Source: 7, Receiver: 14
-Received: Source: 1, Receiver: 14
-Received: Source: 1, Receiver: 14
-Received: Source: 3, Receiver: 16
-Received: Source: 9, Receiver: 16
-Received: Source: 8, Receiver: 16
-Received: Source: 8, Receiver: 16
-Received: Source: 5, Receiver: 16
-Received: Source: 0, Receiver: 16
-Received: Source: 0, Receiver: 16
-Received: Source: 0, Receiver: 16
-Received: Source: 5, Receiver: 16
-Received: Source: 5, Receiver: 16
-Received: Source: 5, Receiver: 16
-Received: Source: 3, Receiver: 12
-Received: Source: 2, Receiver: 12
-Received: Source: 1, Receiver: 12
-Received: Source: 1, Receiver: 12
-Received: Source: 5, Receiver: 12
-Received: Source: 5, Receiver: 12
-Received: Source: 5, Receiver: 12
-Received: Source: 5, Receiver: 12
-Received: Source: 5, Receiver: 12
-Received: Source: 5, Receiver: 12
-Received: Source: 7, Receiver: 12
-Received: Source: 7, Receiver: 12
-Received: Source: 6, Receiver: 17
-Received: Source: 3, Receiver: 17
-Received: Source: 3, Receiver: 17
-Received: Source: 3, Receiver: 17
-Received: Source: 3, Receiver: 17
-Received: Source: 3, Receiver: 17
-Received: Source: 3, Receiver: 17
-Received: Source: 3, Receiver: 17
-Received: Source: 3, Receiver: 18
-Received: Source: 4, Receiver: 18
-Received: Source: 7, Receiver: 18
-Received: Source: 3, Receiver: 18
-Received: Source: 1, Receiver: 18
-Received: Source: 7, Receiver: 18
-Received: Source: 9, Receiver: 18
-Received: Source: 9, Receiver: 18
-Received: Source: 9, Receiver: 18
-Received: Source: 9, Receiver: 18
-Received: Source: 5, Receiver: 11
-Received: Source: 7, Receiver: 11
-Received: Source: 1, Receiver: 11
-Received: Source: 1, Receiver: 11
-Received: Source: 0, Receiver: 11
-Received: Source: 0, Receiver: 11
-Received: Source: 5, Receiver: 11
-Received: Source: 5, Receiver: 11
-Received: Source: 6, Receiver: 11
-Received: Source: 1, Receiver: 11
-Received: Source: 4, Receiver: 11
-Received: Source: 4, Receiver: 11
-Received: Source: 6, Receiver: 11
-Received: Source: 6, Receiver: 11
-Received: Source: 0, Receiver: 11
-Received: Source: 8, Receiver: 11
-Received: Source: 8, Receiver: 11
-Received: Source: 9, Receiver: 13
-Received: Source: 6, Receiver: 13
-Received: Source: 6, Receiver: 13
-Received: Source: 6, Receiver: 13
-Received: Source: 6, Receiver: 13
-Received: Source: 6, Receiver: 13
-Received: Source: 6, Receiver: 13
-Received: Source: 6, Receiver: 13
-Received: Source: 3, Receiver: 19
-Received: Source: 1, Receiver: 19
-Received: Source: 6, Receiver: 19
-Received: Source: 0, Receiver: 19
-Received: Source: 0, Receiver: 19
-Received: Source: 0, Receiver: 19
-Received: Source: 0, Receiver: 19
-Received: Source: 0, Receiver: 15
-Received: Source: 2, Receiver: 15
-Received: Source: 8, Receiver: 15
-Received: Source: 8, Receiver: 15
-Received: Source: 4, Receiver: 15
-Received: Source: 4, Receiver: 15
-Received: Source: 3, Receiver: 15
-Received: Source: 3, Receiver: 15
-Received: Source: 3, Receiver: 15
-Received: Source: 0, Receiver: 10
-Received: Source: 6, Receiver: 10
-Received: Source: 6, Receiver: 10
-Received: Source: 5, Receiver: 10
-Received: Source: 5, Receiver: 10
-Received: Source: 5, Receiver: 10

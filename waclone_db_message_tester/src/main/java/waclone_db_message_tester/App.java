@@ -44,15 +44,15 @@ public class App {
                 }
                 GlobalVariables.printer.acquire();
                 GlobalVariables.senderThreadsReady = true;
-                System.out.println("All sender threads authenticated.");
                 GlobalVariables.printer.release();
+
+                System.out.println("All sender threads authenticated.");
 
                 for (int i = 0; i < 10; i++) {
                     threads.get(i).join();
                 }
-                GlobalVariables.printer.acquire();
+
                 System.out.println("Sender threads done. Scanner ready.");
-                GlobalVariables.printer.release();
 
             } else if (type == 1) {
                 ArrayList<SampleReceivingThread> threads = new ArrayList<SampleReceivingThread>();
@@ -74,16 +74,15 @@ public class App {
                 }
                 GlobalVariables.printer.acquire();
                 GlobalVariables.receiverThreadsReady = true;
-                System.out.println("All receiver threads authenticated.");
                 GlobalVariables.printer.release();
+
+                System.out.println("All receiver threads authenticated.");
 
                 for (int i = 0; i < 10; i++) {
                     threads.get(i).join();
                 }
 
-                GlobalVariables.printer.acquire();
                 System.out.println("Receiver threads done. Scanner ready.");
-                GlobalVariables.printer.release();
 
             } else {
                 scanner.close();

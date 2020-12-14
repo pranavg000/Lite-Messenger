@@ -8,12 +8,14 @@ import java.net.Socket;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import waclone_db_message_tester.GlobalVariables.RequestType;
+import org.bson.Document;
 
 public class SampleReceivingThread extends Thread {
     public String id;
     public Socket socket;
+    public String token;
     public boolean isAuthenticated = false;
+
     DataInputStream inputStream;
     DataOutputStream outputStream;
 
@@ -26,14 +28,10 @@ public class SampleReceivingThread extends Thread {
         try {
             socket = new Socket("127.0.0.1", 5000);
             isAuthenticated = true;
-            GlobalVariables.printer.acquire();
             System.out.println("Receiver thread with id "+id+" authenticated.");
-            GlobalVariables.printer.release();
         } catch (IOException e) {
             e.printStackTrace();
             return;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
 
         while (true) {
@@ -50,7 +48,8 @@ public class SampleReceivingThread extends Thread {
         }
 
         Gson gson = new Gson();
-        Request request = new Request(RequestType.Auth, id, "-1", "CONNECTION PACKET");
+        Document connectionDoc = new Document().append("senderId",id).append("receiverId","-1").append("action","SignUp").append("data","NULL").append("token","NULL");
+        Request request = new Request(connectionDoc);
 
         try{
             outputStream = new DataOutputStream(socket.getOutputStream());
@@ -63,7 +62,17 @@ public class SampleReceivingThread extends Thread {
 
         try {
             inputStream = new DataInputStream(socket.getInputStream());
-
+            Request validation = gson.fromJson(inputStream.readUTF(), Request.class);
+            // System.out.println(id+" "+validation.getAction());
+            if(GlobalVariables.getActionString(validation.getAction()).equals("POSITIVE")){
+                token = validation.getToken();
+                System.out.println("Signed up successfully! Token received: "+token);
+            } else if(GlobalVariables.getActionString(validation.getAction()).equals("ERROR")){
+                System.out.println("Account already exists! TERMINATING");
+                return;
+            } else {
+                System.out.println("Unknown message received");
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -72,15 +81,10 @@ public class SampleReceivingThread extends Thread {
         while (true) {
             try {
                 request = gson.fromJson(inputStream.readUTF(), Request.class);
-                GlobalVariables.printer.acquire();
                 System.out.println("Received: "+request.getData());
-                GlobalVariables.printer.release();
             } catch (JsonSyntaxException | IOException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
-
         }
 
     }

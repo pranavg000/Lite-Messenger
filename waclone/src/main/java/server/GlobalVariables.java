@@ -5,6 +5,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
@@ -33,19 +34,23 @@ public class GlobalVariables {
     public static Semaphore globalLocks;
 
     public static enum RequestType {
-        Auth, NewChat, Message, SignUp
+        Auth, NewChat, Message, SignUp, POSITIVE, ERROR
     }
 
-    public static String getActionString(RequestType r) {
-        String s = "";
-        if (r == RequestType.Auth) {
-            s = "Auth";
-        } else if (r == RequestType.NewChat) {
-            s = "NewChat";
-        } else if (r == RequestType.Message) {
-            s = "Message";
-        } else if (r == RequestType.SignUp) {
-            s = "SignUp";
+    public static String getActionString(RequestType r){
+        String s="";
+        if(r == RequestType.Auth){
+            s="Auth";
+        } else if(r == RequestType.NewChat){
+            s="NewChat";
+        } else if(r ==RequestType.Message){
+            s="Message";
+        } else if(r == RequestType.SignUp){
+            s="SignUp";
+        } else if(r==RequestType.POSITIVE){
+            s="POSITIVE";
+        } else if(r==RequestType.ERROR){
+            s="ERROR";
         }
 
         return s;
@@ -127,4 +132,15 @@ public class GlobalVariables {
         }
         return null;
     }
+
+    public static String generateToken(int len) {
+		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk"
+          +"lmnopqrstuvwxyz!@#$%&";
+		Random rnd = new Random();
+		StringBuilder sb = new StringBuilder(len);
+		for (int i = 0; i < len; i++)
+			sb.append(chars.charAt(rnd.nextInt(chars.length())));
+		return sb.toString();
+    }
+    
 }

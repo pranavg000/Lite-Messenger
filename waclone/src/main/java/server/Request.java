@@ -5,69 +5,85 @@ import server.GlobalVariables.RequestType;
 import org.bson.Document;
 
 public class Request {
-   private RequestType action;
-   private String senderId;
-   private String receiverId;
-   private String data;
+    private RequestType action;
+    private String senderId;
+    private String receiverId;
+    private String data;
+    private String token;
 
-   Request(Document obj){
+    Request(Document obj){
         if(((String)obj.get("action")).equals("Auth")){
             this.action = RequestType.Auth;
         } else if(((String)obj.get("action")).equals("NewChat")){
             this.action = RequestType.NewChat;
         } else if(((String)obj.get("action")).equals("Message")){
             this.action = RequestType.Message;
+        } else if(((String)obj.get("action")).equals("SignUp")){
+            this.action = RequestType.SignUp;
+        }else if(((String)obj.get("action")).equals("POSITIVE")){
+            this.action = RequestType.POSITIVE;
+        } else if(((String)obj.get("action")).equals("ERROR")){
+            this.action = RequestType.ERROR;
         }
         this.senderId = (String)obj.get("senderId");
         this.receiverId = (String)obj.get("receiverId");
         this.data = (String)obj.get("data");
-   }
+        this.token = (String)obj.get("token");
+    }
 
-   public RequestType getAction() {
-       return action;
-   }
+    public String getToken(){
+        return token;
+    }
 
-   public void setAction(RequestType action) {
-       this.action = action;
-   }
+    public void setToken(String t){
+        token=t;
+    }
+    public RequestType getAction() {
+        return action;
+    }
 
-   public String getSenderId() {
-       return senderId;
-   }
+    public void setAction(RequestType action) {
+        this.action = action;
+    }
 
-   public void setSenderId(String senderId) {
-       this.senderId = senderId;
-   }
+    public String getSenderId() {
+        return senderId;
+    }
 
-   public String getReceiverId() {
-       return receiverId;
-   }
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
 
-   public void setReceiverId(String receiverId) {
-       this.receiverId = receiverId;
-   }
+    public String getReceiverId() {
+        return receiverId;
+    }
 
-   public String getData() {
-       return data;
-   }
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
 
-   public void setData(String data) {
-       this.data = data;
-   }
+    public String getData() {
+        return data;
+    }
 
-   public Document toDocument(){
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public Document toDocument(){
 
         String actionString=GlobalVariables.getActionString(action);
 
-        Document obj = new Document().append("senderId", senderId).append("receiverId", receiverId).append("data", data).append("action",actionString);
+        Document obj = new Document().append("senderId", senderId).append("receiverId", receiverId)
+            .append("data", data).append("action",actionString).append("token", token);
         return obj;
 
-   }
+    }
 
-   @Override
-   public String toString() {
-       return "Request [action=" + GlobalVariables.getActionString(action) + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
-               + "]";
-   }
+    @Override
+    public String toString() {
+        return "Request [action=" + GlobalVariables.getActionString(action) + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
+                + ", token="+token+"]";
+    }
    
 }

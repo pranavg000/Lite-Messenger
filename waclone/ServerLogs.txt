@@ -1,0 +1,607 @@
+Starting Server
+Dec 14, 2020 10:21:02 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+End of app.java
+Connection Listening Thread activated
+sun.nio.ch.ServerSocketChannelImpl[/[0:0:0:0:0:0:0:0]:5000]
+Connection Listening Socket ready and listening at port 5000
+83
+83
+83
+83
+83
+83
+83
+83
+83
+83
+{"action":"SignUp","senderId":"0","receiverId":"-1","data":"NULL","token":"NULL"}
+{"action":"SignUp","senderId":"8","receiverId":"-1","data":"NULL","token":"NULL"}
+81
+{"action":"SignUp","senderId":"1","receiverId":"-1","data":"NULL","token":"NULL"}
+{"action":"SignUp","senderId":"9","receiverId":"-1","data":"NULL","token":"NULL"}
+81
+{"action":"SignUp","senderId":"7","receiverId":"-1","data":"NULL","token":"NULL"}
+81
+{"action":"SignUp","senderId":"5","receiverId":"-1","data":"NULL","token":"NULL"}
+81
+{"action":"SignUp","senderId":"2","receiverId":"-1","data":"NULL","token":"NULL"}
+81
+{"action":"SignUp","senderId":"6","receiverId":"-1","data":"NULL","token":"NULL"}
+81
+{"action":"SignUp","senderId":"4","receiverId":"-1","data":"NULL","token":"NULL"}
+81
+81
+{"action":"SignUp","senderId":"3","receiverId":"-1","data":"NULL","token":"NULL"}
+81
+81
+SignUp
+SignUp
+SignUpHI
+SignUp
+SignUp
+SignUp
+SignUp
+SignUp
+SignUpHI
+7 has put up a sign up request.
+SignUp
+SignUp
+SignUp
+SignUpHI
+SignUpHI
+SignUpHI
+SignUpHI
+3 has put up a sign up request.
+SignUpHI
+SignUpHI
+2 has put up a sign up request.
+5 has put up a sign up request.
+1 has put up a sign up request.
+SignUpHI
+SignUpHI
+4 has put up a sign up request.
+Sending[B@4f742f4
+130
+238
+{"action":"Message","senderId":"7","receiverId":"14","data":"Source: 7, Receiver: 14","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Message
+0 has put up a sign up request.
+Sending[B@dfb44bf
+130
+119
+{"action":"Message","senderId":"2","receiverId":"11","data":"Source: 2, Receiver: 11","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Message
+6 has put up a sign up request.
+Sending[B@7283a494
+130
+119
+{"action":"Message","senderId":"3","receiverId":"19","data":"Source: 3, Receiver: 19","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Message
+Sending[B@34d35493
+130
+238
+{"action":"Message","senderId":"5","receiverId":"17","data":"Source: 5, Receiver: 17","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Message
+9 has put up a sign up request.
+8 has put up a sign up request.
+Sending[B@5f1bdbb2
+130
+238
+{"action":"Message","senderId":"1","receiverId":"19","data":"Source: 1, Receiver: 19","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Message
+Send message
+Sending[B@2b1e176e
+130
+238
+{"action":"Message","senderId":"4","receiverId":"14","data":"Source: 4, Receiver: 14","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+Send message
+Sending[B@4949b428
+130
+238
+{"action":"Message","senderId":"0","receiverId":"11","data":"Source: 0, Receiver: 11","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Message
+Send message
+Send message
+Sending[B@37eeace
+130
+119
+{"action":"Message","senderId":"6","receiverId":"12","data":"Source: 6, Receiver: 12","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Message
+Sending[B@6be27859
+130
+238
+{"action":"Message","senderId":"9","receiverId":"11","data":"Source: 9, Receiver: 11","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Message
+Send message
+Send message
+Send message
+Send message
+Sending[B@66435e66
+130
+238
+{"action":"Message","senderId":"8","receiverId":"14","data":"Source: 8, Receiver: 14","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+1071
+{"action":"Message","senderId":"3","receiverId":"18","data":"Source: 3, Receiver: 18","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"7","receiverId":"11","data":"Source: 7, Receiver: 11","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+1071
+{"action":"Message","senderId":"2","receiverId":"18","data":"Source: 2, Receiver: 18","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"5","receiverId":"18","data":"Source: 5, Receiver: 18","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Send message
+Message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"0","receiverId":"17","data":"Source: 0, Receiver: 17","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+1071
+{"action":"Message","senderId":"6","receiverId":"18","data":"Source: 6, Receiver: 18","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"4","receiverId":"11","data":"Source: 4, Receiver: 11","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"1","receiverId":"12","data":"Source: 1, Receiver: 12","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Send message
+Message
+Send message
+Send message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"9","receiverId":"19","data":"Source: 9, Receiver: 19","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"8","receiverId":"11","data":"Source: 8, Receiver: 11","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Send message
+Message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"3","receiverId":"15","data":"Source: 3, Receiver: 15","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+952
+{"action":"Message","senderId":"7","receiverId":"15","data":"Source: 7, Receiver: 15","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+952
+{"action":"Message","senderId":"5","receiverId":"19","data":"Source: 5, Receiver: 19","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+Send message
+952
+{"action":"Message","senderId":"1","receiverId":"12","data":"Source: 1, Receiver: 12","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+952
+{"action":"Message","senderId":"0","receiverId":"11","data":"Source: 0, Receiver: 11","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+Send message
+952
+{"action":"Message","senderId":"4","receiverId":"12","data":"Source: 4, Receiver: 12","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"6","receiverId":"11","data":"Source: 6, Receiver: 11","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+Send message
+Send message
+952
+{"action":"Message","senderId":"9","receiverId":"15","data":"Source: 9, Receiver: 15","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+Send message
+952
+{"action":"Message","senderId":"8","receiverId":"10","data":"Source: 8, Receiver: 10","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"2","receiverId":"11","data":"Source: 2, Receiver: 11","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Send message
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"3","receiverId":"11","data":"Source: 3, Receiver: 11","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"7","receiverId":"14","data":"Source: 7, Receiver: 14","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"1","receiverId":"10","data":"Source: 1, Receiver: 10","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"5","receiverId":"10","data":"Source: 5, Receiver: 10","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"0","receiverId":"17","data":"Source: 0, Receiver: 17","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"4","receiverId":"18","data":"Source: 4, Receiver: 18","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"6","receiverId":"15","data":"Source: 6, Receiver: 15","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Send message
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"9","receiverId":"18","data":"Source: 9, Receiver: 18","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Send message
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"8","receiverId":"16","data":"Source: 8, Receiver: 16","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"2","receiverId":"12","data":"Source: 2, Receiver: 12","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Send message
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"3","receiverId":"13","data":"Source: 3, Receiver: 13","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"7","receiverId":"14","data":"Source: 7, Receiver: 14","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"1","receiverId":"18","data":"Source: 1, Receiver: 18","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"5","receiverId":"14","data":"Source: 5, Receiver: 14","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"0","receiverId":"17","data":"Source: 0, Receiver: 17","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"4","receiverId":"11","data":"Source: 4, Receiver: 11","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"6","receiverId":"11","data":"Source: 6, Receiver: 11","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"9","receiverId":"13","data":"Source: 9, Receiver: 13","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Send message
+Message
+Send message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"8","receiverId":"19","data":"Source: 8, Receiver: 19","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"2","receiverId":"12","data":"Source: 2, Receiver: 12","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Send message
+Message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"3","receiverId":"12","data":"Source: 3, Receiver: 12","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"7","receiverId":"19","data":"Source: 7, Receiver: 19","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"9","receiverId":"15","data":"Source: 9, Receiver: 15","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"5","receiverId":"13","data":"Source: 5, Receiver: 13","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"1","receiverId":"18","data":"Source: 1, Receiver: 18","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"0","receiverId":"17","data":"Source: 0, Receiver: 17","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"4","receiverId":"15","data":"Source: 4, Receiver: 15","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"2","receiverId":"18","data":"Source: 2, Receiver: 18","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"6","receiverId":"11","data":"Source: 6, Receiver: 11","token":"%JnNqBtIFN5zZyBm7YnJ"}
+Send message
+Send message
+Send message
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"8","receiverId":"10","data":"Source: 8, Receiver: 10","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Send message
+Send message
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"3","receiverId":"15","data":"Source: 3, Receiver: 15","token":"cAI%zHLBa321@x$I!2sb"}
+Send message
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"5","receiverId":"18","data":"Source: 5, Receiver: 18","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"7","receiverId":"13","data":"Source: 7, Receiver: 13","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"9","receiverId":"19","data":"Source: 9, Receiver: 19","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"1","receiverId":"12","data":"Source: 1, Receiver: 12","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"0","receiverId":"11","data":"Source: 0, Receiver: 11","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"4","receiverId":"17","data":"Source: 4, Receiver: 17","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"2","receiverId":"18","data":"Source: 2, Receiver: 18","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"6","receiverId":"11","data":"Source: 6, Receiver: 11","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Send message
+Send message
+Message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"8","receiverId":"18","data":"Source: 8, Receiver: 18","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Send message
+Message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"3","receiverId":"15","data":"Source: 3, Receiver: 15","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Send message
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"7","receiverId":"13","data":"Source: 7, Receiver: 13","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"5","receiverId":"15","data":"Source: 5, Receiver: 15","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"9","receiverId":"13","data":"Source: 9, Receiver: 13","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"0","receiverId":"14","data":"Source: 0, Receiver: 14","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"4","receiverId":"10","data":"Source: 4, Receiver: 10","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"1","receiverId":"18","data":"Source: 1, Receiver: 18","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"6","receiverId":"18","data":"Source: 6, Receiver: 18","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"2","receiverId":"10","data":"Source: 2, Receiver: 10","token":"ZscErrVuuZ!LqnyUg8Oh"}
+Send message
+Send message
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"8","receiverId":"10","data":"Source: 8, Receiver: 10","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Send message
+Message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"3","receiverId":"11","data":"Source: 3, Receiver: 11","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Send message
+Message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"9","receiverId":"13","data":"Source: 9, Receiver: 13","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"7","receiverId":"12","data":"Source: 7, Receiver: 12","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"5","receiverId":"12","data":"Source: 5, Receiver: 12","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"4","receiverId":"18","data":"Source: 4, Receiver: 18","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"0","receiverId":"13","data":"Source: 0, Receiver: 13","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"2","receiverId":"16","data":"Source: 2, Receiver: 16","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"1","receiverId":"12","data":"Source: 1, Receiver: 12","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"8","receiverId":"16","data":"Source: 8, Receiver: 16","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"6","receiverId":"13","data":"Source: 6, Receiver: 13","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Send message
+Send message
+Send message
+Message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"3","receiverId":"19","data":"Source: 3, Receiver: 19","token":"cAI%zHLBa321@x$I!2sb"}
+117
+Send message
+Send message
+Message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"9","receiverId":"19","data":"Source: 9, Receiver: 19","token":"O1Zdz4W%RDtrqu6qEHPs"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"5","receiverId":"14","data":"Source: 5, Receiver: 14","token":"Zbwxi!yXqu8kFqKRC09d"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"7","receiverId":"19","data":"Source: 7, Receiver: 19","token":"KZHTc@@J7PrwmbCfHuUY"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"4","receiverId":"17","data":"Source: 4, Receiver: 17","token":"j%qdXJrAoe#1n9!sb42V"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"0","receiverId":"13","data":"Source: 0, Receiver: 13","token":"X607pi@ppjDYnMpsTfcm"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"2","receiverId":"18","data":"Source: 2, Receiver: 18","token":"ZscErrVuuZ!LqnyUg8Oh"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"8","receiverId":"14","data":"Source: 8, Receiver: 14","token":"#XSjw$biwOEBg8gNwtJz"}
+117
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"1","receiverId":"16","data":"Source: 1, Receiver: 16","token":"$4VKSPYQYcaa@!8b4gg8"}
+117
+Send message
+Message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+{"action":"Message","senderId":"6","receiverId":"15","data":"Source: 6, Receiver: 15","token":"%JnNqBtIFN5zZyBm7YnJ"}
+117
+Send message
+Message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+Send message
+Send message
+Send message
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+Send message
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist
+FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist

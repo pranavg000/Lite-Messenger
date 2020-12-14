@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import static com.mongodb.client.model.Filters.*;
 
 import org.bson.Document;
 
@@ -20,80 +21,6 @@ public class ReceiveMessageTask implements Runnable {
     private SocketChannel channel;
     private ByteBuffer buffer = ByteBuffer.allocate(4096);
     private SelectionKey selectorKey;
-
-    private Boolean isAuth(Request request) {
-        if (request.getAction() == RequestType.Auth)
-            return true;
-        return false;
-    }
-
-    private void sendMessageTo(String recieverId, Request request) {
-        try {
-			GlobalVariables.globalLocks.acquire();
-		} catch (InterruptedException e) {
-            e.printStackTrace();
-            return;
-		}
-        if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
-            ClientInfo recieverInfo = GlobalVariables.onlineClientsNew.get(clientId);
-            GlobalVariables.globalLocks.release();
-            GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
-        } else {
-            System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
-            GlobalVariables.messageCollection.insertOne(request.toDocument());
-            GlobalVariables.globalLocks.release();
-        }
-        return;
-    }
-
-    private Boolean processRequest(Request request) {
-        RequestType reqType = request.getAction();
-        String recieverId = request.getReceiverId();
-        System.out.println(reqType);
-        if (clientId.isEmpty())
-            clientId = request.getSenderId();
-        if (!GlobalVariables.checkClientOnline(clientId)) {
-            System.out.println(reqType + "HI");
-            if (isAuth(request)) {
-                GlobalVariables.addClientToOnlineList(channel, clientId);
-                List<Document> messageList = GlobalVariables.fetchUnsendMessages(clientId);
-                // Deliver stored messages to user
-                System.out.println(messageList);
-                // Delete these messages from database
-                for (Document message : messageList) {
-                    Request r = new Request(message);
-                    sendMessageTo(r.getReceiverId(), r);
-                }
-                System.out.println("Auth done for" + clientId);
-            }
-        } else if (reqType == RequestType.NewChat) {
-            System.out.println("New Chat");
-        } else if (reqType == RequestType.Message) {
-            System.out.println("Send message");
-            sendMessageTo(recieverId, request);
-        } else {
-            System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
-            // Unkown command return error response
-            return false;
-        }
-        return true;
-    }
-
-    private void closeConnection() {
-        try {
-            System.out.println("Closing Channel");
-            GlobalVariables.removeClientFromOnlineList(channel);
-            channel.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ReceiveMessageTask(SelectionKey selectorKey) {
-        this.selectorKey = selectorKey;
-        clientId = "";
-        channel = (SocketChannel) selectorKey.channel();
-    }
 
     public void run() {
         Gson gson = new Gson();
@@ -134,4 +61,171 @@ public class ReceiveMessageTask implements Runnable {
         selectorKey.selector().wakeup();
         return;
     }
+
+    private Boolean processRequest(Request request) {
+        RequestType reqType = request.getAction();
+        String recieverId = request.getReceiverId();
+        System.out.println(reqType);
+        if (clientId.isEmpty())
+            clientId = request.getSenderId();
+        if (!GlobalVariables.checkClientOnline(clientId)) {
+            return handleAuth(request);
+        } else if (reqType == RequestType.NewChat) {
+            System.out.println("New Chat");
+        } else if (reqType == RequestType.Message) {
+            System.out.println("Send message");
+            String userToken = GlobalVariables.userCollection
+                .find(eq("userId",clientId)).first().getString("token");
+            if(userToken.equals(request.getToken())){
+                return sendMessageTo(recieverId, request);
+            } else {
+                System.out.println("UNAUTHORISED ACCESS WAS MADE!!! CLIENT PRETENDING TO BE " + clientId);
+                System.out.println("Actual token:"+userToken+" Used token: "+request.getToken());
+                return false;
+            }
+        } else {
+            System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
+            // Unkown command return error response
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean isAuth(Request request) {
+        try {
+            GlobalVariables.globalLocks.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if ((request.getAction() == RequestType.Auth)
+                && (GlobalVariables.userCollection.countDocuments(eq("userId", request.getSenderId())) > 0)) {
+            String userToken = (String) GlobalVariables.userCollection.find(eq("userId", request.getSenderId())).first()
+                    .get("token");
+            GlobalVariables.globalLocks.release();
+            if (userToken == request.getToken()) {
+                return true;
+            }
+        }
+        GlobalVariables.globalLocks.release();
+        return false;
+    }
+
+    private Boolean handleAuth(Request request) {
+        RequestType reqType = request.getAction();
+        System.out.println(reqType + "HI");
+        if (isAuth(request)) {
+            GlobalVariables.addClientToOnlineList(channel, clientId);
+
+            // Send Approval Document
+            Document approvalDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
+                    .append("action", "POSITIVE").append("token", "NULL").append("data", "Authentication Successful!");
+            Request approvalMessage = new Request(approvalDoc);
+            sendMessageTo(clientId, approvalMessage);
+
+            // Deliver stored messages to user
+            List<Document> messageList = GlobalVariables.fetchUnsendMessages(clientId);
+            System.out.println(messageList);
+            // Delete these messages from database
+            for (Document message : messageList) {
+                Request r = new Request(message);
+                sendMessageTo(r.getReceiverId(), r);
+            }
+            System.out.println("Auth done for" + clientId);
+
+            return true;
+
+        } else if (reqType == RequestType.SignUp) {
+            System.out.println(clientId + " has put up a sign up request.");
+            // Only sign up if user doesn't already exist
+            try {
+                GlobalVariables.globalLocks.acquire();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+                return false;
+            }
+            if (GlobalVariables.userCollection.countDocuments(eq("userId", clientId)) == 0) {
+
+                // Create token for new user
+                String tokenToAssign = GlobalVariables.generateToken(20);
+                // Add new user to Database
+                GlobalVariables.userCollection
+                        .insertOne(new Document().append("userId", clientId).append("token", tokenToAssign));
+                GlobalVariables.globalLocks.release();
+                // Add client to online list
+                GlobalVariables.addClientToOnlineList(channel, clientId);
+
+                // Send Approval Document
+                Document approvalDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
+                        .append("action", "POSITIVE").append("data", "Account created successfully!")
+                        .append("token", tokenToAssign);
+                Request approvalMessage = new Request(approvalDoc);
+                sendMessageTo(clientId, approvalMessage);
+                return true;
+
+            } else {
+                GlobalVariables.globalLocks.release();
+                // Reject if user already exists - Send Rejection Document
+                GlobalVariables.addClientToOnlineList(channel, clientId);
+                Document rejectionDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
+                    .append("action","ERROR").append("data","User already exists!!! Can't sign up!").append("token","NULL");
+                Request rejectionMessage = new Request(rejectionDoc);
+                sendMessageTo(clientId, rejectionMessage);
+                GlobalVariables.removeClientFromOnlineList(channel);
+
+                return false;
+            }
+        } else {
+
+            GlobalVariables.addClientToOnlineList(channel, clientId);
+            Document rejectionDoc = new Document().append("senderId", "SERVER").append("receiverId",clientId)
+                .append("token","NULL").append("action","ERROR").append("data","UNAUTHORISED ACCESS");
+            Request rejectionMessage = new Request(rejectionDoc);
+            sendMessageTo(clientId, rejectionMessage);
+            return false;
+        }
+    }
+    
+    private boolean sendMessageTo(String recieverId, Request request) {
+        try {
+			GlobalVariables.globalLocks.acquire();
+		} catch (InterruptedException e) {
+            e.printStackTrace();
+            return false;
+		}
+        if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
+            ClientInfo recieverInfo = GlobalVariables.onlineClientsNew.get(clientId);
+            GlobalVariables.globalLocks.release();
+            GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
+            return true;
+        } else {
+            if(GlobalVariables.userCollection.countDocuments(eq("userId", recieverId)) > 0){
+                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
+                GlobalVariables.messageCollection.insertOne(request.toDocument());
+                GlobalVariables.globalLocks.release();
+                return true;
+            } else {
+                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist");
+                GlobalVariables.globalLocks.release();
+                return false;
+            }
+        }
+    }
+
+    private void closeConnection() {
+        try {
+            System.out.println("Closing Channel");
+            GlobalVariables.removeClientFromOnlineList(channel);
+            channel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ReceiveMessageTask(SelectionKey selectorKey) {
+        this.selectorKey = selectorKey;
+        clientId = "";
+        channel = (SocketChannel) selectorKey.channel();
+    }
+
+    
 }
