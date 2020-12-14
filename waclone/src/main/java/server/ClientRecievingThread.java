@@ -49,10 +49,10 @@ public class ClientRecievingThread extends Thread {
 
                     System.out.println("aye");
 
-                    GlobalVariables.databaseLock.acquire();
+                    GlobalVariables.globalLocks.acquire();
                     List<Document> messages = GlobalVariables.messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
                     GlobalVariables.messageCollection.deleteMany(eq("receiverId", clientId));
-                    GlobalVariables.databaseLock.release();
+                    GlobalVariables.globalLocks.release();
 
                     //Deliver stored messages to user
                     System.out.println(messages);
@@ -79,9 +79,9 @@ public class ClientRecievingThread extends Thread {
                 ClientInfo receiverInfo = GlobalVariables.onlineClients.get(receiverId);
                 GlobalVariables.sendMessage.execute(new SendMessageTask(receiverInfo.getOutputStream(), request));
             } else {
-                GlobalVariables.databaseLock.acquire();
+                GlobalVariables.globalLocks.acquire();
                 GlobalVariables.messageCollection.insertOne(request.toDocument());
-                GlobalVariables.databaseLock.release();
+                GlobalVariables.globalLocks.release();
 
             }
 

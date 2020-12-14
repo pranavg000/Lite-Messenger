@@ -65,11 +65,8 @@ public class SendMessageTaskNew implements Runnable {
         System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline, saving to DB");
         GlobalVariables.databaseInsertData(request);
         try {
-            if (GlobalVariables.channelToClientId.containsKey(channel)) {
+            if (GlobalVariables.removeClientFromOnlineList(channel)) {
                 System.out.println("Closing Channel");
-                String clientId = GlobalVariables.channelToClientId.get(channel);
-                GlobalVariables.channelToClientId.remove(channel);
-                GlobalVariables.onlineClientsNew.remove(clientId);
             }
             channel.close();
         } catch (IOException e) {
@@ -85,25 +82,21 @@ public class SendMessageTaskNew implements Runnable {
         System.out.println("Sending" + buffer.array());
         // synchronized (channel) {
         System.out.println(len);
-        if (GlobalVariables.onlineClientsNew.containsKey(request.getReceiverId())) {
-            while (len > 0) {
-                int clen;
-                try {
-                    clen = channel.write(buffer);
-                    len -= clen;
-                } catch (ClosedChannelException e) {
-                    System.out.println("channel closed");
-                    e.printStackTrace();
-                    storeAndCloseConnection();
-                    return;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    storeAndCloseConnection();
-                    return;
-                }
+        while (len > 0) {
+            int clen;
+            try {
+                clen = channel.write(buffer);
+                len -= clen;
+            } catch (ClosedChannelException e) {
+                System.out.println("channel closed");
+                e.printStackTrace();
+                storeAndCloseConnection();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+                storeAndCloseConnection();
+                return;
             }
-        } else {
-            storeAndCloseConnection();
         }
         return;
     }

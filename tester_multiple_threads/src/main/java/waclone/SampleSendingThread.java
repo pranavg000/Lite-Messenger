@@ -42,7 +42,7 @@ class SampleSendingThread extends Thread {
         Gson gson = new Gson();
         Request request = new Request();
         request.setSenderId(id);
-        request.setRecieverId("-1");
+        request.setReceiverId("-1");
         request.setData("CONNECTION PACKET");
         request.setAction(RequestType.Auth);
 
@@ -97,7 +97,7 @@ class SampleSendingThread extends Thread {
         for (int i = 0; i < 10; i++) {
             int receiver = ThreadLocalRandom.current().nextInt(0, GlobalVariables.Nclients);
             request.setSenderId(id);
-            request.setRecieverId(Integer.toString(receiver));
+            request.setReceiverId(Integer.toString(receiver));
             request.setData("Source: " + id + ", Receiver: " + Integer.toString(receiver));
             request.setAction(RequestType.Message);
 

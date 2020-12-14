@@ -5,7 +5,7 @@ import waclone.GlobalVariables.RequestType;
 public class Request {
    private RequestType action;
    private String senderId;
-   private String recieverId;
+   private String receiverId;
    private String data;
 
    public RequestType getAction() {
@@ -24,12 +24,12 @@ public class Request {
        this.senderId = senderId;
    }
 
-   public String getRecieverId() {
-       return recieverId;
+   public String getReceiverId() {
+       return receiverId;
    }
 
-   public void setRecieverId(String recieverId) {
-       this.recieverId = recieverId;
+   public void setReceiverId(String receiverId) {
+       this.receiverId = receiverId;
    }
 
    public String getData() {
@@ -42,7 +42,7 @@ public class Request {
 
    @Override
    public String toString() {
-       return "Request [action=" + action + ", data=" + data + ", recieverId=" + recieverId + ", senderId=" + senderId
+       return "Request [action=" + action + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
                + "]";
    }
    

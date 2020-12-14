@@ -24,16 +24,16 @@ public class SendMessageTask implements Runnable {
 
                 System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline, saving to DB");
 
-                GlobalVariables.databaseLock.acquire();   
+                GlobalVariables.globalLocks.acquire();   
                 GlobalVariables.messageCollection.insertOne(request.toDocument());
-                GlobalVariables.databaseLock.release();
+                GlobalVariables.globalLocks.release();
 
             }
 
         } catch (IOException e1) {
             // Insert into database if unable to send message.
             try {
-                GlobalVariables.databaseLock.acquire();
+                GlobalVariables.globalLocks.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -41,7 +41,7 @@ public class SendMessageTask implements Runnable {
             GlobalVariables.messageCollection.insertOne(request.toDocument());
             GlobalVariables.onlineClientsRemoveKey(request.getReceiverId());
 
-            GlobalVariables.databaseLock.release();
+            GlobalVariables.globalLocks.release();
 
             e1.printStackTrace();
         } catch (InterruptedException e) {

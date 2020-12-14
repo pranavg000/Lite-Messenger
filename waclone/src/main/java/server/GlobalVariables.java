@@ -1,6 +1,7 @@
 package server;
 
 import java.nio.channels.Channel;
+import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +23,7 @@ public class GlobalVariables {
     public static MongoCollection<Document> messageCollection;
     public static MongoCollection<Document> userCollection;
     public static String connectionString = "mongodb+srv://wacloneAPH:waclonemen3001@waclonecluster.etq8i.mongodb.net/test?retryWrites=true&w=majority";
-    public static Semaphore databaseLock;
-
+    
     // Threads etc.
     public final static int Nthreads = 10;
     public static ExecutorService sendMessage, receiveMessage;
@@ -31,6 +31,7 @@ public class GlobalVariables {
     public static Map<String, ClientInfoNew> onlineClientsNew;
     public static Map<Channel, String> channelToClientId;
     public static BlockingQueue<Request> outbox;
+    public static Semaphore globalLocks;
 
     public static enum RequestType {
         Auth, NewChat, Message, SignUp
@@ -60,12 +61,79 @@ public class GlobalVariables {
     }
 
     public static synchronized void databaseInsertData(Request request) {
-        GlobalVariables.messageCollection.insertOne(request.toDocument());
+        try {
+            globalLocks.acquire();
+            messageCollection.insertOne(request.toDocument());
+            globalLocks.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return;
     }
 
     public static synchronized List<Document> fetchUnsendMessages(String clientId) {
-        List<Document> messages = GlobalVariables.messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
-        GlobalVariables.messageCollection.deleteMany(eq("receiverId", clientId));
+        List<Document> messages = new ArrayList<Document>();
+        try {
+            globalLocks.acquire();
+            messages = messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
+            messageCollection.deleteMany(eq("receiverId", clientId));
+            globalLocks.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return messages;
+    }
+
+    public static synchronized void addClientToOnlineList(SocketChannel channel, String clientId) {
+        try {
+            globalLocks.acquire();
+            onlineClientsNew.put(clientId, new ClientInfoNew(clientId, channel));
+            channelToClientId.put(channel, clientId);
+            globalLocks.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return;
+    }
+
+    public static synchronized boolean removeClientFromOnlineList(SocketChannel channel) {
+        try {
+            globalLocks.acquire();
+            if (channelToClientId.containsKey(channel)) {
+                String clientId = channelToClientId.get(channel);
+                channelToClientId.remove(channel);
+                onlineClientsNew.remove(clientId);
+                globalLocks.release();
+                return true;
+            }
+            return false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean checkClientOnline(String clientId) {
+        try {
+            globalLocks.acquire();
+            boolean ans = onlineClientsNew.containsKey(clientId);
+            globalLocks.release();
+            return ans;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static ClientInfoNew getClientInfo(String clientId) {
+        try {
+            globalLocks.acquire();
+            ClientInfoNew ans = onlineClientsNew.get(clientId);
+            globalLocks.release();
+            return ans;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

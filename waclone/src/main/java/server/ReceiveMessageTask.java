@@ -28,13 +28,22 @@ public class ReceiveMessageTask implements Runnable {
     }
 
     private void sendMessageTo(String recieverId, Request request) {
+        try {
+			GlobalVariables.globalLocks.acquire();
+		} catch (InterruptedException e) {
+            e.printStackTrace();
+            return;
+		}
         if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
-            ClientInfoNew recieverInfo = GlobalVariables.onlineClientsNew.get(recieverId);
+            ClientInfoNew recieverInfo = GlobalVariables.onlineClientsNew.get(clientId);
+            GlobalVariables.globalLocks.release();
             GlobalVariables.sendMessage.execute(new SendMessageTaskNew(recieverInfo.getChannel(), request));
         } else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
-            GlobalVariables.databaseInsertData(request);
+            GlobalVariables.messageCollection.insertOne(request.toDocument());
+            GlobalVariables.globalLocks.release();
         }
+        return;
     }
 
     private Boolean processRequest(Request request) {
@@ -43,12 +52,10 @@ public class ReceiveMessageTask implements Runnable {
         System.out.println(reqType);
         if (clientId.isEmpty())
             clientId = request.getSenderId();
-        if (!GlobalVariables.onlineClientsNew.containsKey(clientId)) {
+        if (!GlobalVariables.checkClientOnline(clientId)) {
             System.out.println(reqType + "HI");
             if (isAuth(request)) {
-                GlobalVariables.onlineClientsNew.put(clientId, new ClientInfoNew(clientId, channel));
-                GlobalVariables.channelToClientId.put(channel, clientId);
-
+                GlobalVariables.addClientToOnlineList(channel, clientId);
                 List<Document> messageList = GlobalVariables.fetchUnsendMessages(clientId);
                 // Deliver stored messages to user
                 System.out.println(messageList);
@@ -75,11 +82,7 @@ public class ReceiveMessageTask implements Runnable {
     private void closeConnection() {
         try {
             System.out.println("Closing Channel");
-            if (GlobalVariables.channelToClientId.containsKey(channel)) {
-                clientId = GlobalVariables.channelToClientId.get(channel);
-                GlobalVariables.channelToClientId.remove(channel);
-                GlobalVariables.onlineClientsNew.remove(clientId);
-            }
+            GlobalVariables.removeClientFromOnlineList(channel);
             channel.close();
         } catch (IOException e) {
             e.printStackTrace();

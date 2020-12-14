@@ -24,7 +24,8 @@ public class App {
         }
         System.out.println("Starting Server");
 
-        GlobalVariables.databaseLock = new Semaphore(1);
+        GlobalVariables.globalLocks = new Semaphore(1);
+
         GlobalVariables.mongoClient = MongoClients.create(GlobalVariables.connectionString);
         GlobalVariables.database = GlobalVariables.mongoClient.getDatabase("wacloneDB");
         GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
