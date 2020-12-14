@@ -35,9 +35,9 @@ public class ReceiveMessageTask implements Runnable {
             return;
 		}
         if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
-            ClientInfoNew recieverInfo = GlobalVariables.onlineClientsNew.get(clientId);
+            ClientInfo recieverInfo = GlobalVariables.onlineClientsNew.get(clientId);
             GlobalVariables.globalLocks.release();
-            GlobalVariables.sendMessage.execute(new SendMessageTaskNew(recieverInfo.getChannel(), request));
+            GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
         } else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
             GlobalVariables.messageCollection.insertOne(request.toDocument());

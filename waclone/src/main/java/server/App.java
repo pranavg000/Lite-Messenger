@@ -31,14 +31,13 @@ public class App {
         GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
         GlobalVariables.messageCollection = GlobalVariables.database.getCollection("messages");
         
-        GlobalVariables.onlineClients = new HashMap<String,ClientInfo>();
-        GlobalVariables.onlineClientsNew = new HashMap<String,ClientInfoNew>();
+        GlobalVariables.onlineClientsNew = new HashMap<String,ClientInfo>();
         GlobalVariables.channelToClientId = new HashMap<Channel,String>();
         GlobalVariables.outbox = new LinkedBlockingDeque<Request>();
         GlobalVariables.sendMessage = Executors.newFixedThreadPool(GlobalVariables.Nthreads);
         GlobalVariables.receiveMessage = Executors.newFixedThreadPool(GlobalVariables.Nthreads);
-        // ConnectionListeningThread clt = new ConnectionListeningThread();
-        ConnectionListeningThreadNew clt = new ConnectionListeningThreadNew();
+
+        ConnectionListeningThread clt = new ConnectionListeningThread();
         clt.start();
 
         System.out.println("End of app.java");

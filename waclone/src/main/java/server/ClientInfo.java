@@ -1,18 +1,10 @@
 package server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.nio.channels.SocketChannel;
 
 public class ClientInfo {
     private String clientId;
-    private DataInputStream inputStream;
-    private DataOutputStream outputStream;
-
-    public ClientInfo(String clientId, DataInputStream inputStream, DataOutputStream outputStream) {
-        this.clientId = clientId;
-        this.inputStream = inputStream;
-        this.outputStream = outputStream;
-    }
+    private SocketChannel channel;
 
     public String getClientId() {
         return clientId;
@@ -22,21 +14,17 @@ public class ClientInfo {
         this.clientId = clientId;
     }
 
-    public DataInputStream getInputStream() {
-        return inputStream;
+    public SocketChannel getChannel() {
+        return channel;
     }
 
-    public void setInputStream(DataInputStream inputStream) {
-        this.inputStream = inputStream;
+    public void setChannel(SocketChannel channel) {
+        this.channel = channel;
     }
 
-    public DataOutputStream getOutputStream() {
-        return outputStream;
+    public ClientInfo(String clientId, SocketChannel channel) {
+        this.clientId = clientId;
+        this.channel = channel;
     }
 
-    public void setOutputStream(DataOutputStream outputStream) {
-        this.outputStream = outputStream;
-    }
-    
-    
 }

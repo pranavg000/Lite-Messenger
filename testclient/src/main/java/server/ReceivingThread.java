@@ -8,8 +8,6 @@ import java.net.SocketException;
 
 import com.google.gson.Gson;
 
-import server.GlobalVariables.RequestType;
-
 public class ReceivingThread extends Thread {
 
     private Socket socket;

@@ -24,11 +24,9 @@ public class SendingThread extends Thread {
         // catch(InterruptedException ex) {
         //     Thread.currentThread().interrupt();
         // }
-        int i = 0;
         Scanner in = new Scanner(System.in);
         while(true){
             int choice = in.nextInt();
-            i++;
             if(choice == 1){
                 System.out.println("Auth sent!!");
                 if(!sendRequest.sendAuth()) break;

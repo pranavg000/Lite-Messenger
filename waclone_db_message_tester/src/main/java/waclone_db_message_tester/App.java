@@ -12,26 +12,25 @@ import java.util.concurrent.Semaphore;
  *
  */
 public class App {
-    public static void main(String[] args) throws InterruptedException, FileNotFoundException
-    {
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
         PrintStream o = new PrintStream(new File("A.txt"));
         System.setOut(o);
-        
+
         GlobalVariables.printer = new Semaphore(1);
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Scanner ready");
-        while(true){
+        while (true) {
             int type = scanner.nextInt();
-            if(type==0){
+            if (type == 0) {
                 ArrayList<SampleSendingThread> threads = new ArrayList<SampleSendingThread>();
                 for (int i = 0; i < 10; i++) {
                     threads.add(new SampleSendingThread(Integer.toString(i)));
                     threads.get(i).start();
                 }
-                while(true){
-                    boolean f=false;
+                while (true) {
+                    boolean f = false;
                     for (int i = 0; i < 10; i++) {
                         if (!threads.get(i).isAuthenticated) {
 
@@ -39,7 +38,7 @@ public class App {
                             break;
                         }
                     }
-                    if(!f){
+                    if (!f) {
                         break;
                     }
                 }
@@ -55,21 +54,21 @@ public class App {
                 System.out.println("Sender threads done. Scanner ready.");
                 GlobalVariables.printer.release();
 
-            } else if(type==1){
+            } else if (type == 1) {
                 ArrayList<SampleReceivingThread> threads = new ArrayList<SampleReceivingThread>();
                 for (int i = 10; i < 20; i++) {
                     threads.add(new SampleReceivingThread(Integer.toString(i)));
-                    threads.get(i-10).start();
+                    threads.get(i - 10).start();
                 }
-                while(true){
-                    boolean f=false;
+                while (true) {
+                    boolean f = false;
                     for (int i = 0; i < 10; i++) {
                         if (!threads.get(i).isAuthenticated) {
                             f = true;
                             break;
                         }
                     }
-                    if(!f){
+                    if (!f) {
                         break;
                     }
                 }
@@ -86,6 +85,9 @@ public class App {
                 System.out.println("Receiver threads done. Scanner ready.");
                 GlobalVariables.printer.release();
 
+            } else {
+                scanner.close();
+                return;
             }
         }
     }

@@ -27,8 +27,7 @@ public class GlobalVariables {
     // Threads etc.
     public final static int Nthreads = 10;
     public static ExecutorService sendMessage, receiveMessage;
-    public static Map<String, ClientInfo> onlineClients;
-    public static Map<String, ClientInfoNew> onlineClientsNew;
+    public static Map<String, ClientInfo> onlineClientsNew;
     public static Map<Channel, String> channelToClientId;
     public static BlockingQueue<Request> outbox;
     public static Semaphore globalLocks;
@@ -50,14 +49,6 @@ public class GlobalVariables {
         }
 
         return s;
-    }
-
-    public static synchronized void onlineClientsAddKey(String key, ClientInfo clientInfo) {
-        onlineClients.put(key, clientInfo);
-    }
-
-    public static synchronized void onlineClientsRemoveKey(String Key) {
-        onlineClients.remove(Key);
     }
 
     public static synchronized void databaseInsertData(Request request) {
@@ -87,7 +78,7 @@ public class GlobalVariables {
     public static synchronized void addClientToOnlineList(SocketChannel channel, String clientId) {
         try {
             globalLocks.acquire();
-            onlineClientsNew.put(clientId, new ClientInfoNew(clientId, channel));
+            onlineClientsNew.put(clientId, new ClientInfo(clientId, channel));
             channelToClientId.put(channel, clientId);
             globalLocks.release();
         } catch (InterruptedException e) {
@@ -125,10 +116,10 @@ public class GlobalVariables {
         return false;
     }
 
-    public static ClientInfoNew getClientInfo(String clientId) {
+    public static ClientInfo getClientInfo(String clientId) {
         try {
             globalLocks.acquire();
-            ClientInfoNew ans = onlineClientsNew.get(clientId);
+            ClientInfo ans = onlineClientsNew.get(clientId);
             globalLocks.release();
             return ans;
         } catch (InterruptedException e) {
