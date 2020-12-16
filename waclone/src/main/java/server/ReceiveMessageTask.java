@@ -83,7 +83,22 @@ public class ReceiveMessageTask implements Runnable {
                 System.out.println("Actual token:"+userToken+" Used token: "+request.getToken());
                 return false;
             }
-        } else {
+        } else if(reqType == RequestType.Disconnect){
+            if(GlobalVariables.userCollection.find(eq("userId",clientId)).first().getString("token").equals(request.getToken())){
+                System.out.println("Client with id "+clientId+" wants to disconnect!");
+                Document disconnectDocument = new Document().append("senderId","SERVER").append("receiverId", clientId)
+                    .append("action", "POSITIVE").append("data","Disconnected successfully!").append("token","NULL");
+                Request disconnectMessage = new Request(disconnectDocument);
+                sendMessageTo(clientId, disconnectMessage);
+                GlobalVariables.removeClientFromOnlineList(channel);
+
+            } else {
+                Document disconnectDocument = new Document().append("senderId","SERVER").append("receiverId", clientId)
+                    .append("action", "ERROR").append("data","UNAUTHORISED ACCESS!!!").append("token","NULL");
+                Request disconnectMessage = new Request(disconnectDocument);
+                sendMessageTo(clientId, disconnectMessage);
+            }
+        }else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
             // Unkown command return error response
             return false;
@@ -96,13 +111,14 @@ public class ReceiveMessageTask implements Runnable {
             GlobalVariables.globalLocks.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return false;
         }
         if ((request.getAction() == RequestType.Auth)
                 && (GlobalVariables.userCollection.countDocuments(eq("userId", request.getSenderId())) > 0)) {
             String userToken = (String) GlobalVariables.userCollection.find(eq("userId", request.getSenderId())).first()
                     .get("token");
             GlobalVariables.globalLocks.release();
-            if (userToken == request.getToken()) {
+            if (userToken.equals(request.getToken())) {
                 return true;
             }
         }
@@ -178,7 +194,7 @@ public class ReceiveMessageTask implements Runnable {
 
             GlobalVariables.addClientToOnlineList(channel, clientId);
             Document rejectionDoc = new Document().append("senderId", "SERVER").append("receiverId",clientId)
-                .append("token","NULL").append("action","ERROR").append("data","UNAUTHORISED ACCESS");
+                .append("token","NULL").append("action","ERROR").append("data","UNAUTHORISED ACCESS!!!");
             Request rejectionMessage = new Request(rejectionDoc);
             sendMessageTo(clientId, rejectionMessage);
             return false;

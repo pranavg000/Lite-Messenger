@@ -10,25 +10,30 @@ import com.google.gson.JsonSyntaxException;
 
 import org.bson.Document;
 
-public class SampleReceivingThread extends Thread {
+public class SampleAuthenticatedReceivingThreads extends Thread {
+    
     public String id;
     public Socket socket;
     public String token;
     public boolean isAuthenticated = false;
-
-    DataInputStream inputStream;
     DataOutputStream outputStream;
-
-    SampleReceivingThread(String i) {
-        id = i;
+    DataInputStream inputStream;
+    
+    SampleAuthenticatedReceivingThreads(String i){
+        this.id=i;
     }
 
-    public void run() {
+    public void run(){
+        if(!GlobalVariables.tokens.containsKey(id)){
+            System.out.println("TOKEN NOT AVAILABLE FOR THIS THREAD!!! TERMINATING!!!");
+            return;
+        }
+        this.token = GlobalVariables.tokens.get(id);
 
         try {
             socket = new Socket("127.0.0.1", 5000);
             isAuthenticated = true;
-            System.out.println("Receiver thread with id " + id + " authenticated.");
+            System.out.println("Authenticated receiver thread with id " + id + " authenticated.");
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -37,7 +42,7 @@ public class SampleReceivingThread extends Thread {
         while (true) {
             try {
                 GlobalVariables.printer.acquire();
-                if (GlobalVariables.receiverThreadsReady) {
+                if (GlobalVariables.authenticatedReceivingThreadsReady) {
                     GlobalVariables.printer.release();
                     break;
                 }
@@ -49,7 +54,7 @@ public class SampleReceivingThread extends Thread {
 
         Gson gson = new Gson();
         Document connectionDoc = new Document().append("senderId", id).append("receiverId", "-1")
-                .append("action", "SignUp").append("data", "NULL").append("token", "NULL");
+                .append("action", "Auth").append("data", "NULL").append("token", token);
         Request request = new Request(connectionDoc);
 
         try {
@@ -64,15 +69,10 @@ public class SampleReceivingThread extends Thread {
         try {
             inputStream = new DataInputStream(socket.getInputStream());
             Request validation = gson.fromJson(inputStream.readUTF(), Request.class);
-            // System.out.println(id+" "+validation.getAction());
-            if (GlobalVariables.getActionString(validation.getAction()).equals("POSITIVE")) {
-                token = validation.getToken();
-                GlobalVariables.printer.acquire();
-                GlobalVariables.tokens.put(id, token);
-                GlobalVariables.printer.release();
-                System.out.println("Signed up successfully! Token received: " + token);
+            if (GlobalVariables.getActionString(validation.getAction()).equals("POSITIVE")) {                
+                System.out.println("Authenticated Receiving Thread with ID "+id+ " Signed In Successfully!");
             } else if (GlobalVariables.getActionString(validation.getAction()).equals("ERROR")) {
-                System.out.println("Account already exists! TERMINATING");
+                System.out.println(validation.getData()+" TERMINATING!!!");
                 return;
             } else {
                 System.out.println("Unknown message received");
@@ -80,10 +80,7 @@ public class SampleReceivingThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
             return;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return;
-        }
+        } 
 
         while (true) {
             try {

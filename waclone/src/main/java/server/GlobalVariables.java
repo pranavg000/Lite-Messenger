@@ -34,7 +34,7 @@ public class GlobalVariables {
     public static Semaphore globalLocks;
 
     public static enum RequestType {
-        Auth, NewChat, Message, SignUp, POSITIVE, ERROR
+        Auth, NewChat, Message, SignUp, Disconnect, POSITIVE, ERROR
     }
 
     public static String getActionString(RequestType r){
@@ -51,6 +51,8 @@ public class GlobalVariables {
             s="POSITIVE";
         } else if(r==RequestType.ERROR){
             s="ERROR";
+        } else if(r==RequestType.Disconnect){
+            s="Disconnect";
         }
 
         return s;

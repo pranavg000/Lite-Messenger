@@ -6,29 +6,31 @@ import java.io.IOException;
 import java.net.Socket;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import org.bson.Document;
 
-public class SampleReceivingThread extends Thread {
+public class AuthenticationTestThread extends Thread {
+    //To test "account does not exist" and "unauthorised access"
+
     public String id;
     public Socket socket;
     public String token;
     public boolean isAuthenticated = false;
-
-    DataInputStream inputStream;
     DataOutputStream outputStream;
-
-    SampleReceivingThread(String i) {
-        id = i;
+    DataInputStream inputStream;
+    
+    AuthenticationTestThread(String i){
+        this.id=i;
     }
 
-    public void run() {
+    public void run(){
+        this.token = "123";
 
         try {
             socket = new Socket("127.0.0.1", 5000);
             isAuthenticated = true;
-            System.out.println("Receiver thread with id " + id + " authenticated.");
+            System.out.println("Authentication test thread with id " + id + " authenticated.");
+
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -37,7 +39,7 @@ public class SampleReceivingThread extends Thread {
         while (true) {
             try {
                 GlobalVariables.printer.acquire();
-                if (GlobalVariables.receiverThreadsReady) {
+                if (GlobalVariables.authenticationThreadsReady) {
                     GlobalVariables.printer.release();
                     break;
                 }
@@ -45,11 +47,12 @@ public class SampleReceivingThread extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+    
         }
 
         Gson gson = new Gson();
         Document connectionDoc = new Document().append("senderId", id).append("receiverId", "-1")
-                .append("action", "SignUp").append("data", "NULL").append("token", "NULL");
+                .append("action", "Auth").append("data", "NULL").append("token", token);
         Request request = new Request(connectionDoc);
 
         try {
@@ -64,37 +67,20 @@ public class SampleReceivingThread extends Thread {
         try {
             inputStream = new DataInputStream(socket.getInputStream());
             Request validation = gson.fromJson(inputStream.readUTF(), Request.class);
-            // System.out.println(id+" "+validation.getAction());
-            if (GlobalVariables.getActionString(validation.getAction()).equals("POSITIVE")) {
-                token = validation.getToken();
-                GlobalVariables.printer.acquire();
-                GlobalVariables.tokens.put(id, token);
-                GlobalVariables.printer.release();
-                System.out.println("Signed up successfully! Token received: " + token);
-            } else if (GlobalVariables.getActionString(validation.getAction()).equals("ERROR")) {
-                System.out.println("Account already exists! TERMINATING");
+            if(GlobalVariables.getActionString(validation.getAction()).equals("POSITIVE")){
+                System.out.println("Authenticated Sending Thread with ID "+id+ " Signed In Successfully!");
+            } else if(GlobalVariables.getActionString(validation.getAction()).equals("ERROR")){
+                System.out.println(validation.getData()+" TERMINATING!!!");
                 return;
             } else {
                 System.out.println("Unknown message received");
+                return;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
             return;
         }
-
-        while (true) {
-            try {
-                request = gson.fromJson(inputStream.readUTF(), Request.class);
-                System.out.println("Received: "+request.getData());
-            } catch (JsonSyntaxException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-
+    
     }
-
 
 }

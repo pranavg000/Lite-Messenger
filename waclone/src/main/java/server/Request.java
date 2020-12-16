@@ -24,6 +24,8 @@ public class Request {
             this.action = RequestType.POSITIVE;
         } else if(((String)obj.get("action")).equals("ERROR")){
             this.action = RequestType.ERROR;
+        } else if(((String)obj.get("action")).equals("Disconnect")){
+            this.action = RequestType.Disconnect;
         }
         this.senderId = (String)obj.get("senderId");
         this.receiverId = (String)obj.get("receiverId");
