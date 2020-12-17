@@ -10,9 +10,9 @@ The server program for a lightweight messenger similar to WhatsApp. It Uses Mong
 * Temporary storing of messages
 
 ## Todo
-* End to end encypted messaging
+* End-to-End encryption
 * Time-Stamp
-* Read/Send receipt
+* Read/Receive receipt
 * Group Messaging
 * Media Support
 
