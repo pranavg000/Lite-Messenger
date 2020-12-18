@@ -72,6 +72,24 @@ public class ReceiveMessageTask implements Runnable {
             return handleAuth(request);
         } else if (reqType == RequestType.NewChat) {
             System.out.println("New Chat");
+            if(GlobalVariables.userCollection.find(eq("userId",clientId)).first().getString("token").equals(request.getToken())){
+                if(GlobalVariables.userCollection.countDocuments(eq("userId",recieverId)) > 0){
+                    Document approvalDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
+                        .append("token","NULL").append("data","User was found").append("action","POSITIVE");
+                    Request approvalReq = new Request(approvalDoc);
+                    sendMessageTo(clientId, approvalReq);
+                } else {
+                    Document rejectionDoc = new Document().append("senderId","SERVER").append("receiverId",clientId)
+                        .append("token","NULL").append("data","USER NOT FOUND").append("action","ERROR");
+                    Request rejectionReq = new Request(rejectionDoc);
+                    sendMessageTo(clientId, rejectionReq);
+                }
+            } else {
+                Document rejectionDoc = new Document().append("senderId","SERVER").append("receiverId",clientId)
+                        .append("token","NULL").append("data","UNAUTHORISED ACCESS!!!").append("action","ERROR");
+                Request rejectionReq = new Request(rejectionDoc);
+                sendMessageTo(clientId, rejectionReq);
+            }
         } else if (reqType == RequestType.Message) {
             System.out.println("Send message");
             String userToken = GlobalVariables.userCollection

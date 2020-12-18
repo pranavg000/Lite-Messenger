@@ -10,6 +10,8 @@ import com.google.gson.JsonSyntaxException;
 
 import org.bson.Document;
 
+import waclone_db_message_tester.GlobalVariables.RequestType;
+
 public class SampleReceivingThread extends Thread {
     public String id;
     public Socket socket;
@@ -85,14 +87,26 @@ public class SampleReceivingThread extends Thread {
             return;
         }
 
-        while (true) {
-            try {
-                request = gson.fromJson(inputStream.readUTF(), Request.class);
-                System.out.println("Received: "+request.getData());
-            } catch (JsonSyntaxException | IOException e) {
-                e.printStackTrace();
-            }
+        Document disconnectDocument = new Document().append("senderId", id).append("receiverId", "-1")
+                .append("action", "Disconnect").append("token", token).append("data", "Trying to disconnect!");
+        Request disconnectRequest = new Request(disconnectDocument);
+        try {
+            outputStream.writeUTF(gson.toJson(disconnectRequest));
+            System.out.println("Receiving thread with id " + id + " disconnecting.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        try {
+            Request validation = gson.fromJson(inputStream.readUTF(), Request.class);
+            if(validation.getAction() == RequestType.POSITIVE){
+                System.out.println("Receiving thread with id "+id+" disconnected successfully");
+            } else {
+                System.out.println("Error disconnecting for id "+id+": "+validation.getData());
+            }
+        } catch (JsonSyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

@@ -9,287 +9,210 @@ Sending thread with id 6 created.
 Sending thread with id 7 created.
 Sending thread with id 8 created.
 Sending thread with id 9 created.
-Thread with id 2 authenticated.
 Thread with id 7 authenticated.
-Thread with id 6 authenticated.
-Thread with id 0 authenticated.
 Thread with id 8 authenticated.
-Thread with id 1 authenticated.
+Thread with id 6 authenticated.
 Thread with id 5 authenticated.
-Thread with id 4 authenticated.
+Thread with id 0 authenticated.
+Thread with id 1 authenticated.
 Thread with id 3 authenticated.
-All sender threads authenticated.
+Thread with id 2 authenticated.
 Thread with id 9 authenticated.
-Signed up successfully! Token received: QX0EiA&cd46igAp%9Fu#
-Sent: Source: 3, Receiver: 17
-Sent: Source: 3, Receiver: 19
+Thread with id 4 authenticated.
+All sender threads authenticated.
+Signed up successfully! Token received: $h5o7Q&tWPD7GNRPsjYV
+Sent: Source: 9, Receiver: 16
+Sent: Source: 9, Receiver: 10
+Sent: Source: 9, Receiver: 13
+Sent: Source: 9, Receiver: 16
+Sent: Source: 9, Receiver: 10
+Sent: Source: 9, Receiver: 15
+Sent: Source: 9, Receiver: 12
+Sent: Source: 9, Receiver: 11
+Sent: Source: 9, Receiver: 10
+Sent: Source: 9, Receiver: 11
+Sending thread with id 9 disconnecting.
+Signed up successfully! Token received: SQm5L$mJU6sN2&W$&tzE
+Sent: Source: 6, Receiver: 14
+Sent: Source: 6, Receiver: 10
+Sent: Source: 6, Receiver: 14
+Sent: Source: 6, Receiver: 15
+Sent: Source: 6, Receiver: 11
+Sent: Source: 6, Receiver: 17
+Sent: Source: 6, Receiver: 15
+Sent: Source: 6, Receiver: 17
+Sent: Source: 6, Receiver: 18
+Sent: Source: 6, Receiver: 12
+Sending thread with id 6 disconnecting.
+Signed up successfully! Token received: 71ox7f22fn&N71wLEeXn
+Sent: Source: 8, Receiver: 12
+Sent: Source: 8, Receiver: 17
+Sent: Source: 8, Receiver: 17
+Sent: Source: 8, Receiver: 14
+Sent: Source: 8, Receiver: 13
+Sent: Source: 8, Receiver: 11
+Sent: Source: 8, Receiver: 11
+Sent: Source: 8, Receiver: 15
+Sent: Source: 8, Receiver: 10
+Sent: Source: 8, Receiver: 15
+Sending thread with id 8 disconnecting.
+Signed up successfully! Token received: N8i0HeDjuyPTL&zJd&P@
+Sent: Source: 0, Receiver: 11
+Sent: Source: 0, Receiver: 12
+Sent: Source: 0, Receiver: 13
+Sent: Source: 0, Receiver: 14
+Sent: Source: 0, Receiver: 10
+Sent: Source: 0, Receiver: 11
+Sent: Source: 0, Receiver: 16
+Sent: Source: 0, Receiver: 11
+Sent: Source: 0, Receiver: 18
+Sent: Source: 0, Receiver: 12
+Sending thread with id 0 disconnecting.
+Signed up successfully! Token received: OvUmqhWA1suqvVrhASOJ
+Sent: Source: 2, Receiver: 12
+Sent: Source: 2, Receiver: 15
+Sent: Source: 2, Receiver: 16
+Sent: Source: 2, Receiver: 17
+Sent: Source: 2, Receiver: 11
+Sent: Source: 2, Receiver: 16
+Sent: Source: 2, Receiver: 11
+Sent: Source: 2, Receiver: 11
+Sent: Source: 2, Receiver: 16
+Sent: Source: 2, Receiver: 12
+Sending thread with id 2 disconnecting.
+Signed up successfully! Token received: s!2ck9cAjgMueHW!U1K4
+Sent: Source: 7, Receiver: 17
+Sent: Source: 7, Receiver: 13
+Sent: Source: 7, Receiver: 10
+Sent: Source: 7, Receiver: 10
+Sent: Source: 7, Receiver: 19
+Sent: Source: 7, Receiver: 17
+Sent: Source: 7, Receiver: 17
+Sent: Source: 7, Receiver: 13
+Sent: Source: 7, Receiver: 19
+Sent: Source: 7, Receiver: 10
+Sending thread with id 7 disconnecting.
+Signed up successfully! Token received: %nXkM309Oh$ZYoEQMaom
+Sent: Source: 5, Receiver: 14
+Sent: Source: 5, Receiver: 13
+Sent: Source: 5, Receiver: 11
+Sent: Source: 5, Receiver: 17
+Sent: Source: 5, Receiver: 17
+Sent: Source: 5, Receiver: 13
+Sent: Source: 5, Receiver: 10
+Sent: Source: 5, Receiver: 16
+Sent: Source: 5, Receiver: 11
+Sent: Source: 5, Receiver: 12
+Sending thread with id 5 disconnecting.
+Signed up successfully! Token received: lNsQ1$W4VHMx1GpAoGCE
+Sent: Source: 3, Receiver: 15
+Sent: Source: 3, Receiver: 13
 Sent: Source: 3, Receiver: 16
-Sent: Source: 3, Receiver: 10
+Sent: Source: 3, Receiver: 15
 Sent: Source: 3, Receiver: 11
-Sent: Source: 3, Receiver: 11
-Sent: Source: 3, Receiver: 11
+Sent: Source: 3, Receiver: 18
 Sent: Source: 3, Receiver: 14
 Sent: Source: 3, Receiver: 13
 Sent: Source: 3, Receiver: 18
+Sent: Source: 3, Receiver: 12
 Sending thread with id 3 disconnecting.
-Signed up successfully! Token received: @Uj@zJgJQLkofVGwtdWz
-Sent: Source: 0, Receiver: 18
-Sent: Source: 0, Receiver: 15
-Sent: Source: 0, Receiver: 10
-Sent: Source: 0, Receiver: 11
-Sent: Source: 0, Receiver: 13
-Sent: Source: 0, Receiver: 13
-Sent: Source: 0, Receiver: 13
-Sent: Source: 0, Receiver: 19
-Sent: Source: 0, Receiver: 19
-Sent: Source: 0, Receiver: 19
-Sending thread with id 0 disconnecting.
-Signed up successfully! Token received: PvFQ$GEK1wgVNLd9P&6L
-Sent: Source: 2, Receiver: 14
-Sent: Source: 2, Receiver: 13
-Sent: Source: 2, Receiver: 15
-Sent: Source: 2, Receiver: 19
-Sent: Source: 2, Receiver: 11
-Sent: Source: 2, Receiver: 13
-Sent: Source: 2, Receiver: 16
-Sent: Source: 2, Receiver: 16
-Sent: Source: 2, Receiver: 18
-Sent: Source: 2, Receiver: 12
-Sending thread with id 2 disconnecting.
-Signed up successfully! Token received: t%RzGoBrhQ!!wG%!#!tO
-Sent: Source: 1, Receiver: 11
-Sent: Source: 1, Receiver: 13
-Sent: Source: 1, Receiver: 14
-Sent: Source: 1, Receiver: 11
-Sent: Source: 1, Receiver: 18
-Sent: Source: 1, Receiver: 13
-Sent: Source: 1, Receiver: 12
-Sent: Source: 1, Receiver: 17
-Sent: Source: 1, Receiver: 11
-Sent: Source: 1, Receiver: 13
-Sending thread with id 1 disconnecting.
-Signed up successfully! Token received: KG4pfc39ZA5xz0d1bvwS
-Sent: Source: 5, Receiver: 19
-Sent: Source: 5, Receiver: 18
-Sent: Source: 5, Receiver: 12
-Sent: Source: 5, Receiver: 19
-Sent: Source: 5, Receiver: 18
-Sent: Source: 5, Receiver: 15
-Sent: Source: 5, Receiver: 19
-Sent: Source: 5, Receiver: 12
-Sent: Source: 5, Receiver: 18
-Sent: Source: 5, Receiver: 18
-Sending thread with id 5 disconnecting.
-Signed up successfully! Token received: OdUsDX#d$!69isN83rks
-Sent: Source: 4, Receiver: 14
-Sent: Source: 4, Receiver: 16
-Sent: Source: 4, Receiver: 18
-Sent: Source: 4, Receiver: 18
-Sent: Source: 4, Receiver: 11
-Sent: Source: 4, Receiver: 15
+Signed up successfully! Token received: f9!r2fxwrCcd#d$tmdR1
+Sent: Source: 4, Receiver: 13
 Sent: Source: 4, Receiver: 13
 Sent: Source: 4, Receiver: 16
-Sent: Source: 4, Receiver: 12
-Sent: Source: 4, Receiver: 14
-Sending thread with id 4 disconnecting.
-Signed up successfully! Token received: a6LX0Rmt%@ZroNp3lvCl
-Sent: Source: 6, Receiver: 17
-Sent: Source: 6, Receiver: 12
-Sent: Source: 6, Receiver: 16
-Sent: Source: 6, Receiver: 16
-Sent: Source: 6, Receiver: 11
-Sent: Source: 6, Receiver: 13
-Sent: Source: 6, Receiver: 18
-Sent: Source: 6, Receiver: 14
-Sent: Source: 6, Receiver: 10
-Sent: Source: 6, Receiver: 12
-Sending thread with id 6 disconnecting.
-Signed up successfully! Token received: a0w@Dn!vK4%fBzzVxi6B
-Sent: Source: 9, Receiver: 19
-Sent: Source: 9, Receiver: 19
-Sent: Source: 9, Receiver: 18
-Sent: Source: 9, Receiver: 17
-Sent: Source: 9, Receiver: 10
-Sent: Source: 9, Receiver: 19
-Sent: Source: 9, Receiver: 17
-Sent: Source: 9, Receiver: 12
-Sent: Source: 9, Receiver: 16
-Sent: Source: 9, Receiver: 19
-Sending thread with id 9 disconnecting.
-Signed up successfully! Token received: uHbZUljbb#92pbs$cUE&
-Sent: Source: 7, Receiver: 18
-Sent: Source: 7, Receiver: 18
-Sent: Source: 7, Receiver: 10
-Sent: Source: 7, Receiver: 18
-Sent: Source: 7, Receiver: 13
-Sent: Source: 7, Receiver: 11
-Sent: Source: 7, Receiver: 15
-Sent: Source: 7, Receiver: 11
-Sent: Source: 7, Receiver: 18
-Sent: Source: 7, Receiver: 19
-Sending thread with id 7 disconnecting.
-Signed up successfully! Token received: oodIkc8oZlQ16E%1OC9c
-Sent: Source: 8, Receiver: 12
-Sent: Source: 8, Receiver: 17
-Sent: Source: 8, Receiver: 16
-Sent: Source: 8, Receiver: 10
-Sent: Source: 8, Receiver: 19
-Sent: Source: 8, Receiver: 17
-Sent: Source: 8, Receiver: 17
-Sent: Source: 8, Receiver: 12
-Sent: Source: 8, Receiver: 11
-Sent: Source: 8, Receiver: 14
-Sending thread with id 8 disconnecting.
-Sending thread with id 0 disconnected successfully
-Sending thread with id 3 disconnected successfully
-Sending thread with id 1 disconnected successfully
-Sending thread with id 2 disconnected successfully
-Sending thread with id 4 disconnected successfully
-Sending thread with id 8 disconnected successfully
-Sending thread with id 7 disconnected successfully
-Sending thread with id 5 disconnected successfully
-Sending thread with id 6 disconnected successfully
-Sending thread with id 9 disconnected successfully
-Sender threads done. Scanner ready.
-Authenticated thread with id 0 authenticated.
-Authenticated thread with id 4 authenticated.
-Authenticated thread with id 3 authenticated.
-Authenticated thread with id 6 authenticated.
-Authenticated thread with id 1 authenticated.
-Authenticated thread with id 2 authenticated.
-Authenticated thread with id 7 authenticated.
-Authenticated thread with id 5 authenticated.
-Authenticated thread with id 8 authenticated.
-Authenticated thread with id 9 authenticated.
-All sample authenticated sending threads ready
-Authenticated Sending Thread with ID 7 Signed In Successfully!
-Sent: Source: 7, Receiver: 18
-Sent: Source: 7, Receiver: 14
-Sent: Source: 7, Receiver: 18
-Sent: Source: 7, Receiver: 16
-Sent: Source: 7, Receiver: 12
-Sent: Source: 7, Receiver: 15
-Sent: Source: 7, Receiver: 12
-Sent: Source: 7, Receiver: 15
-Sent: Source: 7, Receiver: 12
-Sent: Source: 7, Receiver: 14
-Sending thread with id 7 disconnecting.
-Authenticated Sending Thread with ID 6 Signed In Successfully!
-Sent: Source: 6, Receiver: 11
-Sent: Source: 6, Receiver: 19
-Sent: Source: 6, Receiver: 15
-Sent: Source: 6, Receiver: 12
-Sent: Source: 6, Receiver: 18
-Sent: Source: 6, Receiver: 18
-Sent: Source: 6, Receiver: 14
-Sent: Source: 6, Receiver: 15
-Sent: Source: 6, Receiver: 15
-Sent: Source: 6, Receiver: 16
-Sending thread with id 6 disconnecting.
-Authenticated Sending Thread with ID 4 Signed In Successfully!
-Sent: Source: 4, Receiver: 19
-Sent: Source: 4, Receiver: 14
-Sent: Source: 4, Receiver: 12
-Sent: Source: 4, Receiver: 15
-Sent: Source: 4, Receiver: 16
-Sent: Source: 4, Receiver: 15
-Sent: Source: 4, Receiver: 15
 Sent: Source: 4, Receiver: 18
-Sent: Source: 4, Receiver: 16
+Sent: Source: 4, Receiver: 12
 Sent: Source: 4, Receiver: 15
+Sent: Source: 4, Receiver: 11
+Sent: Source: 4, Receiver: 15
+Sent: Source: 4, Receiver: 11
+Sent: Source: 4, Receiver: 11
 Sending thread with id 4 disconnecting.
-Authenticated Sending Thread with ID 8 Signed In Successfully!
-Sent: Source: 8, Receiver: 17
-Sent: Source: 8, Receiver: 19
-Sent: Source: 8, Receiver: 17
-Sent: Source: 8, Receiver: 18
-Sent: Source: 8, Receiver: 19
-Sent: Source: 8, Receiver: 11
-Sent: Source: 8, Receiver: 10
-Sent: Source: 8, Receiver: 14
-Sent: Source: 8, Receiver: 13
-Sent: Source: 8, Receiver: 19
-Sending thread with id 8 disconnecting.
-Authenticated Sending Thread with ID 3 Signed In Successfully!
-Authenticated Sending Thread with ID 0 Signed In Successfully!
-Authenticated Sending Thread with ID 5 Signed In Successfully!
-Sent: Source: 0, Receiver: 17
-Authenticated Sending Thread with ID 1 Signed In Successfully!
-Sent: Source: 0, Receiver: 12
+Signed up successfully! Token received: feQjgQQY&pQxTy55fv7P
+Sent: Source: 1, Receiver: 19
+Sent: Source: 1, Receiver: 16
+Sent: Source: 1, Receiver: 13
+Sent: Source: 1, Receiver: 17
+Sent: Source: 1, Receiver: 17
+Sent: Source: 1, Receiver: 19
+Sent: Source: 1, Receiver: 16
 Sent: Source: 1, Receiver: 11
-Sent: Source: 5, Receiver: 10
-Sent: Source: 3, Receiver: 17
-Sent: Source: 1, Receiver: 17
-Sent: Source: 5, Receiver: 17
-Sent: Source: 1, Receiver: 17
-Sent: Source: 0, Receiver: 16
-Sent: Source: 5, Receiver: 16
-Sent: Source: 3, Receiver: 17
-Sent: Source: 0, Receiver: 11
 Sent: Source: 1, Receiver: 12
-Sent: Source: 0, Receiver: 16
-Sent: Source: 5, Receiver: 15
-Sent: Source: 0, Receiver: 13
-Sent: Source: 3, Receiver: 13
-Sent: Source: 5, Receiver: 15
-Sent: Source: 0, Receiver: 13
-Sent: Source: 1, Receiver: 14
-Sent: Source: 0, Receiver: 16
-Sent: Source: 5, Receiver: 16
-Sent: Source: 3, Receiver: 13
-Sent: Source: 0, Receiver: 10
 Sent: Source: 1, Receiver: 15
-Sent: Source: 0, Receiver: 12
-Sent: Source: 1, Receiver: 10
-Sent: Source: 1, Receiver: 14
-Sent: Source: 3, Receiver: 19
-Sent: Source: 5, Receiver: 18
-Sent: Source: 1, Receiver: 17
-Sent: Source: 3, Receiver: 12
-Sending thread with id 0 disconnecting.
-Sent: Source: 3, Receiver: 16
-Sent: Source: 5, Receiver: 12
-Sent: Source: 3, Receiver: 10
-Sent: Source: 1, Receiver: 15
-Sent: Source: 5, Receiver: 15
-Sent: Source: 3, Receiver: 19
 Sending thread with id 1 disconnecting.
-Sent: Source: 5, Receiver: 17
-Sent: Source: 3, Receiver: 15
-Sending thread with id 5 disconnecting.
-Sending thread with id 3 disconnecting.
-Authenticated Sending Thread with ID 9 Signed In Successfully!
-Sent: Source: 9, Receiver: 16
-Sent: Source: 9, Receiver: 13
-Sent: Source: 9, Receiver: 16
-Sent: Source: 9, Receiver: 14
-Sent: Source: 9, Receiver: 14
-Sent: Source: 9, Receiver: 14
-Sent: Source: 9, Receiver: 12
-Sent: Source: 9, Receiver: 18
-Sent: Source: 9, Receiver: 19
-Sent: Source: 9, Receiver: 12
-Sending thread with id 9 disconnecting.
-Authenticated Sending Thread with ID 2 Signed In Successfully!
-Sent: Source: 2, Receiver: 15
-Sent: Source: 2, Receiver: 18
-Sent: Source: 2, Receiver: 18
-Sent: Source: 2, Receiver: 18
-Sent: Source: 2, Receiver: 11
-Sent: Source: 2, Receiver: 19
-Sent: Source: 2, Receiver: 13
-Sent: Source: 2, Receiver: 15
-Sent: Source: 2, Receiver: 11
-Sent: Source: 2, Receiver: 16
-Sending thread with id 2 disconnecting.
-Sending thread with id 4 disconnected successfully
 Sending thread with id 6 disconnected successfully
-Sending thread with id 7 disconnected successfully
-Sending thread with id 3 disconnected successfully
 Sending thread with id 8 disconnected successfully
-Sending thread with id 5 disconnected successfully
-Sending thread with id 2 disconnected successfully
-Sending thread with id 1 disconnected successfully
-Sending thread with id 0 disconnected successfully
+Sending thread with id 4 disconnected successfully
 Sending thread with id 9 disconnected successfully
-All sample authenticated sending threads done!!!
+Sending thread with id 2 disconnected successfully
+Sending thread with id 5 disconnected successfully
+Sending thread with id 0 disconnected successfully
+Sending thread with id 3 disconnected successfully
+Sending thread with id 7 disconnected successfully
+Sending thread with id 1 disconnected successfully
+Sender threads done. Scanner ready.
+Receiver thread with id 11 authenticated.
+Receiver thread with id 10 authenticated.
+Receiver thread with id 12 authenticated.
+Receiver thread with id 14 authenticated.
+Receiver thread with id 13 authenticated.
+Receiver thread with id 15 authenticated.
+Receiver thread with id 16 authenticated.
+Receiver thread with id 17 authenticated.
+Receiver thread with id 18 authenticated.
+Receiver thread with id 19 authenticated.
+All receiver threads authenticated.
+Signed up successfully! Token received: %8Vom1yGCIJc4wWrx3FS
+Receiving thread with id 10 disconnecting.
+Signed up successfully! Token received: BWMPGy3nwYw3gb5OgJE&
+Receiving thread with id 17 disconnecting.
+Signed up successfully! Token received: 5qzFT49ut0di5SB@fdN@
+Receiving thread with id 19 disconnecting.
+Signed up successfully! Token received: $v5tTybX7CuicbahwQsI
+Receiving thread with id 16 disconnecting.
+Signed up successfully! Token received: 0i60fyuIMPLu8RWp8OIN
+Receiving thread with id 13 disconnecting.
+Signed up successfully! Token received: !PCy2yrKfhw03o2bcPx&
+Receiving thread with id 12 disconnecting.
+Signed up successfully! Token received: Y2FhWh&o%ndMkRJn50DI
+Receiving thread with id 18 disconnecting.
+Signed up successfully! Token received: o8rcFkYEXETyBYUzmLZY
+Receiving thread with id 11 disconnecting.
+Receiving thread with id 17 disconnected successfully
+Signed up successfully! Token received: yHKiRRfNJm3H9sLTW3Be
+Receiving thread with id 19 disconnected successfully
+Receiving thread with id 14 disconnecting.
+Signed up successfully! Token received: KPwlj#QbRE@zjo%TJB1q
+Receiving thread with id 15 disconnecting.
+Receiving thread with id 10 disconnected successfully
+Receiving thread with id 14 disconnected successfully
+Receiving thread with id 18 disconnected successfully
+Receiving thread with id 13 disconnected successfully
+Receiving thread with id 12 disconnected successfully
+Receiving thread with id 15 disconnected successfully
+Receiving thread with id 11 disconnected successfully
+Receiving thread with id 16 disconnected successfully
+Receiver threads done. Scanner ready.
+NEWCHAT thread with id 1 created.
+New chat thread connected
+NEWCHAT THREAD Signed In Successfully!
+POSITIVE User was found
+POSITIVE User was found
+POSITIVE User was found
+POSITIVE User was found
+POSITIVE User was found
+POSITIVE User was found
+POSITIVE User was found
+POSITIVE User was found
+POSITIVE User was found
+POSITIVE User was found
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND
+ERROR USER NOT FOUND

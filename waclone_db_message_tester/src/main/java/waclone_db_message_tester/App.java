@@ -129,7 +129,7 @@ public class App {
 
                 ArrayList<SampleAuthenticatedReceivingThreads> threads = new ArrayList<SampleAuthenticatedReceivingThreads>();
                 for (int i = 0; i < 10; i++) {
-                    threads.add(new SampleAuthenticatedReceivingThreads(Integer.toString(i)));
+                    threads.add(new SampleAuthenticatedReceivingThreads(Integer.toString(i+10)));
                     threads.get(i).start();
                 }
 
@@ -147,7 +147,7 @@ public class App {
                 }
 
                 GlobalVariables.printer.acquire();
-                GlobalVariables.authenticatedSendingThreadsReady=true;
+                GlobalVariables.authenticatedReceivingThreadsReady=true;
                 GlobalVariables.printer.release();
 
                 System.out.println("All sample authenticated sending threads ready");
@@ -189,6 +189,9 @@ public class App {
                 System.out.println("All authentication threads done!!!");
 
 
+            } else if(type==5) {
+                NewChatTestThread thread = new NewChatTestThread("1");
+                thread.start();
             } else {
                 scanner.close();
                 return;
