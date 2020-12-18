@@ -82,10 +82,10 @@ public class GlobalVariables {
         return messages;
     }
 
-    public static synchronized void addClientToOnlineList(SocketChannel channel, String clientId) {
+    public static synchronized void addClientToOnlineList(SocketChannel channel, String clientId, String token) {
         try {
             globalLocks.acquire();
-            onlineClientsNew.put(clientId, new ClientInfo(clientId, channel));
+            onlineClientsNew.put(clientId, new ClientInfo(clientId, channel, token));
             channelToClientId.put(channel, clientId);
             globalLocks.release();
         } catch (InterruptedException e) {
