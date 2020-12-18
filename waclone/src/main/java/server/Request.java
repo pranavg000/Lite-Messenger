@@ -33,6 +33,14 @@ public class Request {
         this.token = (String)obj.get("token");
     }
 
+    Request(RequestType action, String senderId, String receiverId, String data, String token){
+        this.action = action;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.data = data;
+        this.token = token;
+    }
+
     public String getToken(){
         return token;
     }
