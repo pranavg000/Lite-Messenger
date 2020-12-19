@@ -67,9 +67,9 @@ public class SampleAuthenticatedReceivingThreads extends Thread {
         try {
             inputStream = new DataInputStream(socket.getInputStream());
             Request validation = gson.fromJson(inputStream.readUTF(), Request.class);
-            if (GlobalVariables.getActionString(validation.getAction()).equals("POSITIVE")) {                
+            if (validation.getAction() == RequestType.POSITIVE) {                
                 System.out.println("Authenticated Receiving Thread with ID "+id+ " Signed In Successfully!");
-            } else if (GlobalVariables.getActionString(validation.getAction()).equals("ERROR")) {
+            } else if (validation.getAction() == RequestType.ERROR) {
                 System.out.println(validation.getData()+" TERMINATING!!!");
                 return;
             } else {
@@ -83,7 +83,12 @@ public class SampleAuthenticatedReceivingThreads extends Thread {
         while (true) {
             try {
                 request = gson.fromJson(inputStream.readUTF(), Request.class);
-                System.out.println("Received: "+request.getData());
+                if(request.getAction() == RequestType.MessageReceived){
+                    // Yahan Double Ticks karenge aur Receive time daaldenge
+                    System.out.println("Message receive ACK");
+                }
+                System.out.println("Client: " + id + ", Received: "+request.getData() + ", TimeStamp: " + request.getTimeStamp());
+                
             } catch (JsonSyntaxException | IOException e) {
                 e.printStackTrace();
             }

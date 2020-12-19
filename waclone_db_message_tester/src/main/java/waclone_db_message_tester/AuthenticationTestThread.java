@@ -66,9 +66,9 @@ public class AuthenticationTestThread extends Thread {
         try {
             inputStream = new DataInputStream(socket.getInputStream());
             Request validation = gson.fromJson(inputStream.readUTF(), Request.class);
-            if(GlobalVariables.getActionString(validation.getAction()).equals("POSITIVE")){
+            if(validation.getAction() == RequestType.POSITIVE){
                 System.out.println("Authenticated Sending Thread with ID "+id+ " Signed In Successfully!");
-            } else if(GlobalVariables.getActionString(validation.getAction()).equals("ERROR")){
+            } else if(validation.getAction() == RequestType.ERROR){
                 System.out.println(validation.getData()+" TERMINATING!!!");
                 return;
             } else {

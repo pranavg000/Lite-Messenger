@@ -7,6 +7,8 @@ import java.nio.channels.SocketChannel;
 
 import com.google.gson.Gson;
 
+import server.GlobalVariables.RequestType;
+
 public class SendMessageTask implements Runnable {
 
     private SocketChannel channel;
@@ -97,6 +99,13 @@ public class SendMessageTask implements Runnable {
                 storeAndCloseConnection();
                 return;
             }
+        }
+
+        if(request.getAction() == RequestType.Message){
+            // Message sent successfully (Send receive receipt to sender)
+            // Request receiveReceipt = new Request(RequestType.MessageReceived, request.getReceiverId(), 
+            //         request.getSenderId(), request.getRequestId(), "NULL");
+            // GlobalVariables.sendMessageTo(receiveReceipt.getReceiverId(), receiveReceipt);
         }
         return;
     }

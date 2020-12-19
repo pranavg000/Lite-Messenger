@@ -36,30 +36,30 @@ public class GlobalVariables {
     public static ReadWriteLock rwlock;
 
     public static enum RequestType {
-        Auth, NewChat, Message, SignUp, Disconnect, POSITIVE, ERROR, InvalidToken, UserNotFound
+        Auth, NewChat, Message, SignUp, Disconnect, POSITIVE, ERROR, InvalidToken, UserNotFound, MessageReceived
     }
 
 
-    public static String getActionString(RequestType r){
-        String s="";
-        if(r == RequestType.Auth){
-            s="Auth";
-        } else if(r == RequestType.NewChat){
-            s="NewChat";
-        } else if(r ==RequestType.Message){
-            s="Message";
-        } else if(r == RequestType.SignUp){
-            s="SignUp";
-        } else if(r==RequestType.POSITIVE){
-            s="POSITIVE";
-        } else if(r==RequestType.ERROR){
-            s="ERROR";
-        } else if(r==RequestType.Disconnect){
-            s="Disconnect";
-        }
+    // public static String getActionString(RequestType r){
+    //     String s="";
+    //     if(r == RequestType.Auth){
+    //         s="Auth";
+    //     } else if(r == RequestType.NewChat){
+    //         s="NewChat";
+    //     } else if(r ==RequestType.Message){
+    //         s="Message";
+    //     } else if(r == RequestType.SignUp){
+    //         s="SignUp";
+    //     } else if(r==RequestType.POSITIVE){
+    //         s="POSITIVE";
+    //     } else if(r==RequestType.ERROR){
+    //         s="ERROR";
+    //     } else if(r==RequestType.Disconnect){
+    //         s="Disconnect";
+    //     }
 
-        return s;
-    }
+    //     return s;
+    // }
 
     public static synchronized void databaseInsertData(Request request) {
         // try {
@@ -137,6 +137,26 @@ public class GlobalVariables {
 		for (int i = 0; i < len; i++)
 			sb.append(chars.charAt(rnd.nextInt(chars.length())));
 		return sb.toString();
+    }
+
+    public static boolean sendMessageTo(String recieverId, Request request) {
+        
+        if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
+            GlobalVariables.rwlock.readLock().lock();
+            ClientInfo recieverInfo = GlobalVariables.onlineClientsNew.get(recieverId);
+            GlobalVariables.rwlock.readLock().unlock();
+            GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
+            return true;
+        }
+        if(GlobalVariables.userCollection.countDocuments(eq("userId", recieverId)) > 0){
+            System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
+            GlobalVariables.messageCollection.insertOne(request.toDocument());
+            // GlobalVariables.globalLocks.release();
+            return true;
+        } 
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist");
+        // GlobalVariables.globalLocks.release();
+        return false;
     }
     
 }

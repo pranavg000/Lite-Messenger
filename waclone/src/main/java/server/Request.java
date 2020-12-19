@@ -2,9 +2,12 @@ package server;
 
 import server.GlobalVariables.RequestType;
 
+import java.util.UUID;
+
 import org.bson.Document;
 
 public class Request {
+    private String requestId;
     private RequestType action;
     private String senderId;
     private String receiverId;
@@ -13,21 +16,8 @@ public class Request {
     private long timeStamp;
 
     Request(Document obj){
-        if(((String)obj.get("action")).equals("Auth")){
-            this.action = RequestType.Auth;
-        } else if(((String)obj.get("action")).equals("NewChat")){
-            this.action = RequestType.NewChat;
-        } else if(((String)obj.get("action")).equals("Message")){
-            this.action = RequestType.Message;
-        } else if(((String)obj.get("action")).equals("SignUp")){
-            this.action = RequestType.SignUp;
-        }else if(((String)obj.get("action")).equals("POSITIVE")){
-            this.action = RequestType.POSITIVE;
-        } else if(((String)obj.get("action")).equals("ERROR")){
-            this.action = RequestType.ERROR;
-        } else if(((String)obj.get("action")).equals("Disconnect")){
-            this.action = RequestType.Disconnect;
-        }
+        this.requestId = (String)obj.get("requestId");
+        this.action = RequestType.valueOf((String)obj.get("action"));
         this.senderId = (String)obj.get("senderId");
         this.receiverId = (String)obj.get("receiverId");
         this.data = (String)obj.get("data");
@@ -36,6 +26,7 @@ public class Request {
     }
 
     Request(RequestType action, String senderId, String receiverId, String data, String token){
+        this.requestId = UUID.randomUUID().toString();
         this.action = action;
         this.senderId = senderId;
         this.receiverId = receiverId;
@@ -83,20 +74,35 @@ public class Request {
         this.data = data;
     }
 
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+
     public Document toDocument(){
-
-        String actionString=GlobalVariables.getActionString(action);
-
         Document obj = new Document().append("senderId", senderId).append("receiverId", receiverId)
-            .append("data", data).append("action",actionString).append("token", token).append("timeStamp", timeStamp);
+            .append("data", data).append("action", action.name()).append("token", token).append("timeStamp", timeStamp);
         return obj;
-
     }
 
     @Override
     public String toString() {
-        return "Request [action=" + GlobalVariables.getActionString(action) + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
+        return "Request [requestId=" +requestId+ ", action=" + action.name() + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
                 + ", token="+token+ ", timeStamp=" + String.valueOf(timeStamp) + "]";
     }
+
+    
    
 }

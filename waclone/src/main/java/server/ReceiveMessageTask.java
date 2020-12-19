@@ -75,7 +75,7 @@ public class ReceiveMessageTask implements Runnable {
         ClientInfo clientInfo = GlobalVariables.getClientInfo(clientId);
         if(!request.getToken().equals(clientInfo.getToken())){
             Request rejectionMessage = new Request(RequestType.InvalidToken, GlobalVariables.serverId, clientId, "UNAUTHORISED ACCESS!!!", "NULL");
-            sendMessageTo(clientId, rejectionMessage);
+            GlobalVariables.sendMessageTo(clientId, rejectionMessage);
         }
 
 
@@ -84,24 +84,29 @@ public class ReceiveMessageTask implements Runnable {
             
             if(GlobalVariables.userCollection.countDocuments(eq("userId",recieverId)) > 0){
                 Request approvalReq = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "User was found", "NULL");
-                sendMessageTo(clientId, approvalReq);
+                GlobalVariables.sendMessageTo(clientId, approvalReq);
             } else {
                 Request rejectionReq = new Request(RequestType.UserNotFound, GlobalVariables.serverId, clientId, "USER NOT FOUND", "NULL");
-                sendMessageTo(clientId, rejectionReq);
+                GlobalVariables.sendMessageTo(clientId, rejectionReq);
             }
             
         } else if (reqType == RequestType.Message) {
             System.out.println("Send message");
             
-            return sendMessageTo(recieverId, request);
+            return GlobalVariables.sendMessageTo(recieverId, request);
             
         } else if(reqType == RequestType.Disconnect){
             System.out.println("Client with id "+clientId+" wants to disconnect!");
             Request disconnectMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Disconnected successfully!", "NULL");
-            sendMessageTo(clientId, disconnectMessage);
+            GlobalVariables.sendMessageTo(clientId, disconnectMessage);
             GlobalVariables.removeClientFromOnlineList(channel);
 
-        }else {
+        } else if(reqType == RequestType.MessageReceived){
+            System.out.println("Message received");
+            // Send to sender (Receive receipt)
+            return GlobalVariables.sendMessageTo(recieverId, request);
+        }
+        else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
             // Unkown command return error response
             return false;
@@ -136,7 +141,7 @@ public class ReceiveMessageTask implements Runnable {
 
             // Send Approval Document
             Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Authentication Successful!", "NULL");
-            sendMessageTo(clientId, approvalMessage);
+            GlobalVariables.sendMessageTo(clientId, approvalMessage);
 
             // Deliver stored messages to user
             List<Document> messageList = GlobalVariables.fetchUnsendMessages(clientId);
@@ -144,7 +149,7 @@ public class ReceiveMessageTask implements Runnable {
             // Delete these messages from database
             for (Document message : messageList) {
                 Request r = new Request(message);
-                sendMessageTo(r.getReceiverId(), r);
+                GlobalVariables.sendMessageTo(r.getReceiverId(), r);
             }
             System.out.println("Auth done for" + clientId);
 
@@ -172,7 +177,7 @@ public class ReceiveMessageTask implements Runnable {
 
                 // Send Approval Document
                 Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Account created successfully!", tokenToAssign);
-                sendMessageTo(clientId, approvalMessage);
+                GlobalVariables.sendMessageTo(clientId, approvalMessage);
                 return true;
 
             } else {
@@ -180,7 +185,7 @@ public class ReceiveMessageTask implements Runnable {
                 // Reject if user already exists - Send Rejection Document
                 GlobalVariables.addClientToOnlineList(channel, clientId, "NULL");
                 Request rejectionMessage = new Request(RequestType.ERROR, GlobalVariables.serverId, clientId, "User already exists!!! Can't sign up!", "NULL");
-                sendMessageTo(clientId, rejectionMessage);
+                GlobalVariables.sendMessageTo(clientId, rejectionMessage);
                 GlobalVariables.removeClientFromOnlineList(channel);
 
                 return false;
@@ -189,31 +194,31 @@ public class ReceiveMessageTask implements Runnable {
             // The user is not authenticated has sent some non-auth message
             GlobalVariables.addClientToOnlineList(channel, clientId, "NULL");
             Request rejectionMessage = new Request(RequestType.ERROR, GlobalVariables.serverId, clientId, "UNAUTHORISED ACCESS!!!", "NULL");
-            sendMessageTo(clientId, rejectionMessage);
+            GlobalVariables.sendMessageTo(clientId, rejectionMessage);
             GlobalVariables.removeClientFromOnlineList(channel);
             return false;
         }
     }
     
-    private boolean sendMessageTo(String recieverId, Request request) {
+    // private boolean GlobalVariables.sendMessageTo(String recieverId, Request request) {
         
-        if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
-            GlobalVariables.rwlock.readLock().lock();
-            ClientInfo recieverInfo = GlobalVariables.onlineClientsNew.get(clientId);
-            GlobalVariables.rwlock.readLock().unlock();
-            GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
-            return true;
-        }
-        if(GlobalVariables.userCollection.countDocuments(eq("userId", recieverId)) > 0){
-            System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
-            GlobalVariables.messageCollection.insertOne(request.toDocument());
-            // GlobalVariables.globalLocks.release();
-            return true;
-        } 
-        System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist");
-        // GlobalVariables.globalLocks.release();
-        return false;
-    }
+    //     if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
+    //         GlobalVariables.rwlock.readLock().lock();
+    //         ClientInfo recieverInfo = GlobalVariables.onlineClientsNew.get(recieverId);
+    //         GlobalVariables.rwlock.readLock().unlock();
+    //         GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
+    //         return true;
+    //     }
+    //     if(GlobalVariables.userCollection.countDocuments(eq("userId", recieverId)) > 0){
+    //         System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
+    //         GlobalVariables.messageCollection.insertOne(request.toDocument());
+    //         // GlobalVariables.globalLocks.release();
+    //         return true;
+    //     } 
+    //     System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist");
+    //     // GlobalVariables.globalLocks.release();
+    //     return false;
+    // }
 
     private void closeConnection() {
         try {

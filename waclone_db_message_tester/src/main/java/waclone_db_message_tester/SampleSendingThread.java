@@ -65,13 +65,13 @@ class SampleSendingThread extends Thread {
         try {
             inputStream = new DataInputStream(socket.getInputStream());
             Request validation = gson.fromJson(inputStream.readUTF(), Request.class);
-            if (GlobalVariables.getActionString(validation.getAction()).equals("POSITIVE")) {
+            if (validation.getAction() == RequestType.POSITIVE) {
                 token = validation.getToken();
                 GlobalVariables.printer.acquire();
                 GlobalVariables.tokens.put(id, token);
                 GlobalVariables.printer.release();
                 System.out.println("Signed up successfully! Token received: " + token);
-            } else if (GlobalVariables.getActionString(validation.getAction()).equals("ERROR")) {
+            } else if (validation.getAction() == RequestType.ERROR) {
                 System.out.println("Account already exists! TERMINATING");
                 return;
             } else {
@@ -109,7 +109,7 @@ class SampleSendingThread extends Thread {
             if(validation.getAction() == RequestType.POSITIVE){
                 System.out.println("Sending thread with id "+id+" disconnected successfully");
             } else {
-                System.out.println("Error disconnecting for id "+id+": "+validation.getData());
+                System.out.println(validation.getAction().name() + " Error disconnecting for id "+id+": "+validation.getData());
             }
         } catch (JsonSyntaxException | IOException e) {
             e.printStackTrace();
