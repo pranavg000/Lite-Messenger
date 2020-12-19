@@ -48,9 +48,7 @@ public class SampleReceivingThread extends Thread {
         }
 
         Gson gson = new Gson();
-        // Document connectionDoc = new Document().append("senderId", id).append("receiverId", "-1")
-        //         .append("action", "SignUp").append("data", "NULL").append("token", "NULL");
-        Request request = new Request(RequestType.SignUp, id, "-1", "NULL", token);
+        Request request = new Request(RequestType.SignUp, id, GlobalVariables.serverId, "NULL", "NULL");
 
         try {
             outputStream = new DataOutputStream(socket.getOutputStream());
@@ -85,9 +83,7 @@ public class SampleReceivingThread extends Thread {
             return;
         }
 
-        // Document disconnectDocument = new Document().append("senderId", id).append("receiverId", "-1")
-        //         .append("action", "Disconnect").append("token", token).append("data", "Trying to disconnect!");
-        Request disconnectRequest = new Request(RequestType.Disconnect, id, "-1", "Trying to disconnect!", token);
+        Request disconnectRequest = new Request(RequestType.Disconnect, id, GlobalVariables.serverId, "Trying to disconnect!", token);
         try {
             outputStream.writeUTF(gson.toJson(disconnectRequest));
             System.out.println("Receiving thread with id " + id + " disconnecting.");

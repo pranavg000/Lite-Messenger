@@ -38,9 +38,7 @@ public class NewChatTestThread extends Thread {
             e.printStackTrace();
         }
 
-        // Document authDoc = new Document().append("senderId", id).append("receiverId", "-1").append("action", "Auth")
-        //         .append("token", token).append("data", "Authenticating request");
-        Request authReq = new Request(RequestType.Auth, id, "-1", "Authenticating request", token);
+        Request authReq = new Request(RequestType.Auth, id, GlobalVariables.serverId, "Authenticating request", token);
         Gson gson = new Gson();
 
         try {

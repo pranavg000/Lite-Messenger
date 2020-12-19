@@ -6,6 +6,7 @@ import java.util.concurrent.Semaphore;
 class GlobalVariables {
 
     public static Semaphore printer;
+    public final static String serverId = "SERVER";
     public static boolean senderThreadsReady=false;
     public static boolean receiverThreadsReady=false;
     public static boolean authenticatedSendingThreadsReady=false;

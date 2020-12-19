@@ -136,7 +136,6 @@ public class ReceiveMessageTask implements Runnable {
 
             // Send Approval Document
             Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Authentication Successful!", "NULL");
-            // Request approvalMessage = new Request(approvalDoc);
             sendMessageTo(clientId, approvalMessage);
 
             // Deliver stored messages to user
@@ -173,7 +172,6 @@ public class ReceiveMessageTask implements Runnable {
 
                 // Send Approval Document
                 Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Account created successfully!", tokenToAssign);
-                // Request approvalMessage = new Request(approvalDoc);
                 sendMessageTo(clientId, approvalMessage);
                 return true;
 
@@ -182,7 +180,6 @@ public class ReceiveMessageTask implements Runnable {
                 // Reject if user already exists - Send Rejection Document
                 GlobalVariables.addClientToOnlineList(channel, clientId, "NULL");
                 Request rejectionMessage = new Request(RequestType.ERROR, GlobalVariables.serverId, clientId, "User already exists!!! Can't sign up!", "NULL");
-                // Request rejectionMessage = new Request(rejectionDoc);
                 sendMessageTo(clientId, rejectionMessage);
                 GlobalVariables.removeClientFromOnlineList(channel);
 

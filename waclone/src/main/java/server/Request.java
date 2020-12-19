@@ -10,6 +10,7 @@ public class Request {
     private String receiverId;
     private String data;
     private String token;
+    private long timeStamp;
 
     Request(Document obj){
         if(((String)obj.get("action")).equals("Auth")){
@@ -31,6 +32,7 @@ public class Request {
         this.receiverId = (String)obj.get("receiverId");
         this.data = (String)obj.get("data");
         this.token = (String)obj.get("token");
+        this.timeStamp = (long)obj.get("timeStamp");
     }
 
     Request(RequestType action, String senderId, String receiverId, String data, String token){
@@ -39,6 +41,7 @@ public class Request {
         this.receiverId = receiverId;
         this.data = data;
         this.token = token;
+        this.timeStamp = System.currentTimeMillis();
     }
 
     public String getToken(){
@@ -85,7 +88,7 @@ public class Request {
         String actionString=GlobalVariables.getActionString(action);
 
         Document obj = new Document().append("senderId", senderId).append("receiverId", receiverId)
-            .append("data", data).append("action",actionString).append("token", token);
+            .append("data", data).append("action",actionString).append("token", token).append("timeStamp", timeStamp);
         return obj;
 
     }
@@ -93,7 +96,7 @@ public class Request {
     @Override
     public String toString() {
         return "Request [action=" + GlobalVariables.getActionString(action) + ", data=" + data + ", receiverId=" + receiverId + ", senderId=" + senderId
-                + ", token="+token+"]";
+                + ", token="+token+ ", timeStamp=" + String.valueOf(timeStamp) + "]";
     }
    
 }

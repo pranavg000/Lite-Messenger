@@ -27,6 +27,7 @@ public class GlobalVariables {
     
     // Threads etc.
     public final static int Nthreads = 10;
+    public final static String serverId = "SERVER";
     public static ExecutorService sendMessage, receiveMessage;
     public static Map<String, ClientInfo> onlineClientsNew;
     public static Map<Channel, String> channelToClientId;
@@ -38,7 +39,6 @@ public class GlobalVariables {
         Auth, NewChat, Message, SignUp, Disconnect, POSITIVE, ERROR, InvalidToken, UserNotFound
     }
 
-    public static String serverId = "SERVER";
 
     public static String getActionString(RequestType r){
         String s="";
