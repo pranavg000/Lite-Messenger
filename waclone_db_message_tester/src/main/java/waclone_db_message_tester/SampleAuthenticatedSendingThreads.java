@@ -9,8 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import org.bson.Document;
-
 import waclone_db_message_tester.GlobalVariables.RequestType;
 
 public class SampleAuthenticatedSendingThreads extends Thread {
@@ -59,8 +57,8 @@ public class SampleAuthenticatedSendingThreads extends Thread {
         }
 
         Gson gson = new Gson();
-        Document connectionDoc = new Document().append("senderId",id).append("receiverId","-1").append("action","Auth").append("data","NULL").append("token",token);
-        Request request = new Request(connectionDoc);
+        // Document connectionDoc = new Document().append("senderId",id).append("receiverId","-1").append("action","Auth").append("data","NULL").append("token",token);
+        Request request = new Request(RequestType.Auth, id, "-1", "NULL", token);
 
         try{
             outputStream = new DataOutputStream(socket.getOutputStream());
@@ -104,9 +102,9 @@ public class SampleAuthenticatedSendingThreads extends Thread {
             }
         }
 
-        Document disconnectDocument = new Document().append("senderId", id).append("receiverId", "-1")
-                .append("action", "Disconnect").append("token", token).append("data", "Trying to disconnect!");
-        Request disconnectRequest = new Request(disconnectDocument);
+        // Document disconnectDocument = new Document().append("senderId", id).append("receiverId", "-1")
+        //         .append("action", "Disconnect").append("token", token).append("data", "Trying to disconnect!");
+        Request disconnectRequest = new Request(RequestType.Disconnect, id, "-1", "Trying to disconnect!", token);
         try {
             outputStream.writeUTF(gson.toJson(disconnectRequest));
             System.out.println("Sending thread with id " + id + " disconnecting.");

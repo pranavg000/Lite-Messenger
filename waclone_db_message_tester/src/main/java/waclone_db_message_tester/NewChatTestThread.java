@@ -8,8 +8,6 @@ import java.net.Socket;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import org.bson.Document;
-
 import waclone_db_message_tester.GlobalVariables.RequestType;
 
 public class NewChatTestThread extends Thread {
@@ -40,9 +38,9 @@ public class NewChatTestThread extends Thread {
             e.printStackTrace();
         }
 
-        Document authDoc = new Document().append("senderId", id).append("receiverId", "-1").append("action", "Auth")
-                .append("token", token).append("data", "Authenticating request");
-        Request authReq = new Request(authDoc);
+        // Document authDoc = new Document().append("senderId", id).append("receiverId", "-1").append("action", "Auth")
+        //         .append("token", token).append("data", "Authenticating request");
+        Request authReq = new Request(RequestType.Auth, id, "-1", "Authenticating request", token);
         Gson gson = new Gson();
 
         try {
@@ -70,10 +68,10 @@ public class NewChatTestThread extends Thread {
         }
 
         for (int i = 10; i < 20; i++) {
-            Document doc = new Document().append("senderId", id).append("receiverId", Integer.toString(i))
-                    .append("token", token).append("data", "Creating new chat with " + Integer.toString(i))
-                    .append("action", "NewChat");
-            Request req = new Request(doc);
+            // Document doc = new Document().append("senderId", id).append("receiverId", Integer.toString(i))
+            //         .append("token", token).append("data", "Creating new chat with " + Integer.toString(i))
+            //         .append("action", "NewChat");
+            Request req = new Request(RequestType.NewChat, id, Integer.toString(i), "Creating new chat with " + Integer.toString(i), token);
             try {
                 outputStream.writeUTF(gson.toJson(req));
             } catch (IOException e) {
@@ -91,10 +89,10 @@ public class NewChatTestThread extends Thread {
         }
         
         for (int i = 20; i < 30; i++) {
-            Document doc = new Document().append("senderId", id).append("receiverId", Integer.toString(i))
-                    .append("token", token).append("data", "Creating new chat with " + Integer.toString(i))
-                    .append("action", "NewChat");
-            Request req = new Request(doc);
+            // Document doc = new Document().append("senderId", id).append("receiverId", Integer.toString(i))
+            //         .append("token", token).append("data", "Creating new chat with " + Integer.toString(i))
+            //         .append("action", "NewChat");
+            Request req = new Request(RequestType.NewChat, id, Integer.toString(i), "Creating new chat with " + Integer.toString(i), token);
             try {
                 outputStream.writeUTF(gson.toJson(req));
             } catch (IOException e) {

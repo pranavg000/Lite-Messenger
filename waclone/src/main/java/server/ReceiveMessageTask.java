@@ -129,22 +129,22 @@ public class ReceiveMessageTask implements Runnable {
     }
 
     private Boolean isAuth(Request request) {
-        try {
-            GlobalVariables.globalLocks.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return false;
-        }
+        // try {
+        //     GlobalVariables.globalLocks.acquire();
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        //     return false;
+        // }
         if ((request.getAction() == RequestType.Auth)
                 && (GlobalVariables.userCollection.countDocuments(eq("userId", request.getSenderId())) > 0)) {
             String userToken = (String) GlobalVariables.userCollection.find(eq("userId", request.getSenderId())).first()
                     .get("token");
-            GlobalVariables.globalLocks.release();
+            // GlobalVariables.globalLocks.release();
             if (userToken.equals(request.getToken())) {
                 return true;
             }
         }
-        GlobalVariables.globalLocks.release();
+        // GlobalVariables.globalLocks.release();
         return false;
     }
 
@@ -176,12 +176,12 @@ public class ReceiveMessageTask implements Runnable {
         } else if (reqType == RequestType.SignUp) {
             System.out.println(clientId + " has put up a sign up request.");
             // Only sign up if user doesn't already exist
-            try {
-                GlobalVariables.globalLocks.acquire();
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-                return false;
-            }
+            // try {
+            //     GlobalVariables.globalLocks.acquire();
+            // } catch (InterruptedException e1) {
+            //     e1.printStackTrace();
+            //     return false;
+            // }
             if (GlobalVariables.userCollection.countDocuments(eq("userId", clientId)) == 0) {
 
                 // Create token for new user
@@ -189,7 +189,7 @@ public class ReceiveMessageTask implements Runnable {
                 // Add new user to Database
                 GlobalVariables.userCollection
                         .insertOne(new Document().append("userId", clientId).append("token", tokenToAssign));
-                GlobalVariables.globalLocks.release();
+                // GlobalVariables.globalLocks.release();
                 // Add client to online list, token = tokenToAssign
                 GlobalVariables.addClientToOnlineList(channel, clientId, tokenToAssign);
 
@@ -203,7 +203,7 @@ public class ReceiveMessageTask implements Runnable {
                 return true;
 
             } else {
-                GlobalVariables.globalLocks.release();
+                // GlobalVariables.globalLocks.release();
                 // Reject if user already exists - Send Rejection Document
                 GlobalVariables.addClientToOnlineList(channel, clientId, "NULL");
                 // Document rejectionDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
@@ -229,13 +229,14 @@ public class ReceiveMessageTask implements Runnable {
     }
     
     private boolean sendMessageTo(String recieverId, Request request) {
-        try {
-			GlobalVariables.globalLocks.acquire();
-		} catch (InterruptedException e) {
-            e.printStackTrace();
-            return false;
-		}
+        
         if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
+            try {
+                GlobalVariables.globalLocks.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return false;
+            }
             ClientInfo recieverInfo = GlobalVariables.onlineClientsNew.get(clientId);
             GlobalVariables.globalLocks.release();
             GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
@@ -244,11 +245,11 @@ public class ReceiveMessageTask implements Runnable {
             if(GlobalVariables.userCollection.countDocuments(eq("userId", recieverId)) > 0){
                 System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
                 GlobalVariables.messageCollection.insertOne(request.toDocument());
-                GlobalVariables.globalLocks.release();
+                // GlobalVariables.globalLocks.release();
                 return true;
             } else {
                 System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist");
-                GlobalVariables.globalLocks.release();
+                // GlobalVariables.globalLocks.release();
                 return false;
             }
         }

@@ -7,7 +7,7 @@ import java.net.Socket;
 
 import com.google.gson.Gson;
 
-import org.bson.Document;
+import waclone_db_message_tester.GlobalVariables.RequestType;
 
 public class AuthenticationTestThread extends Thread {
     //To test "account does not exist" and "unauthorised access"
@@ -51,9 +51,10 @@ public class AuthenticationTestThread extends Thread {
         }
 
         Gson gson = new Gson();
-        Document connectionDoc = new Document().append("senderId", id).append("receiverId", "-1")
-                .append("action", "Auth").append("data", "NULL").append("token", token);
-        Request request = new Request(connectionDoc);
+        // Document connectionDoc = new Document().append("senderId", id).append("receiverId", "-1")
+        //         .append("action", "Auth").append("data", "NULL").append("token", token);
+        
+        Request request = new Request(RequestType.Auth, id, "-1", "NULL", token);
 
         try {
             outputStream = new DataOutputStream(socket.getOutputStream());

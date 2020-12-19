@@ -59,26 +59,34 @@ public class GlobalVariables {
     }
 
     public static synchronized void databaseInsertData(Request request) {
-        try {
-            globalLocks.acquire();
-            messageCollection.insertOne(request.toDocument());
-            globalLocks.release();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     globalLocks.acquire();
+        //     messageCollection.insertOne(request.toDocument());
+        //     globalLocks.release();
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
+
+        messageCollection.insertOne(request.toDocument());
+
+
         return;
     }
 
     public static synchronized List<Document> fetchUnsendMessages(String clientId) {
         List<Document> messages = new ArrayList<Document>();
-        try {
-            globalLocks.acquire();
-            messages = messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
-            messageCollection.deleteMany(eq("receiverId", clientId));
-            globalLocks.release();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     globalLocks.acquire();
+        //     messages = messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
+        //     messageCollection.deleteMany(eq("receiverId", clientId));
+        //     globalLocks.release();
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
+
+        messages = messageCollection.find(eq("receiverId", clientId)).into(new ArrayList<Document>());
+        messageCollection.deleteMany(eq("receiverId", clientId));
+
         return messages;
     }
 
