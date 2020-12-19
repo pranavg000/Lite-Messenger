@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReadWriteLock;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
-import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Filters.eq;
 import org.bson.Document;
 
 public class GlobalVariables {
@@ -31,7 +31,8 @@ public class GlobalVariables {
     public static Map<String, ClientInfo> onlineClientsNew;
     public static Map<Channel, String> channelToClientId;
     public static BlockingQueue<Request> outbox;
-    public static Semaphore globalLocks;
+    // public static Semaphore globalLocks;
+    public static ReadWriteLock rwlock;
 
     public static enum RequestType {
         Auth, NewChat, Message, SignUp, Disconnect, POSITIVE, ERROR, InvalidToken, UserNotFound
@@ -93,61 +94,44 @@ public class GlobalVariables {
     }
 
     public static synchronized void addClientToOnlineList(SocketChannel channel, String clientId, String token) {
-        try {
-            globalLocks.acquire();
-            onlineClientsNew.put(clientId, new ClientInfo(clientId, channel, token));
-            channelToClientId.put(channel, clientId);
-            globalLocks.release();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        
+        rwlock.writeLock().lock();
+        onlineClientsNew.put(clientId, new ClientInfo(clientId, channel, token));
+        channelToClientId.put(channel, clientId);
+        rwlock.writeLock().unlock();
+            
         return;
     }
 
     public static synchronized boolean removeClientFromOnlineList(SocketChannel channel) {
-        try {
-            globalLocks.acquire();
-            if (channelToClientId.containsKey(channel)) {
-                String clientId = channelToClientId.get(channel);
-                channelToClientId.remove(channel);
-                onlineClientsNew.remove(clientId);
-                globalLocks.release();
-                return true;
-            }
-            return false;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        rwlock.writeLock().lock();
+        if (channelToClientId.containsKey(channel)) {
+            String clientId = channelToClientId.get(channel);
+            channelToClientId.remove(channel);
+            onlineClientsNew.remove(clientId);
+            rwlock.writeLock().unlock();
+            return true;
         }
+        rwlock.writeLock().unlock();
         return false;
     }
 
     public static boolean checkClientOnline(String clientId) {
-        try {
-            globalLocks.acquire();
-            boolean ans = onlineClientsNew.containsKey(clientId);
-            globalLocks.release();
-            return ans;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
+        rwlock.readLock().lock();
+        boolean ans = onlineClientsNew.containsKey(clientId);
+        rwlock.readLock().unlock();
+        return ans;
     }
 
     public static ClientInfo getClientInfo(String clientId) {
-        try {
-            globalLocks.acquire();
-            ClientInfo ans = onlineClientsNew.get(clientId);
-            globalLocks.release();
-            return ans;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        rwlock.readLock().lock();
+        ClientInfo ans = onlineClientsNew.get(clientId);
+        rwlock.readLock().unlock();
+        return ans;
     }
 
     public static String generateToken(int len) {
-		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk"
-          +"lmnopqrstuvwxyz!@#$%&";
+		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&";
 		Random rnd = new Random();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; i++)

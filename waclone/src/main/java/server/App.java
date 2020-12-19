@@ -2,7 +2,6 @@ package server;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.Semaphore;
 
 import com.mongodb.client.MongoClients;
 
@@ -11,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.nio.channels.Channel;
 import java.util.HashMap;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class App {
     public static void main(String[] args) {
@@ -24,8 +24,6 @@ public class App {
         }
         System.out.println("Starting Server");
 
-        GlobalVariables.globalLocks = new Semaphore(1);
-
         GlobalVariables.mongoClient = MongoClients.create(GlobalVariables.connectionString);
         GlobalVariables.database = GlobalVariables.mongoClient.getDatabase("wacloneDB");
         GlobalVariables.userCollection = GlobalVariables.database.getCollection("users");
@@ -36,6 +34,7 @@ public class App {
         GlobalVariables.outbox = new LinkedBlockingDeque<Request>();
         GlobalVariables.sendMessage = Executors.newFixedThreadPool(GlobalVariables.Nthreads);
         GlobalVariables.receiveMessage = Executors.newFixedThreadPool(GlobalVariables.Nthreads);
+        GlobalVariables.rwlock = new ReentrantReadWriteLock();
 
         ConnectionListeningThread clt = new ConnectionListeningThread();
         clt.start();

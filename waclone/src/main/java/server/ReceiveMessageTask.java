@@ -217,14 +217,9 @@ public class ReceiveMessageTask implements Runnable {
     private boolean sendMessageTo(String recieverId, Request request) {
         
         if (GlobalVariables.onlineClientsNew.containsKey(recieverId)) {
-            try {
-                GlobalVariables.globalLocks.acquire();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                return false;
-            }
+            GlobalVariables.rwlock.readLock().lock();
             ClientInfo recieverInfo = GlobalVariables.onlineClientsNew.get(clientId);
-            GlobalVariables.globalLocks.release();
+            GlobalVariables.rwlock.readLock().unlock();
             GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
             return true;
         }
