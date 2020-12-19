@@ -74,7 +74,7 @@ public class ReceiveMessageTask implements Runnable {
 
         ClientInfo clientInfo = GlobalVariables.getClientInfo(clientId);
         if(!request.getToken().equals(clientInfo.getToken())){
-            Request rejectionMessage = new Request(RequestType.InvalidToken, GlobalVariables.serverIdentifier, clientId, "UNAUTHORISED ACCESS!!!", "NULL");
+            Request rejectionMessage = new Request(RequestType.InvalidToken, GlobalVariables.serverId, clientId, "UNAUTHORISED ACCESS!!!", "NULL");
             sendMessageTo(clientId, rejectionMessage);
         }
 
@@ -83,14 +83,10 @@ public class ReceiveMessageTask implements Runnable {
             System.out.println("New Chat");
             
             if(GlobalVariables.userCollection.countDocuments(eq("userId",recieverId)) > 0){
-                // Document approvalDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId", clientId)
-                //     .append("token","NULL").append("data","User was found").append("action","POSITIVE");
-                Request approvalReq = new Request(RequestType.POSITIVE, GlobalVariables.serverIdentifier, clientId, "User was found", "NULL");
+                Request approvalReq = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "User was found", "NULL");
                 sendMessageTo(clientId, approvalReq);
             } else {
-                // Document rejectionDoc = new Document().append("senderId",GlobalVariables.serverIdentifier).append("receiverId",clientId)
-                //     .append("token","NULL").append("data","USER NOT FOUND").append("action","UserNotFound");
-                Request rejectionReq = new Request(RequestType.UserNotFound, GlobalVariables.serverIdentifier, clientId, "USER NOT FOUND", "NULL");
+                Request rejectionReq = new Request(RequestType.UserNotFound, GlobalVariables.serverId, clientId, "USER NOT FOUND", "NULL");
                 sendMessageTo(clientId, rejectionReq);
             }
             
@@ -101,9 +97,7 @@ public class ReceiveMessageTask implements Runnable {
             
         } else if(reqType == RequestType.Disconnect){
             System.out.println("Client with id "+clientId+" wants to disconnect!");
-            // Document disconnectDocument = new Document().append("senderId",GlobalVariables.serverIdentifier).append("receiverId", clientId)
-            //     .append("action", "POSITIVE").append("data","Disconnected successfully!").append("token","NULL");
-            Request disconnectMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverIdentifier, clientId, "Disconnected successfully!", "NULL");
+            Request disconnectMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Disconnected successfully!", "NULL");
             sendMessageTo(clientId, disconnectMessage);
             GlobalVariables.removeClientFromOnlineList(channel);
 
@@ -141,9 +135,7 @@ public class ReceiveMessageTask implements Runnable {
             GlobalVariables.addClientToOnlineList(channel, clientId, request.getToken());
 
             // Send Approval Document
-            // Document approvalDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId", clientId)
-            //         .append("action", "POSITIVE").append("token", "NULL").append("data", "Authentication Successful!");
-            Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverIdentifier, clientId, "Authentication Successful!", "NULL");
+            Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Authentication Successful!", "NULL");
             // Request approvalMessage = new Request(approvalDoc);
             sendMessageTo(clientId, approvalMessage);
 
@@ -180,10 +172,7 @@ public class ReceiveMessageTask implements Runnable {
                 GlobalVariables.addClientToOnlineList(channel, clientId, tokenToAssign);
 
                 // Send Approval Document
-                // Document approvalDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId", clientId)
-                //         .append("action", "POSITIVE").append("data", "Account created successfully!")
-                //         .append("token", tokenToAssign);
-                Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverIdentifier, clientId, "Account created successfully!", tokenToAssign);
+                Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Account created successfully!", tokenToAssign);
                 // Request approvalMessage = new Request(approvalDoc);
                 sendMessageTo(clientId, approvalMessage);
                 return true;
@@ -192,9 +181,7 @@ public class ReceiveMessageTask implements Runnable {
                 // GlobalVariables.globalLocks.release();
                 // Reject if user already exists - Send Rejection Document
                 GlobalVariables.addClientToOnlineList(channel, clientId, "NULL");
-                // Document rejectionDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId", clientId)
-                //     .append("action","ERROR").append("data","User already exists!!! Can't sign up!").append("token","NULL");
-                Request rejectionMessage = new Request(RequestType.ERROR, GlobalVariables.serverIdentifier, clientId, "User already exists!!! Can't sign up!", "NULL");
+                Request rejectionMessage = new Request(RequestType.ERROR, GlobalVariables.serverId, clientId, "User already exists!!! Can't sign up!", "NULL");
                 // Request rejectionMessage = new Request(rejectionDoc);
                 sendMessageTo(clientId, rejectionMessage);
                 GlobalVariables.removeClientFromOnlineList(channel);
@@ -204,10 +191,7 @@ public class ReceiveMessageTask implements Runnable {
         } else {
             // The user is not authenticated has sent some non-auth message
             GlobalVariables.addClientToOnlineList(channel, clientId, "NULL");
-            // Document rejectionDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId",clientId)
-            //     .append("token","NULL").append("action","ERROR").append("data","UNAUTHORISED ACCESS!!!");
-            Request rejectionMessage = new Request(RequestType.InvalidToken, GlobalVariables.serverIdentifier, clientId, "UNAUTHORISED ACCESS!!!", "NULL");
-            // Request rejectionMessage = new Request(rejectionDoc);
+            Request rejectionMessage = new Request(RequestType.ERROR, GlobalVariables.serverId, clientId, "UNAUTHORISED ACCESS!!!", "NULL");
             sendMessageTo(clientId, rejectionMessage);
             GlobalVariables.removeClientFromOnlineList(channel);
             return false;

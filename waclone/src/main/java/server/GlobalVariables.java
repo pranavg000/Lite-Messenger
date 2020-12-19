@@ -38,7 +38,7 @@ public class GlobalVariables {
         Auth, NewChat, Message, SignUp, Disconnect, POSITIVE, ERROR, InvalidToken, UserNotFound
     }
 
-    public static String serverIdentifier = "SERVER";
+    public static String serverId = "SERVER";
 
     public static String getActionString(RequestType r){
         String s="";
