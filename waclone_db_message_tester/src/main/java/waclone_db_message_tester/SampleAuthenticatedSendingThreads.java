@@ -85,17 +85,11 @@ public class SampleAuthenticatedSendingThreads extends Thread {
 
         for(int i=0;i<10;i++){
             int receiver = ThreadLocalRandom.current().nextInt(10,20);
-            request.setSenderId(id);
-            request.setReceiverId(Integer.toString(receiver));
-            request.setData("Source: "+id+", Receiver: "+Integer.toString(receiver));
-            request.setAction(RequestType.Message);
-            request.setToken(token);
+            request = new Request(RequestType.Message, id, Integer.toString(receiver), "Source: "+id+", Receiver: "+Integer.toString(receiver), token);
             
             try {
-                // DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
                 outputStream.writeUTF(gson.toJson(request));
                 System.out.println("Sent: "+request.getData());
-                // outputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
