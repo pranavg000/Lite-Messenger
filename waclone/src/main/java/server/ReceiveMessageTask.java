@@ -70,56 +70,43 @@ public class ReceiveMessageTask implements Runnable {
             clientId = request.getSenderId();
         if (!GlobalVariables.checkClientOnline(clientId)) { // Client is not authenticated
             return handleAuth(request);
-        } else if (reqType == RequestType.NewChat) {
+        } 
+
+        ClientInfo clientInfo = GlobalVariables.getClientInfo(clientId);
+        if(!request.getToken().equals(clientInfo.getToken())){
+            Request rejectionMessage = new Request(RequestType.InvalidToken, GlobalVariables.serverIdentifier, clientId, "UNAUTHORISED ACCESS!!!", "NULL");
+            sendMessageTo(clientId, rejectionMessage);
+        }
+
+
+        if (reqType == RequestType.NewChat) {
             System.out.println("New Chat");
-            if(GlobalVariables.userCollection.find(eq("userId",clientId)).first().getString("token").equals(request.getToken())){
-                if(GlobalVariables.userCollection.countDocuments(eq("userId",recieverId)) > 0){
-                    Document approvalDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
-                        .append("token","NULL").append("data","User was found").append("action","POSITIVE");
-                    Request approvalReq = new Request(approvalDoc);
-                    sendMessageTo(clientId, approvalReq);
-                } else {
-                    Document rejectionDoc = new Document().append("senderId","SERVER").append("receiverId",clientId)
-                        .append("token","NULL").append("data","USER NOT FOUND").append("action","ERROR");
-                    Request rejectionReq = new Request(rejectionDoc);
-                    sendMessageTo(clientId, rejectionReq);
-                }
+            
+            if(GlobalVariables.userCollection.countDocuments(eq("userId",recieverId)) > 0){
+                // Document approvalDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId", clientId)
+                //     .append("token","NULL").append("data","User was found").append("action","POSITIVE");
+                Request approvalReq = new Request(RequestType.POSITIVE, GlobalVariables.serverIdentifier, clientId, "User was found", "NULL");
+                sendMessageTo(clientId, approvalReq);
             } else {
-                Document rejectionDoc = new Document().append("senderId","SERVER").append("receiverId",clientId)
-                        .append("token","NULL").append("data","UNAUTHORISED ACCESS!!!").append("action","ERROR");
-                Request rejectionReq = new Request(rejectionDoc);
+                // Document rejectionDoc = new Document().append("senderId",GlobalVariables.serverIdentifier).append("receiverId",clientId)
+                //     .append("token","NULL").append("data","USER NOT FOUND").append("action","UserNotFound");
+                Request rejectionReq = new Request(RequestType.UserNotFound, GlobalVariables.serverIdentifier, clientId, "USER NOT FOUND", "NULL");
                 sendMessageTo(clientId, rejectionReq);
             }
+            
         } else if (reqType == RequestType.Message) {
             System.out.println("Send message");
-            ClientInfo clientInfo = GlobalVariables.getClientInfo(clientId);
-            String userToken = clientInfo.getToken();
-            // String userToken = GlobalVariables.userCollection
-            //     .find(eq("userId",clientId)).first().getString("token");
-            if(userToken.equals(request.getToken())){
-                return sendMessageTo(recieverId, request);
-            } else {
-                System.out.println("UNAUTHORISED ACCESS WAS MADE!!! CLIENT PRETENDING TO BE " + clientId);
-                System.out.println("Actual token:"+userToken+" Used token: "+request.getToken());
-                return false;
-            }
+            
+            return sendMessageTo(recieverId, request);
+            
         } else if(reqType == RequestType.Disconnect){
-            ClientInfo clientInfo = GlobalVariables.getClientInfo(clientId);
-            String userToken = clientInfo.getToken();
-            if(userToken.equals(request.getToken())){
-                System.out.println("Client with id "+clientId+" wants to disconnect!");
-                // Document disconnectDocument = new Document().append("senderId","SERVER").append("receiverId", clientId)
-                //     .append("action", "POSITIVE").append("data","Disconnected successfully!").append("token","NULL");
-                Request disconnectMessage = new Request(RequestType.POSITIVE, "SERVER", clientId, "Disconnected successfully!", "NULL");
-                sendMessageTo(clientId, disconnectMessage);
-                GlobalVariables.removeClientFromOnlineList(channel);
+            System.out.println("Client with id "+clientId+" wants to disconnect!");
+            // Document disconnectDocument = new Document().append("senderId",GlobalVariables.serverIdentifier).append("receiverId", clientId)
+            //     .append("action", "POSITIVE").append("data","Disconnected successfully!").append("token","NULL");
+            Request disconnectMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverIdentifier, clientId, "Disconnected successfully!", "NULL");
+            sendMessageTo(clientId, disconnectMessage);
+            GlobalVariables.removeClientFromOnlineList(channel);
 
-            } else {
-                // Document disconnectDocument = new Document().append("senderId","SERVER").append("receiverId", clientId)
-                //     .append("action", "ERROR").append("data","UNAUTHORISED ACCESS!!!").append("token","NULL");
-                Request disconnectMessage = new Request(RequestType.ERROR, "SERVER", clientId, "UNAUTHORISED ACCESS!!!", "NULL");
-                sendMessageTo(clientId, disconnectMessage);
-            }
         }else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
             // Unkown command return error response
@@ -150,14 +137,13 @@ public class ReceiveMessageTask implements Runnable {
 
     private Boolean handleAuth(Request request) {
         RequestType reqType = request.getAction();
-        System.out.println(reqType + "HI");
         if (isAuth(request)) {
             GlobalVariables.addClientToOnlineList(channel, clientId, request.getToken());
 
             // Send Approval Document
-            // Document approvalDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
+            // Document approvalDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId", clientId)
             //         .append("action", "POSITIVE").append("token", "NULL").append("data", "Authentication Successful!");
-            Request approvalMessage = new Request(RequestType.POSITIVE, "SERVER", clientId, "Authentication Successful!", "NULL");
+            Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverIdentifier, clientId, "Authentication Successful!", "NULL");
             // Request approvalMessage = new Request(approvalDoc);
             sendMessageTo(clientId, approvalMessage);
 
@@ -194,10 +180,10 @@ public class ReceiveMessageTask implements Runnable {
                 GlobalVariables.addClientToOnlineList(channel, clientId, tokenToAssign);
 
                 // Send Approval Document
-                // Document approvalDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
+                // Document approvalDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId", clientId)
                 //         .append("action", "POSITIVE").append("data", "Account created successfully!")
                 //         .append("token", tokenToAssign);
-                Request approvalMessage = new Request(RequestType.POSITIVE, "SERVER", clientId, "Account created successfully!", tokenToAssign);
+                Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverIdentifier, clientId, "Account created successfully!", tokenToAssign);
                 // Request approvalMessage = new Request(approvalDoc);
                 sendMessageTo(clientId, approvalMessage);
                 return true;
@@ -206,9 +192,9 @@ public class ReceiveMessageTask implements Runnable {
                 // GlobalVariables.globalLocks.release();
                 // Reject if user already exists - Send Rejection Document
                 GlobalVariables.addClientToOnlineList(channel, clientId, "NULL");
-                // Document rejectionDoc = new Document().append("senderId", "SERVER").append("receiverId", clientId)
+                // Document rejectionDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId", clientId)
                 //     .append("action","ERROR").append("data","User already exists!!! Can't sign up!").append("token","NULL");
-                Request rejectionMessage = new Request(RequestType.ERROR, "SERVER", clientId, "User already exists!!! Can't sign up!", "NULL");
+                Request rejectionMessage = new Request(RequestType.ERROR, GlobalVariables.serverIdentifier, clientId, "User already exists!!! Can't sign up!", "NULL");
                 // Request rejectionMessage = new Request(rejectionDoc);
                 sendMessageTo(clientId, rejectionMessage);
                 GlobalVariables.removeClientFromOnlineList(channel);
@@ -218,9 +204,9 @@ public class ReceiveMessageTask implements Runnable {
         } else {
             // The user is not authenticated has sent some non-auth message
             GlobalVariables.addClientToOnlineList(channel, clientId, "NULL");
-            // Document rejectionDoc = new Document().append("senderId", "SERVER").append("receiverId",clientId)
+            // Document rejectionDoc = new Document().append("senderId", GlobalVariables.serverIdentifier).append("receiverId",clientId)
             //     .append("token","NULL").append("action","ERROR").append("data","UNAUTHORISED ACCESS!!!");
-            Request rejectionMessage = new Request(RequestType.ERROR, "SERVER", clientId, "UNAUTHORISED ACCESS!!!", "NULL");
+            Request rejectionMessage = new Request(RequestType.InvalidToken, GlobalVariables.serverIdentifier, clientId, "UNAUTHORISED ACCESS!!!", "NULL");
             // Request rejectionMessage = new Request(rejectionDoc);
             sendMessageTo(clientId, rejectionMessage);
             GlobalVariables.removeClientFromOnlineList(channel);
@@ -241,18 +227,16 @@ public class ReceiveMessageTask implements Runnable {
             GlobalVariables.globalLocks.release();
             GlobalVariables.sendMessage.execute(new SendMessageTask(recieverInfo.getChannel(), request));
             return true;
-        } else {
-            if(GlobalVariables.userCollection.countDocuments(eq("userId", recieverId)) > 0){
-                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
-                GlobalVariables.messageCollection.insertOne(request.toDocument());
-                // GlobalVariables.globalLocks.release();
-                return true;
-            } else {
-                System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist");
-                // GlobalVariables.globalLocks.release();
-                return false;
-            }
         }
+        if(GlobalVariables.userCollection.countDocuments(eq("userId", recieverId)) > 0){
+            System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Offline");
+            GlobalVariables.messageCollection.insertOne(request.toDocument());
+            // GlobalVariables.globalLocks.release();
+            return true;
+        } 
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFF Reciever Does Not Exist");
+        // GlobalVariables.globalLocks.release();
+        return false;
     }
 
     private void closeConnection() {
