@@ -36,7 +36,7 @@ public class GlobalVariables {
     public static ReadWriteLock rwlock;
 
     public static enum RequestType {
-        Auth, NewChat, Message, SignUp, Disconnect, POSITIVE, ERROR, InvalidToken, UserNotFound, MessageReceived, SignUpSuccessful, AuthSuccessful, NewChatPositive
+        Auth, NewChat, Message, SignUp, Disconnect, POSITIVE, ERROR, InvalidToken, UserNotFound, MessageReceived, SignUpSuccessful, AuthSuccessful, NewChatPositive, MessageRead
     }
 
 

@@ -66,10 +66,10 @@ public class SendMessageTask implements Runnable {
     private void storeAndCloseConnection() {
         System.out.println("FFFFFFFFFFFFFFFFFFFFFF Receiver Offline, saving to DB");
         GlobalVariables.databaseInsertData(request);
+        if (GlobalVariables.removeClientFromOnlineList(channel)) {
+            System.out.println("Closing Channel");
+        }
         try {
-            if (GlobalVariables.removeClientFromOnlineList(channel)) {
-                System.out.println("Closing Channel");
-            }
             channel.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,12 +101,12 @@ public class SendMessageTask implements Runnable {
             }
         }
 
-        if(request.getAction() == RequestType.Message){
-            // Message sent successfully (Send receive receipt to sender)
-            // Request receiveReceipt = new Request(RequestType.MessageReceived, request.getReceiverId(), 
-            //         request.getSenderId(), request.getRequestId(), "NULL");
-            // GlobalVariables.sendMessageTo(receiveReceipt.getReceiverId(), receiveReceipt);
-        }
+        // if(request.getAction() == RequestType.Message){
+        //     // Message sent successfully (Send receive receipt to sender)
+        //     Request receiveReceipt = new Request(RequestType.MessageReceived, request.getSenderId(), 
+        //             request.getReceiverId(), request.getRequestId(), "NULL");
+        //     GlobalVariables.sendMessageTo(receiveReceipt.getReceiverId(), receiveReceipt);
+        // }
         return;
     }
 }

@@ -100,11 +100,13 @@ public class ReceiveMessageTask implements Runnable {
             Request disconnectMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Disconnected successfully!", "NULL");
             GlobalVariables.sendMessageTo(clientId, disconnectMessage);
             GlobalVariables.removeClientFromOnlineList(channel);
-
-        // } else if(reqType == RequestType.MessageReceived){
-        //     System.out.println("Message received");
-        //     // Send to sender (Receive receipt)
-        //     return GlobalVariables.sendMessageTo(recieverId, request);
+        
+        } 
+        // else if(reqType == RequestType.MessageRead){
+        //     System.out.println("Message Read");
+        //     // Send to sender (Read receipt)
+        //     Request readReceipt = new Request(RequestType.MessageRead, request.getSenderId(), recieverId, request.getRequestId(), "");
+        //     return GlobalVariables.sendMessageTo(recieverId, readReceipt);
         // }
         else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
