@@ -83,7 +83,7 @@ public class ReceiveMessageTask implements Runnable {
             System.out.println("New Chat");
             
             if(GlobalVariables.userCollection.countDocuments(eq("userId",recieverId)) > 0){
-                Request approvalReq = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "User was found", "NULL");
+                Request approvalReq = new Request(RequestType.NewChatPositive, GlobalVariables.serverId, clientId, recieverId, "NULL");
                 GlobalVariables.sendMessageTo(clientId, approvalReq);
             } else {
                 Request rejectionReq = new Request(RequestType.UserNotFound, GlobalVariables.serverId, clientId, "USER NOT FOUND", "NULL");
@@ -101,11 +101,11 @@ public class ReceiveMessageTask implements Runnable {
             GlobalVariables.sendMessageTo(clientId, disconnectMessage);
             GlobalVariables.removeClientFromOnlineList(channel);
 
-        } else if(reqType == RequestType.MessageReceived){
-            System.out.println("Message received");
-            // Send to sender (Receive receipt)
-            return GlobalVariables.sendMessageTo(recieverId, request);
-        }
+        // } else if(reqType == RequestType.MessageReceived){
+        //     System.out.println("Message received");
+        //     // Send to sender (Receive receipt)
+        //     return GlobalVariables.sendMessageTo(recieverId, request);
+        // }
         else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
             // Unkown command return error response
@@ -176,7 +176,7 @@ public class ReceiveMessageTask implements Runnable {
                 GlobalVariables.addClientToOnlineList(channel, clientId, tokenToAssign);
 
                 // Send Approval Document
-                Request approvalMessage = new Request(RequestType.POSITIVE, GlobalVariables.serverId, clientId, "Account created successfully!", tokenToAssign);
+                Request approvalMessage = new Request(RequestType.SignUpSuccessful, GlobalVariables.serverId, clientId, "Account created successfully!", tokenToAssign);
                 GlobalVariables.sendMessageTo(clientId, approvalMessage);
                 return true;
 
