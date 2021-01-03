@@ -92,7 +92,7 @@ public class Request {
 
 
     public Document toDocument(){
-        Document obj = new Document().append("senderId", senderId).append("receiverId", receiverId)
+        Document obj = new Document().append("requestId", requestId).append("senderId", senderId).append("receiverId", receiverId)
             .append("data", data).append("action", action.name()).append("token", token).append("timeStamp", timeStamp);
         return obj;
     }

@@ -151,6 +151,7 @@ public class ReceiveMessageTask implements Runnable {
             // Delete these messages from database
             for (Document message : messageList) {
                 Request r = new Request(message);
+                System.out.println(r.getRequestId());
                 GlobalVariables.sendMessageTo(r.getReceiverId(), r);
             }
             System.out.println("Auth done for" + clientId);
