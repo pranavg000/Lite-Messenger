@@ -81,7 +81,7 @@ public class SendMessageTask implements Runnable {
         Gson gson = new Gson();
         int len = convertUTF(gson.toJson(request));
 
-        System.out.println("Sending" + buffer.array());
+        System.out.println("Sending" + buffer.array() +" "+ request.getTimeStamp());
         // synchronized (channel) {
         System.out.println(len);
         while (len > 0) {
