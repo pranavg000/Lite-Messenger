@@ -46,6 +46,7 @@ public class ConnectionListeningThread extends Thread {
 
                 if (curKey.isAcceptable()) {
                     ServerSocketChannel server = (ServerSocketChannel) curKey.channel();
+                    System.out.println("New socket request");
                     SocketChannel channel = server.accept();
                     registerChannel(selector, channel, SelectionKey.OP_READ);
                 } else if (curKey.isReadable()) {

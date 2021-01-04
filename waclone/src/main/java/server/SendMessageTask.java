@@ -101,12 +101,12 @@ public class SendMessageTask implements Runnable {
             }
         }
 
-        // if(request.getAction() == RequestType.Message){
-        //     // Message sent successfully (Send receive receipt to sender)
-        //     Request receiveReceipt = new Request(RequestType.MessageReceived, request.getSenderId(), 
-        //             request.getReceiverId(), request.getRequestId(), "NULL");
-        //     GlobalVariables.sendMessageTo(receiveReceipt.getReceiverId(), receiveReceipt);
-        // }
+        if(request.getAction() == RequestType.Message){
+            // Message sent successfully (Send receive receipt to sender)
+            Request receiveReceipt = new Request(RequestType.MessageReceived, request.getSenderId(), 
+                    request.getReceiverId(), request.getRequestId(), "NULL");
+            GlobalVariables.sendMessageTo(receiveReceipt.getReceiverId(), receiveReceipt);
+        }
         return;
     }
 }

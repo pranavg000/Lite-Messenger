@@ -1,0 +1,7 @@
+Starting Server
+Jan 03, 2021 6:42:15 PM com.mongodb.diagnostics.logging.Loggers shouldUseSLF4J
+WARNING: SLF4J not found on the classpath.  Logging is disabled for the 'org.mongodb.driver' component
+End of app.java
+Connection Listening Thread activated
+sun.nio.ch.ServerSocketChannelImpl[/[0:0:0:0:0:0:0:0]:5000]
+Connection Listening Socket ready and listening at port 5000

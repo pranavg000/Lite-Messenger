@@ -102,12 +102,12 @@ public class ReceiveMessageTask implements Runnable {
             GlobalVariables.removeClientFromOnlineList(channel);
         
         } 
-        // else if(reqType == RequestType.MessageRead){
-        //     System.out.println("Message Read");
-        //     // Send to sender (Read receipt)
-        //     Request readReceipt = new Request(RequestType.MessageRead, request.getSenderId(), recieverId, request.getRequestId(), "");
-        //     return GlobalVariables.sendMessageTo(recieverId, readReceipt);
-        // }
+        else if(reqType == RequestType.MessageRead){
+            System.out.println("Message Read");
+            // Send to sender (Read receipt)
+            Request readReceipt = new Request(RequestType.MessageRead, request.getSenderId(), recieverId, request.getRequestId(), "");
+            return GlobalVariables.sendMessageTo(recieverId, readReceipt);
+        }
         else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
             // Unkown command return error response
