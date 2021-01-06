@@ -103,8 +103,8 @@ public class SendMessageTask implements Runnable {
 
         if(request.getAction() == RequestType.Message){
             // Message sent successfully (Send receive receipt to sender)
-            Request receiveReceipt = new Request(RequestType.MessageReceived, request.getSenderId(), 
-                    request.getReceiverId(), String.valueOf(request.getTimeStamp()), "NULL");
+            Request receiveReceipt = new Request(RequestType.MessageReceived, request.getReceiverId(), 
+                    request.getSenderId(), String.valueOf(request.getTimeStamp()), "NULL");
             GlobalVariables.sendMessageTo(receiveReceipt.getReceiverId(), receiveReceipt);
         }
         return;

@@ -78,6 +78,8 @@ public class ReceiveMessageTask implements Runnable {
             GlobalVariables.sendMessageTo(clientId, rejectionMessage);
         }
 
+        // Remove token because might need to store/send to someone
+        request.setToken("");
 
         if (reqType == RequestType.NewChat) {
             System.out.println("New Chat");
@@ -105,8 +107,8 @@ public class ReceiveMessageTask implements Runnable {
         else if(reqType == RequestType.MessageRead){
             System.out.println("Message Read");
             // Send to sender (Read receipt)
-            Request readReceipt = new Request(RequestType.MessageRead, request.getSenderId(), recieverId, request.getRequestId(), "");
-            return GlobalVariables.sendMessageTo(recieverId, readReceipt);
+            // Request readReceipt = new Request(RequestType.MessageRead, request.getSenderId(), recieverId, request.getRequestId(), "");
+            return GlobalVariables.sendMessageTo(recieverId, request);
         }
         else {
             System.out.println("FFFFFFFFFFFFFFFFFFFFFF Unknown Command");
