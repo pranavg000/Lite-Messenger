@@ -1,7 +1,7 @@
-WA-Clone-Server
+Lite Messenger
 ======
 
-The server program for a lightweight messenger similar to WhatsApp. It Uses MongoDB as a database. Server is implemented using the Java NIO package. Uses Thread Pools to handle requests of multiple clients simultaneously and avoids creating a new thread for every client connection.   
+This repository contains both the Server(Java) & Android Client program for a lightweight intant messaging application inspired by WhatsApp. It uses MongoDB as a database. Server is implemented using the Java NIO package. Uses Thread Pools to handle requests of multiple clients simultaneously and avoids creating a new thread for every client connection.   
 
 ## Features 
 * Registration through phone number
@@ -15,10 +15,3 @@ The server program for a lightweight messenger similar to WhatsApp. It Uses Mong
 * Read/Receive receipt
 * Group Messaging
 * Media Support
-
-## To run
-
- ```
- git clone
-
-```
